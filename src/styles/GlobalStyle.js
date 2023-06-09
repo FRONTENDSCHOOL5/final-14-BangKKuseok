@@ -1,36 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import './fonts.css';
 
 const GlobalStyle = createGlobalStyle`
 	${reset};
 
-	@font-face {
-			font-family: 'Pretendard';
-			src: url('../assets/fonts/Pretendard/Pretendard-Regular.woff2') format('font-woff2'),
-					url('../assets/fonts/Pretendard/Pretendard-Regular.woff') format('woff'),
-					url('../assets/fonts/Pretendard/Pretendard-Regular.otf') format('opentype');
-			font-weight: 400;
-    }
-    @font-face {
-			font-family: 'Pretendard';
-			src: url('../assets/fonts/Pretendard/Pretendard-Medium.woff2') format('font-woff2'),
-					url('../assets/fonts/Pretendard/Pretendard-Medium.woff') format('woff'),
-					url('../assets/fonts/Pretendard/Pretendard-Medium.otf') format('opentype');
-			font-weight: 500;
-    }
-    @font-face {
-			font-family: 'Pretendard';
-			src: url('../assets/fonts/Pretendard/Pretendard-SemiBold.woff2') format('font-woff2'),
-					url('../assets/fonts/Pretendard/Pretendard-SemiBold.woff') format('woff'),
-					url('../assets/fonts/Pretendard/Pretendard-SemiBold.otf') format('opentype');
-			font-weight: 600;
-    }
 	*{
 		box-sizing: border-box;
 		font-size: 10px;
 	}
 	body{
-		font-family: 'Pretendard',sans-serif;
+		font-family: 'Pretendard', sans-serif;
 	}
 	a{
 		text-decoration: none;
