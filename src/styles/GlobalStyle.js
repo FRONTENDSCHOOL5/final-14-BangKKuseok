@@ -7,6 +7,8 @@ const GlobalStyle = createGlobalStyle`
 
 	*{
 		box-sizing: border-box;
+	}
+	:root{
 		font-size: 10px;
 	}
 	body{
