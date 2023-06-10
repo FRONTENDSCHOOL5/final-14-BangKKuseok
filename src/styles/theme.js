@@ -2,6 +2,7 @@ const colors = {
   mainCoral: '#f15846',
   subCoral: '#ff6553',
   lightCoral: '#F8ABA2',
+  yellow: '#F2C94C',
   black: '#292929',
   white: '#fff',
   gray100: '#dbdbdb',
