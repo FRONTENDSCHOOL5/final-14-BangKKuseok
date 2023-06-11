@@ -151,3 +151,11 @@ export default function PostCard({
     </StyledPostCard>
   );
 }
+
+
+/*
+  실제 사용방법
+  - <PostCard data={...api에서 받아온 데이터} /> 식으로 데이터 객체를 spread 연산자 사용해서 넘기기
+  - PostCard 컴포넌트 안에서 구조분해 할당 및 content를 postContent와 space로 나누기
+  - postImg의 경우 따로 불러와 src와 alt값 지정하기
+ */
