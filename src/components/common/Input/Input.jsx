@@ -85,17 +85,17 @@ export default function Input(
   // 눈 감은 사진 or 눈 뜬 사진
   const [isEye, setIsEye] = useState(false);
   // 눈 감은 사진이면 type: password, 눈 뜬 사진이면 type: text
-  const [isPasswordOrText, setIsPasswordOrText] = useState({inputType});
+  const [type, setType] = useState(inputType);
 
   // 비밀번호를 입력할 때 눈 사진을 클릭하면 동작하는 함수
-  const handleClickEye = (e) => {
+  const handleClickEye = () => {
     // input의 type을 password에서 text로
     // 한번 더 클릭하면 text에서 password
-    if(e.target.type === 'password'){
-      setIsPasswordOrText('text');
+    if(type=== 'password'){
+      setType('text');
       setIsEye(true);
     } else{
-      setIsPasswordOrText('password');
+      setType('password');
       setIsEye(false);
     }
   }
@@ -105,8 +105,7 @@ export default function Input(
       <InputWrapper>
         <InputLabel htmlFor={id}>{labelText}</InputLabel>
         <InputBox 
-          type={inputType} 
-          // type={type}
+          type={type} 
           id={id} 
           placeholder={placeHolder} 
           onChange={onChange}
