@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const spaces = [
+  '전체',
   '원룸',
   '거실',
   '침실',
@@ -25,6 +26,10 @@ const StyledSpaceTab = styled.button`
   line-height: 1;
   border: 1.4px solid currentColor;
   flex-shrink: 0;
+
+  &:not(.active):hover {
+    color: ${({ theme }) => theme.colors.mainCoral};
+  }
 
   &.active {
     font-weight: 600;
