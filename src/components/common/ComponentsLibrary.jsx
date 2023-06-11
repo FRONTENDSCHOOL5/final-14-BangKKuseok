@@ -2,6 +2,8 @@ import React from 'react';
 import ProductCard from './Card/ProductCard';
 import styled from 'styled-components';
 import PostCard from './Card/PostCard';
+import SpaceTabs from './Tabs/SpaceTabs';
+import ViewTabs from './Tabs/ViewTabs';
 
 const StyledH2 = styled.h2`
   font-size: 20px;
@@ -11,6 +13,14 @@ const StyledH2 = styled.h2`
 export default function ComponentsLibrary() {
   return (
     <>
+      <StyledH2>SpaceTabs</StyledH2>
+      <SpaceTabs currentTab={0} />
+      <br/>
+
+      <StyledH2>ViewTabs</StyledH2>
+      <ViewTabs selected={'grid'} />
+      <hr/>
+
       <StyledH2>ProductCard</StyledH2>
       <ProductCard
         pdImg='https://source.unsplash.com/random/400x164/?lamp'
