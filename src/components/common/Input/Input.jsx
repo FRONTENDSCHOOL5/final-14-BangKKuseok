@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import styled from "styled-components"
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import eyeIcon from '../../../assets/icons/icon-eye.svg';
 import eyeOffIcon from '../../../assets/icons/icon-eye-off.svg';
 
@@ -11,17 +11,16 @@ const InputWrapper = styled.div`
 
   width: 322px;
   height: 48px;
-
 `;
 
 const InputLabel = styled.p`
-  font-size: ${({theme}) => theme.fontSize.xs};
-  color: ${({theme}) => theme.colors.gray300};
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  color: ${({ theme }) => theme.colors.gray300};
 `;
 
 const InputBox = styled.input`
   margin: 0;
-  padding: 0; 
+  padding: 0;
 
   position: absolute;
   bottom: 10px;
@@ -31,16 +30,18 @@ const InputBox = styled.input`
   border: none;
   outline: none;
 
-  border-bottom: 1px solid ${({isInValid}) => isInValid? ({theme}) => theme.colors.subCoral : ({theme}) => theme.colors.gray100};
-  
+  border-bottom: 1px solid
+    ${({ isInValid }) =>
+      isInValid ? ({ theme }) => theme.colors.subCoral : ({ theme }) => theme.colors.gray100};
+
   width: 100%;
   height: 30px;
 
   &::placeholder {
-    font-size: ${({theme}) => theme.fontSize.sm};
-    color: ${({theme}) => theme.colors.gray100};
-  };
-`
+    font-size: ${({ theme }) => theme.fontSize.sm};
+    color: ${({ theme }) => theme.colors.gray100};
+  }
+`;
 const EyeIcon = styled.img`
   position: absolute;
   bottom: 0;
@@ -55,11 +56,11 @@ const EyeIcon = styled.img`
 `;
 
 const InputShowWarning = styled.strong`
-  font-size: ${({theme}) => theme.fontSize.xs};
-  color: ${({theme}) => theme.colors.mainCoral};
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  color: ${({ theme }) => theme.colors.mainCoral};
   &::before {
-    content:'*'
-  };
+    content: '*';
+  }
 
   display: block;
   margin-top: 3px;
@@ -69,14 +70,7 @@ const InputShowWarning = styled.strong`
 // labelText : label에 들어갈 문구
 // inputType : input의 타입
 // placeHoldler : input에 적용할 placeholder
-export default function Input(
-  { id,
-    labelText,
-    inputType,
-    placeHolder,
-    onChange,
-  }) {
-
+export default function Input({ id, labelText, inputType, placeHolder, onChange }) {
   // 유효하지 않으면 빨간색 밑줄, 경고 메시지 뜨도록
   const [isInValid, setIsInValid] = useState(false);
   // 경고메시지의 내용을 담고있음
@@ -91,34 +85,31 @@ export default function Input(
   const handleClickEye = () => {
     // input의 type을 password에서 text로
     // 한번 더 클릭하면 text에서 password
-    if(type=== 'password'){
+    if (type === 'password') {
       setType('text');
       setIsEye(true);
-    } else{
+    } else {
       setType('password');
       setIsEye(false);
     }
-  }
+  };
 
-  return(
+  return (
     <>
       <InputWrapper>
         <InputLabel htmlFor={id}>{labelText}</InputLabel>
-        <InputBox 
-          type={type} 
-          id={id} 
-          placeholder={placeHolder} 
+        <InputBox
+          type={type}
+          id={id}
+          placeholder={placeHolder}
           onChange={onChange}
           isInValid={isInValid}
         />
-        {inputType === "password" &&
-          <EyeIcon src={isEye ? eyeIcon : eyeOffIcon} 
-            alt="eye-image"
-            onClick={handleClickEye} 
-          /> 
-        }
+        {inputType === 'password' && (
+          <EyeIcon src={isEye ? eyeIcon : eyeOffIcon} alt='eye-image' onClick={handleClickEye} />
+        )}
       </InputWrapper>
-      {isInValid ? <InputShowWarning>{warningMsg}</InputShowWarning> : null}        
+      {isInValid ? <InputShowWarning>{warningMsg}</InputShowWarning> : null}
     </>
-  )
+  );
 }
