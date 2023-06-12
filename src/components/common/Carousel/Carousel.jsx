@@ -14,6 +14,7 @@ import {
 export default function Carousel({ data }) {
   const [current, setCurrent] = useState(0);
   const [movePercentage, setMovePercentage] = useState(`-${current}00%`);
+  const [isPopup, setIsPopup] = useState(false);
 
   const moveSlide = (i) => {
     let nextIdx = current + i;
@@ -25,6 +26,14 @@ export default function Carousel({ data }) {
     }
 
     setCurrent(nextIdx);
+  };
+
+  const popupControlButton = () => {
+    setIsPopup(true);
+  };
+
+  const nonPopupControlButton = () => {
+    setIsPopup(false);
   };
 
   useEffect(() => {
@@ -42,7 +51,7 @@ export default function Carousel({ data }) {
   });
 
   return (
-    <CarouselWrapper>
+    <CarouselWrapper onMouseOver={popupControlButton} onMouseOut={nonPopupControlButton}>
       <ImageBox movePercentage={movePercentage}>
         {data.map((item) => (
           <ImageItem key={item.id} url={item.image}>
@@ -58,7 +67,7 @@ export default function Carousel({ data }) {
       <Indicator>
         <span>{`${current + 1} / ${data.length}`}</span>
       </Indicator>
-      <ControlBox>
+      <ControlBox isPopup={isPopup}>
         <button type='button' aria-label='이전 슬라이드 이동 버튼' onClick={() => moveSlide(-1)}>
           <img src={leftIcon} alt='' />
         </button>

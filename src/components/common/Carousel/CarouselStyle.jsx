@@ -86,9 +86,11 @@ const ControlBox = styled.div`
   display: flex;
   justify-content: space-between;
   position: absolute;
-  top: 50%;
+  bottom: ${(p) => (p.isPopup ? '50%' : '0')};
   left: 50%;
+  opacity: ${(p) => (p.isPopup ? 1 : 0)};
   transform: translate(-50%, -50%);
+  transition: all 0.5s ease-in-out;
 
   button {
     width: 26px;
