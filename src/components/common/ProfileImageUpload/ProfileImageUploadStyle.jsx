@@ -12,7 +12,7 @@ const ProfileImageUploadWrapper = styled.div`
   }
 `;
 
-const UploadBtn = styled.form`
+const UploadForm = styled.form`
   position: absolute;
   inset: auto 0 0 auto;
   width: 36px;
@@ -24,4 +24,4 @@ const UploadBtn = styled.form`
   }
 `;
 
-export { ProfileImageUploadWrapper, UploadBtn };
+export { ProfileImageUploadWrapper, UploadForm };
