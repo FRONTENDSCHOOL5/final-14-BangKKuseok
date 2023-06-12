@@ -11,7 +11,7 @@ import { ReactComponent as BackIcon } from '../../../assets/icons/icon-arrow-lef
 import { ReactComponent as MoreIcon } from '../../../assets/icons/icon-more.svg';
 import { ReactComponent as SearchIcon } from '../../../assets/icons/icon-search.svg';
 import Button from '../Button/Button';
-import RoundedInput from '../Input/RoundedInput';
+import RoundedInput from '../Input/RoundedInput/RoundedInput';
 
 export default function Header({ type }) {
   const UI = {
