@@ -1,4 +1,3 @@
-import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const ProfileImageUploadWrapper = styled.div`
@@ -20,9 +19,9 @@ const UploadBtn = styled.form`
   label {
     cursor: pointer;
   }
-  input:focus-visible + label{
+  input:focus-visible + label {
     outline: 2px solid skyblue;
   }
 `;
 
-export {ProfileImageUploadWrapper, UploadBtn}
+export { ProfileImageUploadWrapper, UploadBtn };
