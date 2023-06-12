@@ -12,6 +12,8 @@ const ImageBox = styled.ul`
   width: 100%;
   height: 100%;
   position: relative;
+  transform: translate(${(p) => p.movePercentage});
+  transition: all 0.3s ease-in-out;
 
   li {
     width: 100%;
