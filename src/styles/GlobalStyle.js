@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 	button {
 		border: 0;
+		padding: 0;
 		background: transparent;
 		font-family: inherit;
 		cursor: pointer;
@@ -28,7 +29,12 @@ const GlobalStyle = createGlobalStyle`
 		width: 100%;
 		vertical-align: middle;
 	}
+	svg{
+		vertical-align: middle;
+	}
 	input{
+		background: unset;
+		border: unset;	
 		font: inherit;
 	}
 	textarea {
