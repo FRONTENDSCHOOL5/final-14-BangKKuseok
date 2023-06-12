@@ -6,6 +6,7 @@ import {
   ContentBox,
   ControlBox,
   ImageBox,
+  ImageItem,
   Indicator,
   PostDate,
 } from './CarouselStyle';
@@ -44,23 +45,19 @@ export default function Carousel({ data }) {
     <CarouselWrapper>
       <ImageBox movePercentage={movePercentage}>
         {data.map((item) => (
-          <li key={item.id}>
-            <img
-              src={item.image}
-              alt={`${item.author.username}님의  ${JSON.parse(item.content).space}이미지`}
-            />
+          <ImageItem key={item.id} url={item.image}>
             <ContentBox>
               <label>
                 {item.author.username}님의 {JSON.parse(item.content).space}
               </label>
               <PostDate>{item.createdAt.slice(0, 10)}</PostDate>
-              <Indicator>
-                <span>{`${current + 1} / ${data.length}`}</span>
-              </Indicator>
             </ContentBox>
-          </li>
+          </ImageItem>
         ))}
       </ImageBox>
+      <Indicator>
+        <span>{`${current + 1} / ${data.length}`}</span>
+      </Indicator>
       <ControlBox>
         <button type='button' aria-label='이전 슬라이드 이동 버튼' onClick={() => moveSlide(-1)}>
           <img src={leftIcon} alt='' />

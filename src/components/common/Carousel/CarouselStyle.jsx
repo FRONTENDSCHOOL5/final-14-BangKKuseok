@@ -28,20 +28,26 @@ const ImageBox = styled.ul`
   }
 `;
 
+const ImageItem = styled.li`
+  width: 100%;
+  display: flex;
+  flex-shrink: 0;
+  cursor: pointer;
+  background: url(${(p) => p.url}) no-repeat center / cover;
+`;
+
 const ContentBox = styled.div`
   width: 100%;
   height: 100px;
-  padding: 11px 16px 39px 26px;
-  display: grid;
-  grid-template-areas:
-    'label label'
-    'createdDate indicator';
+  padding: 11px 16px 0 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
   position: absolute;
   bottom: 0;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(41, 41, 41, 0.87) 89.06%);
 
   label {
-    grid-area: label;
     ${({ theme }) => css`
       color: ${theme.colors.white};
       font-size: ${theme.fontSize.lg};
@@ -51,8 +57,6 @@ const ContentBox = styled.div`
 `;
 
 const PostDate = styled.span`
-  grid-area: createdDate;
-  align-self: self-end;
   ${({ theme }) => css`
     color: ${theme.colors.white};
     font-size: ${theme.fontSize.lg};
@@ -61,8 +65,6 @@ const PostDate = styled.span`
 `;
 
 const Indicator = styled.div`
-  grid-area: indicator;
-  justify-self: end;
   width: 50px;
   height: 22px;
   padding: 5px 0;
@@ -73,6 +75,9 @@ const Indicator = styled.div`
   font-size: ${({ theme }) => theme.fontSize.xs};
   color: ${({ theme }) => theme.colors.black};
   text-align: center;
+  position: absolute;
+  bottom: 39px;
+  right: 16px;
 `;
 
 const ControlBox = styled.div`
@@ -103,4 +108,4 @@ const ControlBox = styled.div`
   }
 `;
 
-export { CarouselWrapper, ImageBox, ContentBox, PostDate, Indicator, ControlBox };
+export { CarouselWrapper, ImageBox, ImageItem, ContentBox, PostDate, Indicator, ControlBox };
