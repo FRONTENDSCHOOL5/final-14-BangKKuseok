@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import defaultProfImg from '../../../assets/images/profile-large.png';
 import profUploadImg from '../../../assets/images/prof-upload.png';
-import { ProfileImageUploadWrapper, UploadForm } from './ProfileImageUploadStyle';
+import { ProfileImageUploadWrapper, UploadBtn } from './ProfileImageUploadStyle';
 
 export default function ProfileImageUpload() {
   //프로필 이미지 저장 변수
@@ -21,7 +21,7 @@ export default function ProfileImageUpload() {
   return (
     <ProfileImageUploadWrapper>
       <img src={profImg} alt='프로필 이미지' />
-      <UploadForm>
+      <UploadBtn>
         <input
           type='file'
           id='profUpload'
@@ -31,9 +31,9 @@ export default function ProfileImageUpload() {
           ref={imgRef}
         ></input>
         <label htmlFor='profUpload'>
-          <img src={profUploadImg} alt='업로드 버튼 이미지' />
+          <img src={profUploadImg} alt='이미지 업로드 버튼' />
         </label>
-      </UploadForm>
+      </UploadBtn>
     </ProfileImageUploadWrapper>
   );
 }
