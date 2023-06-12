@@ -20,12 +20,12 @@ const GalleryImg = styled.img`
   object-fit: cover;
 `;
 
-export default function Gallery({ imgUrl, postId }) {
-  const count = imgUrl.length;
+export default function Gallery({ imgUrls, postId }) {
+  const count = imgUrls.length;
 
   return (
     <GalleryWrapper count={count}>
-      {imgUrl.map((url, index) => (
+      {imgUrls.map((url, index) => (
         <GalleryBox key={index}>
           <Link to={`/post/${postId}`}>
             <GalleryImg src={url} alt='no-img' />
