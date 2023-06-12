@@ -11,6 +11,7 @@ import { ReactComponent as BackIcon } from '../../../assets/icons/icon-arrow-lef
 import { ReactComponent as MoreIcon } from '../../../assets/icons/icon-more.svg';
 import { ReactComponent as SearchIcon } from '../../../assets/icons/icon-search.svg';
 import Button from '../Button/Button';
+import RoundedInput from '../Input/RoundedInput/RoundedInput';
 
 export default function Header({ type }) {
   const UI = {
@@ -29,7 +30,7 @@ export default function Header({ type }) {
         <button>
           <BackIcon stroke='#000' />
         </button>
-        {/* <SearchInput /> */}
+        <RoundedInput id='search' placeholder='계정을 검색하세요' />
       </HeaderShadowUI>
     ),
     feed: (
