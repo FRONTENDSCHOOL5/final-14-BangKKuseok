@@ -5,7 +5,7 @@ import { ReactComponent as ChatIcon } from '../../../assets/icons/icon-message.s
 import { ReactComponent as UserIcon } from '../../../assets/icons/icon-user.svg';
 
 export const NavbarWrapper = styled.nav`
-  width: 100%;
+  width: 390px;
   position: fixed;
   bottom: 0;
   background-color: ${({ theme }) => theme.colors.white};
