@@ -1,4 +1,3 @@
-import React from 'react';
 import styled, { css } from 'styled-components';
 
 const SIZES = {
@@ -61,26 +60,4 @@ const StyledButton = styled.button`
   }
 `;
 
-export default function Button({
-  type = 'button',
-  disabled = false,
-  size,
-  variant,
-  onClick,
-  children,
-}) {
-  const sizeStyle = SIZES[size];
-  const variantStyle = VARIANTS[variant];
-
-  return (
-    <StyledButton
-      type={type}
-      disabled={disabled}
-      size={sizeStyle}
-      variant={variantStyle}
-      onClick={onClick}
-    >
-      {children}
-    </StyledButton>
-  );
-}
+export { SIZES, VARIANTS, StyledButton };
