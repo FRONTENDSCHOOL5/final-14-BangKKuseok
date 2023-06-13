@@ -23,6 +23,7 @@ const ProductInfoBox = styled.div`
   h3 {
     color: ${({ theme }) => theme.colors.black};
     font-size: ${({ theme }) => theme.fontSize.sm};
+    font-weight: 500;
     margin-bottom: 0.7rem;
     text-overflow: ellipsis;
     white-space: nowrap;
