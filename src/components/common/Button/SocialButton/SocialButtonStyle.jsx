@@ -1,4 +1,3 @@
-import React from 'react';
 import styled, { css } from 'styled-components';
 import mailIcon from '../../../assets/icons/icon-mail.svg';
 import kakaoIcon from '../../../assets/icons/icon-kakao.svg';
@@ -32,12 +31,4 @@ const StyledButton = styled.button`
   background: var(--background, none);
 `;
 
-export default function SocialButton({ social, onClick, children }) {
-  const socialStyle = SOCIALS[social];
-
-  return (
-    <StyledButton type='button' social={socialStyle} onClick={onClick}>
-      {children}
-    </StyledButton>
-  );
-}
+export { SOCIALS, StyledButton };
