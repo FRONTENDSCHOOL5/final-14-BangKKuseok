@@ -5,12 +5,12 @@ import { HeartCommentList, PostCardWrapper, PostDetail, PostInfoBox, Space } fro
 import { convertDateFormat } from '../../../../utils/getTime';
 
 export default function PostCard({ data, moreInfo }) {
-  const { id, content, image, hearted, heartCount, commentCount, createdAt } = data;
+  const { content, image, hearted, heartCount, comments, createdAt } = data;
   const { space, detail } = JSON.parse(content);
 
   return (
     <PostCardWrapper moreInfo={moreInfo}>
-      <img src={image} alt={id || '게시글 이미지'} />
+      <img src={image} alt={`${space} 이미지`} />
 
       <PostInfoBox moreInfo={moreInfo}>
         <Space moreInfo={moreInfo}> {space} </Space>
@@ -21,7 +21,7 @@ export default function PostCard({ data, moreInfo }) {
           </li>
           <li>
             <img src={commentIcon} alt='댓글' />
-            {commentCount}
+            {comments.length}
           </li>
         </HeartCommentList>
       </PostInfoBox>
