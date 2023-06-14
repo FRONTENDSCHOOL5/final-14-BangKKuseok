@@ -12,7 +12,7 @@ export default function Heart() {
 
   return (
     <button type='button' aria-label='하트 버튼' onClick={handleClickHeartButton} >
-      <StyledHeart ishearted={+isHearted} />
+      <StyledHeart $isHearted={isHearted} />
     </button>
   );
 }

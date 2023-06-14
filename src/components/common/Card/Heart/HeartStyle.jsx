@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 export const StyledHeart = styled(HeartIcon)`
   ${(props) =>
-    props.ishearted
+    props.$isHearted
       ? css`
           path {
             stroke: ${({ theme }) => theme.colors.mainCoral};
