@@ -1,7 +1,7 @@
 {
   "extends": ["react-app", "prettier"],
   "rules": {
-    "indent": ["error", 2],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "no-var": "error",
     "require-await": "error",
     "eqeqeq": "warn",
