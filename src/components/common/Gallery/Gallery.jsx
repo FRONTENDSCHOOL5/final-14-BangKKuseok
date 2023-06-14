@@ -3,15 +3,14 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const GalleryWrapper = styled.div`
-  max-width: 542px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 174px);
+  grid-template-columns: repeat(auto-fill, minmax(174px, 1fr));
   gap: 10px;
 `;
 const GalleryBox = styled.div`
-  width: 174px;
-  height: 174px;
+  aspect-ratio: 174 / 174;
   overflow: hidden;
+  border-radius: 8px;
 `;
 const GalleryImg = styled.img`
   width: 100%;
