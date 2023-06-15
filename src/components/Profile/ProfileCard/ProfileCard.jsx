@@ -1,5 +1,5 @@
 import React from 'react';
-import basicProfileImage from '../../../assets/images/profile-large.png';
+import basicProfileImage from '../../../assets/images/profile.png';
 import Button from '../../common/Button/Button/Button';
 import {
   AccountName,
