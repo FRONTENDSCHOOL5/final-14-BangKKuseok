@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import chatIcon from '../../../assets/icons/icon-message-fill-subCoral.svg';
+import shareIcon from '../../../assets/icons/icon-share.svg';
 
 const ProfileCardWrapper = styled.section`
   width: 100%;
@@ -76,6 +78,21 @@ const UserActionBox = styled.div`
   align-items: center;
   gap: 6px;
   margin-top: 16px;
+
+  a {
+    width: 34px;
+    height: 34px;
+    margin: 0 8px;
+    border: 1px solid ${({ theme }) => theme.colors.subCoral};
+    border-radius: 50%;
+
+    :nth-child(1) {
+      background: url(${chatIcon}) no-repeat center / 2rem;
+    }
+    :nth-child(3) {
+      background: url(${shareIcon}) no-repeat center / 2rem;
+    }
+  }
 `;
 
 export {

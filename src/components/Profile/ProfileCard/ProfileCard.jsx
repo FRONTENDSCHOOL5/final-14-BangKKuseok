@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import basicProfileImage from '../../../assets/images/profile.png';
 import Button from '../../common/Button/Button/Button';
 import {
@@ -12,8 +12,16 @@ import {
   UserInfoBox,
   UserName,
 } from './ProfileCardStyle';
+import { useParams, Link } from 'react-router-dom';
 
 export default function ProfileCard({ profile }) {
+  const { accountname: accountnameByParams } = useParams();
+  const [isFollow, setIsFollow] = useState(false);
+
+  const handleClickFollow = () => {
+    setIsFollow((prev) => !prev);
+  };
+
   return (
     <ProfileCardWrapper>
       <FollowFollowingBox>
@@ -39,11 +47,28 @@ export default function ProfileCard({ profile }) {
         <Intro>{profile.intro}</Intro>
       </UserInfoBox>
       <UserActionBox>
-        {/* TODO: 내 계정의 프로필인지 타계정 프로필인지에 따라 아래의 동작 버튼이 달라진다. */}
-        <Button size='md' variant='line'>
-          프로필 수정
-        </Button>
-        <Button size='md'>상품 등록</Button>
+        {accountnameByParams ? (
+          <>
+            <Link to={`/chat/${accountnameByParams}`} title='상대방과 채팅하기'></Link>
+            {isFollow ? (
+              <Button size='md' variant='white' onClick={handleClickFollow}>
+                언팔로우
+              </Button>
+            ) : (
+              <Button size='md' onClick={handleClickFollow}>
+                팔로우
+              </Button>
+            )}
+            <Link to={``} title='프로필 공유하기'></Link>
+          </>
+        ) : (
+          <>
+            <Button size='md' variant='line'>
+              프로필 수정
+            </Button>
+            <Button size='md'>상품 등록</Button>
+          </>
+        )}
       </UserActionBox>
     </ProfileCardWrapper>
   );
