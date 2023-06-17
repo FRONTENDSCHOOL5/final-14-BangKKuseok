@@ -5,7 +5,7 @@ import LoginPage from './LoginPage/LoginPage';
 import SignupPage from './SignupPage/SignupPage';
 import FeedPage from './FeedPage/FeedPage';
 import SearchPage from './SearchPage/SearchPage';
-import PostPage from './PostPage/PostPage';
+import PostPage from './PostPage/PostPage/PostPage';
 import MyProfilePage from './ProfilePage/MyProfilePage/MyProfilePage';
 import UserProfilePage from './ProfilePage/UserProfilePage/UserProfilePage';
 import ProfileEditPage from './ProfilePage/ProfileEditPage/ProfileEditPage';
