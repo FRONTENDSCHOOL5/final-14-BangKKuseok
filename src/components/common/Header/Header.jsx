@@ -6,7 +6,14 @@ import { ReactComponent as SearchIcon } from '../../../assets/icons/icon-search.
 import Button from '../Button/Button/Button';
 import RoundedInput from '../Input/RoundedInput/RoundedInput';
 
-export default function Header({ type, title, btnText, isBtnActive }) {
+export default function Header({
+  type,
+  title,
+  btnText,
+  isBtnActive,
+  onClickBackBtn,
+  onClickNextBtn,
+}) {
   const HeaderLayout = {
     home: (
       <HeaderWrapper type={type}>
@@ -53,11 +60,11 @@ export default function Header({ type, title, btnText, isBtnActive }) {
     ),
     imageSelect: (
       <HeaderWrapper type={type}>
-        <button>
+        <button type='button' onClick={onClickBackBtn}>
           <BackIcon stroke='#000' />
         </button>
         <HeaderH2>{title}</HeaderH2>
-        <Button disabled={!isBtnActive} size='sm'>
+        <Button disabled={!isBtnActive} size='sm' onClick={onClickNextBtn}>
           {btnText}
         </Button>
       </HeaderWrapper>
