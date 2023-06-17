@@ -18,6 +18,9 @@ const GlobalStyle = createGlobalStyle`
 		text-decoration: none;
 		color: inherit;
 	}
+	li{
+		list-style: none;
+	}
 	button {
 		border: 0;
 		padding: 0;
