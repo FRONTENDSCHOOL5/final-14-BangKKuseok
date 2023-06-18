@@ -1,90 +1,114 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import eyeIcon from '../../../assets/icons/icon-eye.svg';
 import eyeOffIcon from '../../../assets/icons/icon-eye-off.svg';
 
 const InputWrapper = styled.div`
-  position: relative;
-
   display: flex;
   flex-direction: column;
 
   width: 322px;
-  height: 48px;
+  margin: 16px auto;
 `;
 
-const InputLabel = styled.p`
+const InputLabel = styled.label`
   font-size: ${({ theme }) => theme.fontSize.xs};
   color: ${({ theme }) => theme.colors.gray300};
+  margin-bottom: 10px;
 `;
 
-const InputBox = styled.input`
-  margin: 0;
-  padding: 0;
+const InputBox = styled.div`
+  position: relative;
+`;
 
-  position: absolute;
-  bottom: 10px;
-  right: 50%;
-  transform: translate(50%, 50%);
+const StyledInput = styled.input`
+  padding-bottom: 8px;
+  font-size: ${({ theme }) => theme.fontSize.sm};
 
-  border: none;
   outline: none;
 
-  border-bottom: 1px solid
-    ${({ isInValid }) =>
-      isInValid ? ({ theme }) => theme.colors.subCoral : ({ theme }) => theme.colors.gray100};
+  &: focus {
+    border-bottom: 1px solid ${({ theme }) => theme.colors.black};
+  }
+
+  ${({ warningMsg, value }) =>
+    warningMsg && value
+      ? css`
+          border-bottom: 1px solid ${({ theme }) => theme.colors.subCoral};
+        `
+      : css`
+          border-bottom: 1px solid ${({ theme }) => theme.colors.gray100};
+        `};
+  ${({ warningMsg, isInValid }) =>
+    warningMsg && isInValid
+      ? css`
+          border-bottom: 1px solid ${({ theme }) => theme.colors.subCoral};
+        `
+      : css`
+          border-bottom: 1px solid ${({ theme }) => theme.colors.gray100};
+        `};
 
   width: 100%;
-  height: 30px;
 
   &::placeholder {
-    font-size: ${({ theme }) => theme.fontSize.sm};
     color: ${({ theme }) => theme.colors.gray100};
   }
 `;
-const EyeIcon = styled.img`
+const EyeButton = styled.button`
   position: absolute;
-  bottom: 0;
+  top: 50%;
   right: 0;
+  transform: translateY(-50%);
 
   width: 18px;
   height: 18px;
 
-  margin-right: 3px;
+  margin-right: 4px;
+
+  background: url(${(p) => (p.isEye ? eyeIcon : eyeOffIcon)}) no-repeat center / contain;
 
   cursor: pointer;
 `;
 
 const InputShowWarning = styled.strong`
+  margin: 6px 0;
+  display: block;
+
   font-size: ${({ theme }) => theme.fontSize.xs};
   color: ${({ theme }) => theme.colors.mainCoral};
   &::before {
     content: '*';
   }
-
-  display: block;
-  margin-top: 3px;
 `;
 
 // id: input의 아이디
 // labelText : label에 들어갈 문구
 // inputType : input의 타입
 // placeHoldler : input에 적용할 placeholder
-export default function Input({ id, labelText, inputType, placeHolder, onChange }) {
-  // 유효하지 않으면 빨간색 밑줄, 경고 메시지 뜨도록
-  const [isInValid, setIsInValid] = useState(false);
-  // 경고메시지의 내용을 담고있음
-  const [warningMsg, setWarningMsg] = useState('');
-
-  // 눈 감은 사진 or 눈 뜬 사진
+export default function Input({
+  id,
+  labelText,
+  inputType,
+  placeHolder,
+  value,
+  onChange,
+  onBlur,
+  warningMsg,
+  isInValid,
+}) {
   const [isEye, setIsEye] = useState(false);
-  // 눈 감은 사진이면 type: password, 눈 뜬 사진이면 type: text
   const [type, setType] = useState(inputType);
+  const [isFocused, setIsFocused] = useState(false);
 
-  // 비밀번호를 입력할 때 눈 사진을 클릭하면 동작하는 함수
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
   const handleClickEye = () => {
-    // input의 type을 password에서 text로
-    // 한번 더 클릭하면 text에서 password
     if (type === 'password') {
       setType('text');
       setIsEye(true);
@@ -95,21 +119,41 @@ export default function Input({ id, labelText, inputType, placeHolder, onChange 
   };
 
   return (
-    <>
-      <InputWrapper>
-        <InputLabel htmlFor={id}>{labelText}</InputLabel>
-        <InputBox
+    <InputWrapper onFocus={handleFocus} onBlur={handleBlur} isFocused={isFocused}>
+      <InputLabel htmlFor={id}>{labelText}</InputLabel>
+      <InputBox>
+        <StyledInput
           type={type}
           id={id}
           placeholder={placeHolder}
+          value={value}
           onChange={onChange}
+          onFocus={onChange}
+          onBlur={onBlur}
           isInValid={isInValid}
+          warningMsg={warningMsg}
         />
-        {inputType === 'password' && (
-          <EyeIcon src={isEye ? eyeIcon : eyeOffIcon} alt='eye-image' onClick={handleClickEye} />
-        )}
-      </InputWrapper>
-      {isInValid ? <InputShowWarning>{warningMsg}</InputShowWarning> : null}
-    </>
+        {inputType === 'password' && <EyeButton onClick={handleClickEye} isEye={isEye}></EyeButton>}
+      </InputBox>
+
+      {value && warningMsg && id === 'email' && <InputShowWarning>{warningMsg}</InputShowWarning>}
+
+      {value && warningMsg && id === 'password' && (
+        <InputShowWarning>{warningMsg}</InputShowWarning>
+      )}
+
+      {isInValid && warningMsg && id === 'emailSignup' && (
+        <InputShowWarning>{warningMsg}</InputShowWarning>
+      )}
+      {isInValid && warningMsg && id === 'passwordSignup' && (
+        <InputShowWarning>{warningMsg}</InputShowWarning>
+      )}
+
+      {isInValid && warningMsg && id === 'name' && (
+        <InputShowWarning>{warningMsg}</InputShowWarning>
+      )}
+
+      {isInValid && warningMsg && id === 'id' && <InputShowWarning>{warningMsg}</InputShowWarning>}
+    </InputWrapper>
   );
 }
