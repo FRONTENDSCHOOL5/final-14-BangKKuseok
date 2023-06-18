@@ -14,7 +14,7 @@ const LayoutWrapper = styled.div`
 
 const LayoutMain = styled.div`
   overflow-y: scroll;
-  height: ${(p) => (p.isNonNav ? '100vh' : 'calc(100vh - 68px)')};
+  height: ${(p) => !p.isNonNav && 'calc(100vh - 68px)'};
   -ms-overflow-style: none;
   scrollbar-width: none;
 
