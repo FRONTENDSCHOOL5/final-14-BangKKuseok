@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import mailIcon from '../../../assets/icons/icon-mail.svg';
-import kakaoIcon from '../../../assets/icons/icon-kakao.svg';
-import googleIcon from '../../../assets/icons/icon-google.svg';
+import mailIcon from '../../../../assets/icons/icon-mail.svg';
+import kakaoIcon from '../../../../assets/icons/icon-kakao.svg';
+import googleIcon from '../../../../assets/icons/icon-google.svg';
 
 const SOCIALS = {
   mail: css`
