@@ -38,7 +38,7 @@ export const SelectSpaceBtn = styled.button`
 
 export const ModalSpaceList = styled.div`
   font-size: ${({ theme }) => theme.fontSize.sm};
-  padding: 0 8px;
+  padding: 0 8px 60px;
   h3 {
     color: ${({ theme }) => theme.colors.gray300};
     font-weight: 500;

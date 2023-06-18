@@ -6,7 +6,7 @@ export const ProductBubbleWrapper = styled.div`
   transform: translate(-50%, -100%);
   left: ${({ bubbleLoc }) => bubbleLoc.x + '%'};
   top: ${({ bubbleLoc }) => bubbleLoc.y + '%'};
-  z-index: 2;
+  z-index: 1;
 `;
 
 // 태그 위치에 따른 말꼬리 위치
@@ -44,7 +44,6 @@ export const ProductBubbleBox = styled.div`
   &::after {
     content: '';
     position: absolute;
-    z-index: 2;
     width: 0;
     height: 0;
     border-top: 10px solid white;

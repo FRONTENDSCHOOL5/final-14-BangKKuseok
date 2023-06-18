@@ -43,6 +43,7 @@ export const BottomSheetDim = styled.div`
   width: clamp(390px, 100%, 720px);
   height: 100vh;
   margin: 0 auto;
+  z-index: 50;
   background-color: rgba(0, 0, 0, 0.3);
   animation: ${(p) => (p.isShow ? fadeIn : fadeOut)} 0.3s ease-out;
   transition: background-color 0.3s ease-out;

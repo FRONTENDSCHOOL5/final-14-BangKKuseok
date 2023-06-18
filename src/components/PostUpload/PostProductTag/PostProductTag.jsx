@@ -3,6 +3,7 @@ import addTagBtn from '../../../assets/icons/icon-add-tag.svg';
 import { BouncingCircle, ImgBox, PostProductTagWrapper, TagBox } from './PostProductTagStyle';
 import ProductBubble from '../ProductBubble/ProductBubble';
 import BottomSheet from '../../common/BottomSheet/BottomSheet';
+import BasicModal from '../../common/BottomSheet/BasicModal';
 import ModalProductList from '../ModalProductList/ModalProductList';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { bubbleLocAtom, mouseLocAtom, selectedProductsAtom } from '../../../atoms/post';
@@ -24,10 +25,8 @@ export default function PostProductTag({ postImg, setIsBtnActive }) {
 
   //이미지 위 클릭하면
   const handleClickImg = (e) => {
-    console.log(tagStep);
     //1.'클릭 유도'일때
     if ((tagStep === '클릭 유도' || tagStep === '상품태그 추가') && e.target === e.currentTarget) {
-      console.log(tagStep);
       // 마우스 위치 지정
       const x = Math.floor((e.nativeEvent.offsetX / e.currentTarget.offsetWidth) * 100);
       const y = Math.floor((e.nativeEvent.offsetY / e.currentTarget.offsetWidth) * 100);
@@ -84,6 +83,11 @@ export default function PostProductTag({ postImg, setIsBtnActive }) {
     }
   }, [selectedItems, setIsBtnActive]);
 
+  //바텀시트 여닫기
+  const handleClickModalOpen = () => {
+    setIsShow((prev) => !prev);
+  };
+
   return (
     <>
       <PostProductTagWrapper>
@@ -112,12 +116,14 @@ export default function PostProductTag({ postImg, setIsBtnActive }) {
         </p>
       </PostProductTagWrapper>
       {tagStep === '상품목록 확인' && (
-        <BottomSheet isShow={isShow} setIsShow={setIsShow}>
-          <ModalProductList
-            setIsShow={setIsShow}
-            setTagStep={setTagStep}
-            setIsBubbleShow={setIsBubbleShow}
-          />
+        <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
+          <BasicModal>
+            <ModalProductList
+              setIsShow={setIsShow}
+              setTagStep={setTagStep}
+              setIsBubbleShow={setIsBubbleShow}
+            />
+          </BasicModal>
         </BottomSheet>
       )}
     </>

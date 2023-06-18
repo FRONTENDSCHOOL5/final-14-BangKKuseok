@@ -7,6 +7,7 @@ import ProductTag from '../ProductTag/ProductTag';
 import { ImgBox, TagBox } from '../PostProductTag/PostProductTagStyle';
 import { SPACES } from '../../../constants/spaces';
 import { ModalSpaceList, PostTextWriteWrapper, SelectSpaceBtn } from './PostTextWriteStyle';
+import BasicModal from '../../common/BottomSheet/BasicModal';
 
 export default function PostTextWrite({ postImg, setIsBtnActive, setContent }) {
   //바텀시트 열기 변수
@@ -47,6 +48,11 @@ export default function PostTextWrite({ postImg, setIsBtnActive, setContent }) {
     }
   }, [space, detail, setIsBtnActive, setContent]);
 
+  //바텀시트 여닫기
+  const handleClickModalOpen = () => {
+    setIsShow((prev) => !prev);
+  };
+
   return (
     <>
       <PostTextWriteWrapper>
@@ -75,17 +81,19 @@ export default function PostTextWrite({ postImg, setIsBtnActive, setContent }) {
         ></textarea>
       </PostTextWriteWrapper>
       {isShow && (
-        <BottomSheet isShow={isShow} setIsShow={setIsShow}>
-          <ModalSpaceList>
-            <h3>공간을 선택해주세요</h3>
-            <ul>
-              {SPACES.map((space, index) => (
-                <button type='button' key={index} onClick={handleClickSpace}>
-                  {space}
-                </button>
-              ))}
-            </ul>
-          </ModalSpaceList>
+        <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
+          <BasicModal>
+            <ModalSpaceList>
+              <h3>공간을 선택해주세요</h3>
+              <ul>
+                {SPACES.map((space, index) => (
+                  <button type='button' key={index} onClick={handleClickSpace}>
+                    {space}
+                  </button>
+                ))}
+              </ul>
+            </ModalSpaceList>
+          </BasicModal>
         </BottomSheet>
       )}
     </>

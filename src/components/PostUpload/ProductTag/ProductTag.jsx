@@ -10,7 +10,7 @@ const StyledProductTag = styled.img`
   transform: translate(-50%, -50%);
   left: ${({ mouseLoc }) => mouseLoc.x + '%'};
   top: ${({ mouseLoc }) => mouseLoc.y + '%'};
-  z-index: 1;
+  z-index: 0;
 `;
 
 export default function ProductTag({ data }) {
