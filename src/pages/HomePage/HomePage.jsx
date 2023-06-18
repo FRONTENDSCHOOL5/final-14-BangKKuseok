@@ -31,7 +31,7 @@ export default function HomePage() {
   const [scrollLeft, setScrollLeft] = useState(0);
 
   const handleClickTabButton = (e) => {
-    const index = SPACES.indexOf(e.target.innerText) + 1;
+    const index = ['전체', ...SPACES].indexOf(e.target.innerText);
     if (e.target.tagName === 'BUTTON') {
       setScrollLeft(e.currentTarget.scrollLeft); // 버튼 클릭했을 때 scrollLeft 위치 유지
       setCurrentTab(index);
