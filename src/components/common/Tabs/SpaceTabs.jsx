@@ -1,22 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
-const spaces = [
-  '전체',
-  '원룸',
-  '거실',
-  '침실',
-  '주방',
-  '욕실',
-  '아이방',
-  '드레스룸',
-  '서재&작업실',
-  '베란다',
-  '사무공간',
-  '가구&소품',
-  '현관',
-  '외관&기타',
-];
+import { SPACES } from '../../../constants/spaces';
 
 const StyledSpaceTab = styled.button`
   font-weight: 500;
@@ -41,16 +25,21 @@ const StyledSpaceTab = styled.button`
 
 const StyledSpaceTabs = styled.nav`
   width: 100%;
-  padding: 20px 0 20px 16px;
+  padding: 20px 20px 20px 16px;
   display: flex;
   gap: 1rem;
   overflow-x: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-export default function SpaceTabs({ currentTab, ...rest }) {
+export default function SpaceTabs({ currentTab, onClick, scrollLeft }) {
   return (
-    <StyledSpaceTabs {...rest}>
-      {spaces.map((space, index) => (
+    <StyledSpaceTabs
+    >
+      {['전체', ...SPACES].map((space, index) => (
         <StyledSpaceTab key={index} className={index === currentTab ? 'active' : null}>
           {space}
         </StyledSpaceTab>
