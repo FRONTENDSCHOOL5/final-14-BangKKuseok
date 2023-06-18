@@ -27,9 +27,9 @@ export default function AppRouter() {
         <Route path='/signup' element={<SignupPage />} />
         <Route path='/feed' element={<FeedPage />} />
         <Route path='/search' element={<SearchPage />} />
-        <Route path='/post/:postId' element={<PostPage />} />
         <Route path='/post/upload' element={<PostUploadPage />} />
-        <Route path='/post/edit' element={<PostEditPage />} />
+        <Route path='/post/:postId' element={<PostPage />} />
+        <Route path='/post/:postId/edit' element={<PostEditPage />} />
         <Route path='/profile'>
           <Route index element={<MyProfilePage />} />
           <Route path='edit' element={<ProfileEditPage />} />
