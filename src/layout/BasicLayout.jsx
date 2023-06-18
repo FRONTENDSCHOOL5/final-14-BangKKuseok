@@ -10,11 +10,12 @@ const LayoutWrapper = styled.div`
   margin: 0 auto;
   position: relative;
   background-color: #fff;
+  overflow-y: hidden;
 `;
 
 const LayoutMain = styled.div`
   overflow-y: scroll;
-  height: ${(p) => (p.isNonNav ? '100vh' : 'calc(100vh - 68px)')};
+  height: ${(p) => !p.isNonNav && 'calc(100vh - 68px)'};
   -ms-overflow-style: none;
   scrollbar-width: none;
 
