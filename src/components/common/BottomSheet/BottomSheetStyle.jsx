@@ -38,21 +38,15 @@ const slideDown = keyframes`
 `;
 
 export const BottomSheetDim = styled.div`
+  overflow-y: hidden;
+  z-index: 10;
   position: absolute;
   top: 0;
-
   width: 100%;
   height: 100vh;
-
   background-color: rgba(0, 0, 0, 0.3);
   transition: background-color 0.25s ease-out;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
   animation: ${fadeIn} 0.25s ease-out forwards;
-
   ${(props) =>
     props.disappear &&
     css`
@@ -85,7 +79,6 @@ export const ModalBox = styled.div`
 export const HeaderModal = styled.button`
   width: 100%;
   height: 48px;
-
   position: relative;
 
   &::before {
@@ -94,10 +87,8 @@ export const HeaderModal = styled.button`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     width: 50px;
     height: 4px;
-
     background-color: ${({ theme }) => theme.colors.gray100};
   }
 `;
