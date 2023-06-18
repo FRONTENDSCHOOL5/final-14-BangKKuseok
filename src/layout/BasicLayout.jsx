@@ -10,6 +10,7 @@ const LayoutWrapper = styled.div`
   margin: 0 auto;
   position: relative;
   background-color: #fff;
+  overflow-y: hidden;
 `;
 
 const LayoutMain = styled.div`
