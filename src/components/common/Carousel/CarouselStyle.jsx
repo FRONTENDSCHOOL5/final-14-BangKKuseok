@@ -1,10 +1,11 @@
 import styled, { css } from 'styled-components';
 
 const CarouselWrapper = styled.article`
-  width: 390px;
+  width: 100%;
   height: 404px;
   position: relative;
   overflow: hidden;
+  margin-top: -60px;
 `;
 
 const ImageBox = styled.ul`

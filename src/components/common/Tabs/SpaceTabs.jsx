@@ -1,22 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRef } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-
-const spaces = [
-  '전체',
-  '원룸',
-  '거실',
-  '침실',
-  '주방',
-  '욕실',
-  '아이방',
-  '드레스룸',
-  '서재&작업실',
-  '베란다',
-  '사무공간',
-  '가구&소품',
-  '현관',
-  '외관&기타',
-];
+import { SPACES } from '../../../constants/spaces';
 
 const StyledSpaceTab = styled.button`
   font-weight: 500;
@@ -41,16 +27,60 @@ const StyledSpaceTab = styled.button`
 
 const StyledSpaceTabs = styled.nav`
   width: 100%;
-  padding: 20px 0 20px 16px;
+  padding: 20px 20px 20px 16px;
   display: flex;
   gap: 1rem;
   overflow-x: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-export default function SpaceTabs({ currentTab, ...rest }) {
+export default function SpaceTabs({ currentTab, onClick, scrollLeft }) {
+  const scrollRef = useRef(null);
+  const [isStart, setIsStart] = useState(false);
+  const [isDrag, setIsDrag] = useState(false);
+  const [startX, setStartX] = useState(0);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollLeft;
+    }
+  }, [scrollLeft]);
+
+  const handleDragStart = (e) => {
+    e.preventDefault();
+    setIsDrag(false);
+    setIsStart(true);
+    setStartX(e.pageX + scrollRef.current.scrollLeft);
+  };
+
+  const handleDragEnd = (e) => {
+    setIsStart(false);
+  };
+
+  const handleDragMove = (e) => {
+    if (isStart) {
+      setIsDrag(true);
+      scrollRef.current.scrollLeft = startX - e.pageX;
+    }
+  };
+
+  const handleClickTab = (e) => {
+    if (!isDrag) onClick(e);
+  };
+
   return (
-    <StyledSpaceTabs {...rest}>
-      {spaces.map((space, index) => (
+    <StyledSpaceTabs
+      ref={scrollRef}
+      onMouseDown={handleDragStart}
+      onMouseMove={handleDragMove}
+      onMouseUp={handleDragEnd}
+      onMouseLeave={handleDragEnd}
+      onClick={handleClickTab}
+    >
+      {['전체', ...SPACES].map((space, index) => (
         <StyledSpaceTab key={index} className={index === currentTab ? 'active' : null}>
           {space}
         </StyledSpaceTab>
