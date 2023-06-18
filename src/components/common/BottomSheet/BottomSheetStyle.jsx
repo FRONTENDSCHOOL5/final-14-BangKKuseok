@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const fadeIn = keyframes`
 from {
@@ -23,13 +23,13 @@ const slideUp = keyframes`
   }
 
   to {
-    transform: translateY(calc(100% - ${({ LEN }) => (LEN < 425 ? LEN : 425)}px));
+    transform: translateY(0);
   }
 `;
 
 const slideDown = keyframes`
   from {
-    transform: translateY(calc(100% - ${({ LEN }) => (LEN < 425 ? LEN : 425)}px));
+    transform: translateY(0);
   }
 
   to {
@@ -38,55 +38,39 @@ const slideDown = keyframes`
 `;
 
 export const BottomSheetDim = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
-
-  width: 100%;
+  width: clamp(390px, 100%, 720px);
   height: 100vh;
-
+  margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.3);
-  transition: background-color 0.25s ease-out;
+  animation: ${(p) => (p.isShow ? fadeIn : fadeOut)} 0.3s ease-out;
+  transition: background-color 0.3s ease-out;
+`;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  animation: ${fadeIn} 0.25s ease-out forwards;
-
-  ${(props) =>
-    props.disappear &&
-    css`
-      animation-name: ${fadeOut};
-    `}
+export const BottomSheetWrapper = styled.article`
+  width: 100%;
+  position: absolute;
+  bottom: 0;
 `;
 
 export const ModalBox = styled.div`
-  width: inherit;
-  height: ${({ LEN }) => (LEN < 425 ? LEN : 425)}px;
-  border-radius: 1rem 1rem 0 0;
-
-  position: absolute;
+  position: relative;
   bottom: 0;
-
+  z-index: 50;
+  border-radius: 20px 20px 0 0;
+  padding-top: 48px;
   display: flex;
   flex-direction: column;
-
   background-color: ${({ theme }) => theme.colors.white};
-  animation: ${slideUp} 0.25s ease-out forwards;
-
-  ${(props) =>
-    props.disappear &&
-    css`
-      animation-name: ${slideDown};
-      animation-timing-function: ease-in;
-    `}
+  animation: ${(p) => (p.isShow ? slideUp : slideDown)} 0.3s ease-out;
 `;
 
-export const HeaderModal = styled.button`
+export const ModalHandle = styled.button`
   width: 100%;
   height: 48px;
-
-  position: relative;
+  position: absolute;
+  top: 0;
 
   &::before {
     content: '';
@@ -94,10 +78,8 @@ export const HeaderModal = styled.button`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     width: 50px;
     height: 4px;
-
     background-color: ${({ theme }) => theme.colors.gray100};
   }
 `;

@@ -1,51 +1,38 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { BottomSheetDim, ModalBox, HeaderModal } from './BottomSheetStyle';
-import ListModal from './ListModal';
-import BasicModal from './BasicModal';
+import React, { useState, useEffect } from 'react';
+import { BottomSheetDim, BottomSheetWrapper, ModalBox, ModalHandle } from './BottomSheetStyle';
 
-// type: basic, list
-function BottomSheet({ type = 'basic', isShow, setIsShow, children }) {
-  const [animate, setAnimate] = useState(false);
-  const [localVisible, setLocalVisible] = useState(isShow);
-  const wrapperRef = useRef(null);
-  const modalBoxRef = useRef(null);
+export default function BottomSheet({ isShow, onClick, children }) {
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setLocalVisible(isShow);
+    let modalTimer;
+
+    if (isShow) {
+      setIsVisible(true);
+    } else {
+      modalTimer = setTimeout(() => setIsVisible(false), 250);
+    } // 0.25초뒤에 없어짐
+
+    return () => {
+      if (modalTimer !== undefined) {
+        clearTimeout(modalTimer);
+      }
+    };
   }, [isShow]);
 
-  useEffect(() => {
-    if (localVisible && !isShow) {
-      setAnimate(true);
-      setTimeout(() => setAnimate(false), 250);
-    } // 0.25초뒤에 없어짐
-    setLocalVisible(isShow);
-  }, [localVisible, isShow]);
-
-  // Dim 클릭했을 때, ModalBox부분을 제외한 영역이어야 동작하도록
-  const handleDimClick = (e) => {
-    if (wrapperRef.current && modalBoxRef.current && !modalBoxRef.current.contains(e.target)) {
-      setIsShow(false);
-    }
-  };
-
-  // ModalBox의 HeaderModal을 클릭했을 때 동작
-  const handleHeaderModalClick = () => {
-    setIsShow(false);
-  };
-
-  if (!localVisible && !animate) return null;
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <>
-      <BottomSheetDim onClick={handleDimClick} disappear={!isShow} ref={wrapperRef}>
-        <ModalBox disappear={!isShow} ref={modalBoxRef}>
-          <HeaderModal onClick={handleHeaderModalClick} />
-          {type === 'list' ? <ListModal /> : <BasicModal>{children}</BasicModal>}
+      <BottomSheetWrapper>
+        <ModalBox isShow={isShow}>
+          {children}
+          <ModalHandle onClick={onClick} aria-label='모달 닫기' />
         </ModalBox>
-      </BottomSheetDim>
+        <BottomSheetDim isShow={isShow} onClick={onClick} />
+      </BottomSheetWrapper>
     </>
   );
 }
-
-export default BottomSheet;

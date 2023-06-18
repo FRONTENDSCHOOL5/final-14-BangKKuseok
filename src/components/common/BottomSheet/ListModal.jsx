@@ -2,34 +2,35 @@ import React from 'react';
 import styled from 'styled-components';
 
 const BottomSheetListWrapper = styled.ul`
-  max-height: 425px;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    width: 0;
-    background: transparent;
-  }
+  margin-bottom: 10px;
 `;
 
 const ListItem = styled.li`
-  height: 48px;
-  display: flex;
-  align-items: center;
-  padding: 0 24px;
+  height: 46px;
+  padding: 14px 26px;
   font-size: ${({ theme }) => theme.fontSize.sm};
+  cursor: pointer;
 `;
 
-const LEN = 0;
+const TYPES = {
+  profile: ['설정 및 개인정보', '로그아웃'],
+  myPost: ['삭제', '수정'],
+  userPost: ['신고하기'],
+  chat: ['채팅방 나가기'],
+  myComment: ['삭제'],
+  userComment: ['신고하기'],
+};
 
-export default function ListModal({ items }) {
-  const LEN = items.length * 48;
-
+export default function ListModal({ type, onClick }) {
   return (
     <BottomSheetListWrapper>
-      {items.map((item, index) => (
-        <ListItem key={index}>{item}</ListItem>
+      {TYPES[type].map((item, index) => (
+        <ListItem key={index} onClick={onClick}>
+          <button type='button' onClick={onClick}>
+            {item}
+          </button>
+        </ListItem>
       ))}
     </BottomSheetListWrapper>
   );
 }
-
-export { LEN };
