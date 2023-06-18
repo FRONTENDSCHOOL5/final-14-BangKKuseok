@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRef } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { SPACES } from '../../../constants/spaces';
 
@@ -36,8 +38,47 @@ const StyledSpaceTabs = styled.nav`
 `;
 
 export default function SpaceTabs({ currentTab, onClick, scrollLeft }) {
+  const scrollRef = useRef(null);
+  const [isStart, setIsStart] = useState(false);
+  const [isDrag, setIsDrag] = useState(false);
+  const [startX, setStartX] = useState(0);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollLeft;
+    }
+  }, [scrollLeft]);
+
+  const handleDragStart = (e) => {
+    e.preventDefault();
+    setIsDrag(false);
+    setIsStart(true);
+    setStartX(e.pageX + scrollRef.current.scrollLeft);
+  };
+
+  const handleDragEnd = (e) => {
+    setIsStart(false);
+  };
+
+  const handleDragMove = (e) => {
+    if (isStart) {
+      setIsDrag(true);
+      scrollRef.current.scrollLeft = startX - e.pageX;
+    }
+  };
+
+  const handleClickTab = (e) => {
+    if (!isDrag) onClick(e);
+  };
+
   return (
     <StyledSpaceTabs
+      ref={scrollRef}
+      onMouseDown={handleDragStart}
+      onMouseMove={handleDragMove}
+      onMouseUp={handleDragEnd}
+      onMouseLeave={handleDragEnd}
+      onClick={handleClickTab}
     >
       {['전체', ...SPACES].map((space, index) => (
         <StyledSpaceTab key={index} className={index === currentTab ? 'active' : null}>
