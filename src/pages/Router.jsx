@@ -6,6 +6,8 @@ import SignupPage from './SignupPage/SignupPage';
 import FeedPage from './FeedPage/FeedPage';
 import SearchPage from './SearchPage/SearchPage';
 import PostPage from './PostPage/PostPage/PostPage';
+import PostUploadPage from './PostPage/PostUploadPage/PostUploadPage';
+import PostEditPage from './PostPage/PostEditPage/PostEditPage';
 import MyProfilePage from './ProfilePage/MyProfilePage/MyProfilePage';
 import UserProfilePage from './ProfilePage/UserProfilePage/UserProfilePage';
 import ProfileEditPage from './ProfilePage/ProfileEditPage/ProfileEditPage';
@@ -25,7 +27,9 @@ export default function AppRouter() {
         <Route path='/signup' element={<SignupPage />} />
         <Route path='/feed' element={<FeedPage />} />
         <Route path='/search' element={<SearchPage />} />
+        <Route path='/post/upload' element={<PostUploadPage />} />
         <Route path='/post/:postId' element={<PostPage />} />
+        <Route path='/post/:postId/edit' element={<PostEditPage />} />
         <Route path='/profile'>
           <Route index element={<MyProfilePage />} />
           <Route path='edit' element={<ProfileEditPage />} />

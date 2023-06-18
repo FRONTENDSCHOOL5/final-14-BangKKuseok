@@ -1,11 +1,6 @@
 import { atom, selector } from 'recoil';
 import { products } from '../mock/mockData';
 
-export const postAtom = atom({
-  key: 'postAtom',
-  default: {},
-});
-
 export const userProductsAtom = atom({
   key: 'userProductsAtom',
   default: products,
