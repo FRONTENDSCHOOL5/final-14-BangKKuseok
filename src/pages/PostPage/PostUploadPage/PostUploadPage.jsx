@@ -15,7 +15,7 @@ export default function PostUploadPage() {
   const [postImg, setPostImg] = useState(null);
 
   //이전 step으로 돌아가는 함수
-  const handleClickBackBtn = useCallback(() => {
+  const handleClickLeftButton = useCallback(() => {
     if (step === '사진 선택') {
       navigate(-1);
     } else if (step === '상품태그 추가') {
@@ -27,7 +27,7 @@ export default function PostUploadPage() {
   }, [step, navigate]);
 
   //다음 step으로 넘어가는 함수
-  const handleClickNextBtn = () => {
+  const handleClickRightButton = () => {
     if (step === '사진 선택') {
       setStep('상품태그 추가');
       setIsBtnActive(false);
@@ -59,8 +59,8 @@ export default function PostUploadPage() {
       title={step}
       btnText={btnText}
       isBtnActive={isBtnActive}
-      onClickBackBtn={handleClickBackBtn}
-      onClickNextBtn={handleClickNextBtn}
+      onClickLeftButton={handleClickLeftButton}
+      onClickRightButton={handleClickRightButton}
     >
       <>
         {step === '사진 선택' && StepLayout[step]}

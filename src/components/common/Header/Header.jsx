@@ -11,8 +11,8 @@ export default function Header({
   title,
   btnText,
   isBtnActive,
-  onClickBackBtn,
-  onClickNextBtn,
+  onClickLeftButton,
+  onClickRightButton,
 }) {
   const HeaderLayout = {
     home: (
@@ -60,11 +60,11 @@ export default function Header({
     ),
     imageSelect: (
       <HeaderWrapper type={type}>
-        <button type='button' onClick={onClickBackBtn}>
+        <button type='button' onClick={onClickLeftButton}>
           <BackIcon stroke='#000' />
         </button>
         <HeaderH2>{title}</HeaderH2>
-        <Button disabled={!isBtnActive} size='sm' onClick={onClickNextBtn}>
+        <Button disabled={!isBtnActive} size='sm' onClick={onClickRightButton}>
           {btnText}
         </Button>
       </HeaderWrapper>
