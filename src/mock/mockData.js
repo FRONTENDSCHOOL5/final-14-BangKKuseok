@@ -64,18 +64,20 @@ const products = [
   },
 ];
 
-const profile = {
-  _id: '647fe3b5b2cb2056632d63a8',
-  username: '구스덕하실분',
-  accountname: '구스독',
-  intro: '구스덕조아',
-  image: 'https://i.pinimg.com/750x/e0/81/9c/e0819c03a4c25514289b41a62200fb9a.jpg',
-  isfollow: false,
-  following: ['647d90b9b2cb2056632d52ae', '62d8f10617ae6665817fdccb'],
-  follower: [],
-  followerCount: 0,
-  followingCount: 2,
-};
+const profile = [
+  {
+    _id: '647fe3b5b2cb2056632d63a8',
+    username: '구스덕하실분',
+    accountname: '구스독',
+    intro: '구스덕조아',
+    image: 'https://i.pinimg.com/750x/e0/81/9c/e0819c03a4c25514289b41a62200fb9a.jpg',
+    isfollow: false,
+    following: ['647d90b9b2cb2056632d52ae', '62d8f10617ae6665817fdccb'],
+    follower: [],
+    followerCount: 0,
+    followingCount: 2,
+  },
+];
 
 const posts = [
   {

@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 export const RoundedInputWrapper = styled.form`
@@ -12,6 +11,7 @@ export const RoundedInputWrapper = styled.form`
     font-size: ${({ theme }) => theme.fontSize.base};
     color: ${({ theme }) => theme.colors.black};
     line-height: 160%;
+    outline: none;
 
     &::placeholder {
       color: ${({ theme }) => theme.colors.gray200};

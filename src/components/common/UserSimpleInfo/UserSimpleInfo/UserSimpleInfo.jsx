@@ -1,6 +1,6 @@
 import React from 'react';
-import basicProfileImage from '../../../assets/images/profile.png';
-import { ReactComponent as MoreIcon } from '../../../assets/icons/icon-more-small.svg';
+import basicProfileImage from '../../../../assets/images/profile.png';
+import { ReactComponent as MoreIcon } from '../../../../assets/icons/icon-more-small.svg';
 import {
   UserSimpleInfoWrapper,
   UserInfoBox,
@@ -8,7 +8,7 @@ import {
   UserName,
   AccountName,
 } from './UserSimpleStyle';
-import Button from '../Button/Button/Button';
+import Button from '../../Button/Button/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ export default function UserSimpleInfo({ profile, isLink = false, type, onClick 
     <UserSimpleInfoWrapper>
       <UserInfoBox isLink={isLink}>
         {isLink ? (
-          <Link to={profile.accountname}>
+          <Link to={'/profile/' + profile.accountname}>
             <img src={profile.image || basicProfileImage} alt='유저 프로필 이미지' />
             <UserNameBox>
               <UserName>{profile.username}</UserName>
