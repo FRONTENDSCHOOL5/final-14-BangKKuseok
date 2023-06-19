@@ -49,11 +49,11 @@ export default function Header({
     ),
     post: (
       <HeaderWrapper type={type}>
-        <button>
+        <button type='button' onClick={onClickLeftButton}>
           <BackIcon stroke='#000' />
         </button>
-        <HeaderH3>애월읍 위니브 감귤농장</HeaderH3>
-        <button>
+        <HeaderH3>{title}</HeaderH3>
+        <button type='button' onClick={onClickRightButton}>
           <MoreIcon fill='#000' stroke='#000' />
         </button>
       </HeaderWrapper>

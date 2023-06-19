@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 const PostCardWrapper = styled.article`
   position: relative;
-  width: 358px;
+  width: 100%;
   padding-bottom: 14px;
 
   /* ---게시글 이미지--- */
