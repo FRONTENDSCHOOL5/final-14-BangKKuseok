@@ -29,7 +29,7 @@ export default function PostCard({ data, moreInfo = false }) {
       </PostInfoBox>
 
       <PostDetail moreInfo={moreInfo}>{detail}</PostDetail>
-      {moreInfo && <time>{convertDateFormat(createdAt)}</time>}
+      {moreInfo && <time dateTime={createdAt}>{convertDateFormat(createdAt)}</time>}
     </PostCardWrapper>
   );
 }
