@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import SplashPage from './SplashPage/SplashPage';
 import HomePage from './HomePage/HomePage';
+import MainPage from './MainPage/MainPage';
 import LoginPage from './LoginPage/LoginPage';
 import SignupPage from './SignupPage/SignupPage';
 import FeedPage from './FeedPage/FeedPage';
@@ -23,6 +24,7 @@ export default function AppRouter() {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/splash' element={<SplashPage />} />
+        <Route path='/main' element={<MainPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignupPage />} />
         <Route path='/feed' element={<FeedPage />} />

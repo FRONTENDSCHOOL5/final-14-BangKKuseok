@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import defaultProfImg from '../../../assets/images/profile-large.png';
+import defaultProfImg from '../../../assets/images/profile.png';
 import profUploadImg from '../../../assets/images/prof-upload.png';
 import { ProfileImageUploadWrapper, UploadForm } from './ProfileImageUploadStyle';
 
