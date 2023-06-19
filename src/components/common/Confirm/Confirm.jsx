@@ -14,7 +14,6 @@ export default function Confirm({ type, object, setIsShowConfirm, onClick }) {
   };
 
   const handleClickCancel = () => {
-    console.log('Canceled');
     setIsShowConfirm(false);
   };
 
