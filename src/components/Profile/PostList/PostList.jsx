@@ -1,7 +1,7 @@
 import React from 'react';
 import PostCard from '../../common/Card/PostCard/PostCard';
 import Gallery from '../../common/Gallery/Gallery';
-import UserSimpleInfo from '../../common/UserSimpleInfo/UserSimpleInfo';
+import UserSimpleInfo from '../../common/UserSimpleInfo/UserSimpleInfo/UserSimpleInfo';
 import { PostCardList, PostListWrapper } from './PostListStyle';
 import { filterPosts } from '../../../utils/filterPosts';
 import { profile } from '../../../mock/mockData';
