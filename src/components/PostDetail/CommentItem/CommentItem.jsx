@@ -6,6 +6,15 @@ import { CommentInfoBox, StyledCommentItem } from './CommentItemStyle';
 export default function CommentItem({ data, myProfile, setModalType, setIsShow }) {
   const { author, createdAt, content } = data;
 
+  //_id 구분 (내 댓글 - 삭제 / 남 댓글 - 신고)
+  const handleClickMoreButton = () => {
+    if (myProfile._id === author._id) {
+      setModalType('myComment');
+    } else {
+      setModalType('userComment');
+    }
+    setIsShow(true);
+  };
 
   return (
     <StyledCommentItem>

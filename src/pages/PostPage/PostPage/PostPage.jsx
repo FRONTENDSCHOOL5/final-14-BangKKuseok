@@ -11,6 +11,65 @@ import Confirm from '../../../components/common/Confirm/Confirm';
 import { CommentList, PostPageWrapper } from './PostPageStyle';
 
 export default function PostPage() {
+  //api 연동 시 props로 데이터 받아서 뿌리기
+  // myProfile - 프로필  정보  불러오기 api
+  const data = postDetail;
+  const commentsData = comments;
+  const myProfile = profile;
+
+  const [isShow, setIsShow] = useState(false);
+  const [modalType, setModalType] = useState('userPost');
+  const [isShowConfirm, setIsShowConfirm] = useState(false);
+  const [confirmType, setConfirmType] = useState({ type: 'report', object: 'comment' });
+  const navigate = useNavigate();
+
+  const handleClickModalOpen = () => {
+    setIsShow((prev) => !prev);
+  };
+
+  const handleClickLeftButton = () => {
+    navigate(-1);
+  };
+
+  const handleClickRightButton = () => {
+    if (myProfile._id === data.author._id) {
+      setModalType('myPost');
+    } else {
+      setModalType('userPost');
+    }
+    setIsShow(true);
+  };
+
+  //listItem누를때 실행 함수 (confrim창이 뜨거나 edit페이지로 넘어감)
+  const handleClickListItem = (e) => {
+    if (modalType === 'userComment') {
+      setConfirmType({ type: 'report', object: 'comment' });
+      setIsShowConfirm(true);
+    } else if (modalType === 'myComment') {
+      setConfirmType({ type: 'delete', object: 'comment' });
+      setIsShowConfirm(true);
+    } else if (modalType === 'userPost') {
+      setConfirmType({ type: 'report', object: 'post' });
+      setIsShowConfirm(true);
+    } else {
+      //삭제일 경우
+      if (e.currentTarget.innerText === '삭제') {
+        setConfirmType({ type: 'delete', object: 'post' });
+        setIsShowConfirm(true);
+      } else {
+        //수정일 경우
+        navigate('/post/:postId/edit');
+      }
+    }
+  };
+
+  const handleClickConfirm = (e) => {
+    console.log(e.currentTarget.innerText);
+    //에 따라서 api연동 후 함수작성하기
+
+    setIsShowConfirm(false);
+    setIsShow(false);
+  };
 
   return (
     <BasicLayout
