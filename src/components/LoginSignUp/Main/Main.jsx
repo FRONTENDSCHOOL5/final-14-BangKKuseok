@@ -3,13 +3,13 @@ import WhiteLogo from '../../../assets/images/logo-white.png';
 import SocialButton from '../../common/Button/SocialButton/SocialButton';
 import { MainPageWrapper, WhiteLogoImg, BottomBox, BtnBox, AccountSignUpBox } from './MainStyle';
 
-export default function Main({ gotoLogin, gotoSignUp }) {
+export default function Main({ onClickLoginLink, onClickSignUpLink }) {
   const handleGotoLogin = () => {
-    gotoLogin();
+    onClickLoginLink();
   };
 
   const handleGotoSignUp = () => {
-    gotoSignUp();
+    onClickSignUpLink();
   };
 
   return (

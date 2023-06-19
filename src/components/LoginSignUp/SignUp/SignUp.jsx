@@ -3,7 +3,7 @@ import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button/Button';
 import { SignUpHeader, SignUpLogo, SignUpBottomBox, SignUpGoBack } from './SignUpStyle';
 
-const SignUp = ({ handleBackLink, handleMainLink, handleNextLink }) => {
+const SignUp = ({ onClickBackLink, onClickMainLink, onClickNextLink }) => {
   // 이메일, 비밀번호 값을 받아옴
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
@@ -21,11 +21,11 @@ const SignUp = ({ handleBackLink, handleMainLink, handleNextLink }) => {
   const [isInValid, setIsInValid] = useState(false);
 
   const handleGotoLogin = () => {
-    handleBackLink();
+    onClickBackLink();
   };
 
   const handleGotoMain = () => {
-    handleMainLink();
+    onClickMainLink();
   };
 
   // 이메일 입력값 받아오기
@@ -106,7 +106,7 @@ const SignUp = ({ handleBackLink, handleMainLink, handleNextLink }) => {
 
     // 이메일, 비밀번호 유효성 통과하면 프로필설정으로 이동
     if (!isEmailInValid && !isPwInValid) {
-      handleNextLink();
+      onClickNextLink();
     }
   };
   return (

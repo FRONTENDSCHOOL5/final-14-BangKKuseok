@@ -36,13 +36,13 @@ export default function SignupPage() {
     <>
       {step === '회원가입' && (
         <SignUp
-          handleBackLink={handleBackLink}
-          handleMainLink={handleMainLink}
-          handleNextLink={handleNextLink}
+          onClickBackLink={handleBackLink}
+          onClickMainLink={handleMainLink}
+          onClickNextLink={handleNextLink}
         />
       )}
       {step === '프로필설정' && (
-        <SetUserProfile handleBackLink={handleBackLink} handleNextLink={handleNextLink} />
+        <SetUserProfile onClickBackLink={handleBackLink} onClickNextLink={handleNextLink} />
       )}
     </>
   );

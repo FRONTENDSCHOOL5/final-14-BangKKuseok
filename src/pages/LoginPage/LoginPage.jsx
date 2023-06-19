@@ -25,9 +25,9 @@ export default function LoginPage() {
   return (
     <>
       <Login
-        handleSignUpLink={handleSignUpLink}
-        handleMainLink={handleMainLink}
-        handleNextLink={handleNextLink}
+        onClickSignUpLink={handleSignUpLink}
+        onClickMainLink={handleMainLink}
+        onClickNextLink={handleNextLink}
       />
     </>
   );

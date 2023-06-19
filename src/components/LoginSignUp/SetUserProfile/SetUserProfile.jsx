@@ -12,7 +12,7 @@ import {
   IsAlreadyUser,
 } from './SetUserProfileStyle';
 
-const SetUserProfile = ({ handleBackLink, handleNextLink }) => {
+const SetUserProfile = ({ onClickBackLink, onClickNextLink }) => {
   const [nameValue, setNameValue] = useState('');
   const [IdValue, setIdValue] = useState('');
   const [introValue, setIntroValue] = useState('');
@@ -26,7 +26,7 @@ const SetUserProfile = ({ handleBackLink, handleNextLink }) => {
   const [isInValid, setIsInValid] = useState(false);
 
   const handleGotoSignUpPage = () => {
-    handleBackLink();
+    onClickBackLink();
   };
 
   const handleNameChange = (e) => {
@@ -94,7 +94,7 @@ const SetUserProfile = ({ handleBackLink, handleNextLink }) => {
     console.log(isNameInValid, isIdInValid);
 
     if (!isNameInValid && !isIdInValid) {
-      handleNextLink();
+      onClickNextLink();
     }
   };
 

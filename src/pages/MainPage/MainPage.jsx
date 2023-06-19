@@ -4,13 +4,14 @@ import Main from '../../components/LoginSignUp/Main/Main';
 
 export default function MainPage() {
   const navigate = useNavigate();
-  const gotoSignUp = () => {
+
+  const handleSignUpLink = () => {
     navigate('/signup');
   };
 
-  const gotoLogin = () => {
+  const handleLoginLink = () => {
     navigate('/login');
   };
 
-  return <Main gotoLogin={gotoLogin} gotoSignUp={gotoSignUp} />;
+  return <Main onClickLoginLink={handleLoginLink} onClickSignUpLink={handleSignUpLink} />;
 }
