@@ -9,8 +9,10 @@ import BottomSheet from '../../../components/common/BottomSheet/BottomSheet';
 import ListModal from '../../../components/common/BottomSheet/ListModal';
 import BasicModal from '../../../components/common/BottomSheet/BasicModal';
 import ProductDetailCard from '../../../components/Profile/ProductDetailCard/ProductDetailCard';
-import { posts, products, profile } from '../../../mock/mockData';
+import { posts, products } from '../../../mock/mockData';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { getProfile } from '../../../api/profileApi';
 
 const ProfilePageWrapper = styled.main``;
 
@@ -22,12 +24,17 @@ const Message = styled.p`
   text-align: center;
 `;
 
-export default function MyProfile() {
+export default function ProfilePage() {
   const [selectedTab, setSelectedTab] = useState('list');
   const [selectedProduct, setSelectedProduct] = useState('');
   const [isShowMoreProfile, setIsShowMoreProfile] = useState(false);
   const [isShowMorePost, setIsShowMorePost] = useState(false);
   const [isShowProductDetail, setIsShowProductDetail] = useState(false);
+
+  // getProfile에는 accountname 넘기기
+  const { data: profileData, isLoading: isProfileLoading } = useQuery('myProfile', () =>
+    getProfile('test333'),
+  );
 
   const navigate = useNavigate();
 
@@ -64,20 +71,24 @@ export default function MyProfile() {
       onClickRightButton={handleClickMoreProfileButton}
     >
       <ProfilePageWrapper>
-        <ProfileCard profile={profile} />
-        <ProductList products={products} onClick={handleClickProduct} />
-        {posts.length > 0 ? (
+        {!isProfileLoading && (
           <>
-            <ViewTabs selectedTab={selectedTab} onClick={handleClickTabButton} />
-            <PostList
-              selectedTab={selectedTab}
-              posts={posts}
-              moreInfo={false}
-              onClick={handleClickMorePostButton}
-            />
+            <ProfileCard profile={profileData.profile} />
+            <ProductList products={products} onClick={handleClickProduct} />
+            {posts.length > 0 ? (
+              <>
+                <ViewTabs selectedTab={selectedTab} onClick={handleClickTabButton} />
+                <PostList
+                  selectedTab={selectedTab}
+                  posts={posts}
+                  moreInfo={false}
+                  onClick={handleClickMorePostButton}
+                />
+              </>
+            ) : (
+              <Message>작성된 게시물이 없습니다.</Message>
+            )}
           </>
-        ) : (
-          <Message>작성된 게시물이 없습니다.</Message>
         )}
 
         {/* -- BottomSheet */}
