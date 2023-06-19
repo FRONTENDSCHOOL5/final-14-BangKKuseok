@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button/Button';
 import { LoginHeader, LoginLogo, LoginBottomBox, LoginGoBack } from './LoginStyle';
 
-const Login = ({ onClickSignUpLink, onClickMainLink, onClickNextLink }) => {
+const Login = ({ onClickNextLink }) => {
   // 이메일의 값을 받아옴
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
@@ -20,13 +21,6 @@ const Login = ({ onClickSignUpLink, onClickMainLink, onClickNextLink }) => {
   // 버튼 활성화를 위해 만듦. 사용자가 입력하는 동안은 버튼 활성화가 되지만, 버튼을 눌렀을 때 이메일 혹은 비밀번호가 유효하지 않으면 값을 true로 바꿔줌으로써 버튼을 disabled 시킴
   const [isInValid, setIsInValid] = useState(true);
 
-  const handleGotoSignUp = () => {
-    onClickSignUpLink();
-  };
-
-  const handleGotoMain = () => {
-    onClickMainLink();
-  };
   // 이메일 입력값 받아오기
   const handleEmailChange = (e) => {
     const value = e.target.value;
@@ -148,8 +142,8 @@ const Login = ({ onClickSignUpLink, onClickMainLink, onClickNextLink }) => {
           로그인
         </Button>
         <LoginGoBack>
-          <a onClick={handleGotoSignUp}>회원가입</a>
-          <a onClick={handleGotoMain}>메인으로 돌아가기</a>
+          <Link to={'/signup'}>회원가입</Link>
+          <Link to={'/main'}>메인으로 돌아가기</Link>
         </LoginGoBack>
       </LoginBottomBox>
     </LoginHeader>
