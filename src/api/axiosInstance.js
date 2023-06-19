@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'https://api.mandarin.weniv.co.kr/';
+export const URL = 'https://api.mandarin.weniv.co.kr/';
 
 // 기본 인스턴스
 export const instance = axios.create({

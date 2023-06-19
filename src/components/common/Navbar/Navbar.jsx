@@ -27,7 +27,7 @@ export default function Navbar() {
           </Link>
         </li>
         <li>
-          <Link to='/upload'>
+          <Link to='/post/upload'>
             <UploadIcon />
           </Link>
         </li>

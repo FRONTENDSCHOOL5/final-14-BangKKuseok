@@ -6,10 +6,15 @@ import BottomSheet from '../../common/BottomSheet/BottomSheet';
 import BasicModal from '../../common/BottomSheet/BasicModal';
 import ModalProductList from '../ModalProductList/ModalProductList';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { bubbleLocAtom, mouseLocAtom, selectedProductsAtom } from '../../../atoms/post';
+import {
+  bubbleLocAtom,
+  mouseLocAtom,
+  selectedProductsAtom,
+  userProductsAtom,
+} from '../../../atoms/post';
 import ProductTag from '../ProductTag/ProductTag';
 
-export default function PostProductTag({ postImg, setIsBtnActive }) {
+export default function PostProductTag({ postedImg, setIsBtnActive }) {
   //태그추가 단계 : 클릭 유도 / 상품목록 확인 / 태그와 버블 / 상품태그 추가
   const [tagStep, setTagStep] = useState('클릭 유도');
 
@@ -22,6 +27,7 @@ export default function PostProductTag({ postImg, setIsBtnActive }) {
 
   //선택된 데이터
   const selectedItems = useRecoilValue(selectedProductsAtom);
+  const userItems = useRecoilValue(userProductsAtom);
 
   //이미지 위 클릭하면
   const handleClickImg = (e) => {
@@ -74,14 +80,14 @@ export default function PostProductTag({ postImg, setIsBtnActive }) {
     }
   }, [isShow, selectedItems, setIsBtnActive, tagStep]);
 
-  //선택상품이 있으면 다음단계로 넘어갈 수 있다
+  //선택상품이 있거나 아예 판매상품이 없을때 다음단계로 넘어갈 수 있다
   useEffect(() => {
-    if (selectedItems.length >= 1) {
+    if (userItems.length === 0 || selectedItems.length >= 1) {
       setIsBtnActive(true);
     } else {
       setIsBtnActive(false);
     }
-  }, [selectedItems, setIsBtnActive]);
+  }, [selectedItems, setIsBtnActive, userItems]);
 
   //바텀시트 여닫기
   const handleClickModalOpen = () => {
@@ -92,7 +98,7 @@ export default function PostProductTag({ postImg, setIsBtnActive }) {
     <>
       <PostProductTagWrapper>
         <ImgBox>
-          <img src={postImg} alt='게시글 이미지' />
+          <img src={postedImg} alt='게시글 이미지' />
           <TagBox onClick={handleClickImg}>
             {tagStep === '클릭 유도' && (
               <>

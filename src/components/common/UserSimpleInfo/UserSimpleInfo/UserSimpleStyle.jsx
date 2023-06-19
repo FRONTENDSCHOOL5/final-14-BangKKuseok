@@ -8,6 +8,7 @@ const UserSimpleInfoWrapper = styled.div`
 `;
 
 const UserInfoBox = styled.div`
+  width: 100%;
   ${(p) =>
     p.isLink
       ? css`

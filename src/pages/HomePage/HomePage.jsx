@@ -7,6 +7,24 @@ import PostList from '../../components/Profile/PostList/PostList';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { SPACES } from '../../constants/spaces';
+import Search from '../SearchPage/SearchPage';
+
+const Message = styled.p`
+  font-weight: 500;
+  font-size: ${({ theme }) => theme.fontSize.base};
+  color: ${({ theme }) => theme.colors.gray200};
+  padding-top: 52px;
+  text-align: center;
+`;
+
+const TabWrapper = styled.div`
+  border-radius: 16px 16px 0 0;
+  margin-top: -16px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: ${({ theme }) => theme.colors.white};
+`;
 
 const Message = styled.p`
   font-weight: 500;
@@ -29,6 +47,7 @@ export default function HomePage() {
   const [currentTab, setCurrentTab] = useState(0);
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [isClickSearchButton, setIsClickSearchButton] = useState(false);
 
   const handleClickTabButton = (e) => {
     const index = ['전체', ...SPACES].indexOf(e.target.innerText);
@@ -43,17 +62,35 @@ export default function HomePage() {
     }
   };
 
+  const handleClickLeftButton = () => {
+    setIsClickSearchButton(false);
+  };
+
+  const handleClickRightButton = () => {
+    setIsClickSearchButton(true);
+  };
+
   return (
-    <BasicLayout type='home'>
-      <Carousel data={topLikedPosts} />
-      <TabWrapper>
-        <SpaceTabs currentTab={currentTab} onClick={handleClickTabButton} scrollLeft={scrollLeft} />
-      </TabWrapper>
-      {filteredPosts.length >= 1 ? (
-        <PostList selectedTab='grid' posts={filteredPosts} />
+    <>
+      {isClickSearchButton ? (
+        <Search onClickLeftButton={handleClickLeftButton} />
       ) : (
-        <Message>작성된 게시물이 없습니다.</Message>
+        <BasicLayout type='home' onClickRightButton={handleClickRightButton}>
+          <Carousel data={topLikedPosts} />
+          <TabWrapper>
+            <SpaceTabs
+              currentTab={currentTab}
+              onClick={handleClickTabButton}
+              scrollLeft={scrollLeft}
+            />
+          </TabWrapper>
+          {filteredPosts.length >= 1 ? (
+            <PostList selectedTab='grid' posts={filteredPosts} />
+          ) : (
+            <Message>작성된 게시물이 없습니다.</Message>
+          )}
+        </BasicLayout>
       )}
-    </BasicLayout>
+    </>
   );
 }

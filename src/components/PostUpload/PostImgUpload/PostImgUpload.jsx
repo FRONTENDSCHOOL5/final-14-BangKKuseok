@@ -1,9 +1,10 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import imageUploadBtn from '../../../assets/images/image-upload.png';
 import { PostImgUploadWrapper, UploadForm } from './PostImgUploadStyle';
 
-export default function PostImgUpload({ postImg, setPostImg, setIsBtnActive }) {
+export default function PostImgUpload({ setPostImg, setIsBtnActive }) {
   const imgRef = useRef();
+  const [previewImg, setPreviewImg] = useState(null);
 
   // 이미지 업로드 시 postImg 변경해서 이미지 미리보기 함수
   const HandleUploadPostImg = () => {
@@ -11,7 +12,8 @@ export default function PostImgUpload({ postImg, setPostImg, setIsBtnActive }) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setPostImg(reader.result);
+      setPostImg(file);
+      setPreviewImg(reader.result);
       setIsBtnActive(true);
     };
   };
@@ -26,8 +28,8 @@ export default function PostImgUpload({ postImg, setPostImg, setIsBtnActive }) {
 
   return (
     <PostImgUploadWrapper>
-      {postImg ? (
-        <img src={postImg} alt='게시글 이미지' />
+      {previewImg ? (
+        <img src={previewImg} alt='게시글 이미지' />
       ) : (
         <p onClick={HandleMakeFormClick}>회원님의 공간을 공유해주세요</p>
       )}

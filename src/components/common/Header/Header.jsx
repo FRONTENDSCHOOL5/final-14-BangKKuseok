@@ -13,10 +13,12 @@ export default function Header({
   isBtnActive,
   onClickLeftButton,
   onClickRightButton,
+  value,
+  onChange,
 }) {
   const HeaderLayout = {
     home: (
-      <HeaderWrapper type={type}>
+      <HeaderWrapper type={type} onClick={onClickRightButton}>
         <SearchBtn>
           <SearchIcon stroke='#fff' />
         </SearchBtn>
@@ -31,10 +33,15 @@ export default function Header({
     ),
     search: (
       <HeaderWrapper type={type}>
-        <button>
+        <button onClick={onClickLeftButton}>
           <BackIcon stroke='#000' />
         </button>
-        <RoundedInput id='search' placeholder='계정을 검색하세요' />
+        <RoundedInput
+          id='search'
+          placeholder='계정을 검색하세요'
+          value={value}
+          onChange={onChange}
+        />
       </HeaderWrapper>
     ),
     profile: (
