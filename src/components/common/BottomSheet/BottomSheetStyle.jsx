@@ -58,7 +58,7 @@ export const BottomSheetWrapper = styled.article`
 export const ModalBox = styled.div`
   position: relative;
   bottom: 0;
-  z-index: 50;
+  z-index: 51;
   border-radius: 20px 20px 0 0;
   padding-top: 48px;
   display: flex;

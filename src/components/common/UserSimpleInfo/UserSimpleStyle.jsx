@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const UserSimpleInfoWrapper = styled.div`
   width: 100%;
@@ -8,10 +8,18 @@ const UserSimpleInfoWrapper = styled.div`
 `;
 
 const UserInfoBox = styled.div`
-  a {
-    display: flex;
-    align-items: center;
-  }
+  ${(p) =>
+    p.isLink
+      ? css`
+          a {
+            display: flex;
+            align-items: center;
+          }
+        `
+      : css`
+          display: flex;
+          align-items: center;
+        `};
 
   img {
     width: 50px;

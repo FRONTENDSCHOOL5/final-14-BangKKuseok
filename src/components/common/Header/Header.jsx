@@ -39,10 +39,10 @@ export default function Header({
     ),
     profile: (
       <HeaderWrapper type={type}>
-        <button>
+        <button type='button' onClick={onClickLeftButton}>
           <BackIcon stroke='#fff' />
         </button>
-        <button>
+        <button type='button' onClick={onClickRightButton}>
           <MoreIcon fill='#fff' stroke='#fff' />
         </button>
       </HeaderWrapper>

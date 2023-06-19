@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const PostListWrapper = styled.section`
-  padding: 0 16px;
+  padding: 0 16px 10px 16px;
 `;
 
 const PostCardList = styled.ul`
@@ -10,8 +10,7 @@ const PostCardList = styled.ul`
   justify-content: center;
 
   li article {
-    width: 100%;
-    margin: 0 auto;
+    margin-top: 1rem;
   }
 `;
 
