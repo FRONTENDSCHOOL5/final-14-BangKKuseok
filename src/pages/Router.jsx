@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SplashPage from './SplashPage/SplashPage';
 import HomePage from './HomePage/HomePage';
 import LoginPage from './LoginPage/LoginPage';
@@ -9,7 +9,6 @@ import PostPage from './PostPage/PostPage/PostPage';
 import PostUploadPage from './PostPage/PostUploadPage/PostUploadPage';
 import PostEditPage from './PostPage/PostEditPage/PostEditPage';
 import MyProfilePage from './ProfilePage/MyProfilePage/MyProfilePage';
-import UserProfilePage from './ProfilePage/UserProfilePage/UserProfilePage';
 import ProfileEditPage from './ProfilePage/ProfileEditPage/ProfileEditPage';
 import FollowersPage from './ProfilePage/FollowPage/FollowersPage/FollowersPage';
 import FollowingsPage from './ProfilePage/FollowPage/FollowingsPage/FollowingsPage';
@@ -34,9 +33,9 @@ export default function AppRouter() {
           <Route index element={<MyProfilePage />} />
           <Route path='edit' element={<ProfileEditPage />} />
           <Route path=':accountname'>
-            <Route index element={<UserProfilePage />} />
-            <Route path='follower' element={<FollowersPage />} />
-            <Route path='following' element={<FollowingsPage />} />
+            <Route index element={<MyProfilePage />} />
+            <Route path='followers' element={<FollowersPage />} />
+            <Route path='followings' element={<FollowingsPage />} />
           </Route>
         </Route>
         <Route path='/chat' element={<ChatListPage />} />
