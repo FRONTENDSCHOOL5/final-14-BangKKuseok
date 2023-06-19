@@ -462,4 +462,39 @@ const postDetail = {
   },
 };
 
-export { products, profile, posts, topLikedPosts, postDetail };
+const comments = [
+  {
+    id: '6488cbd3b2cb20566333ad82',
+    content: '이건 댓글입니다 이건 댓글입니다 이건 댓글입니다 이건 댓글입니다 이건 댓글입니다',
+    createdAt: '2021-12-20T06:10:26.803Z',
+    author: {
+      _id: '647fe3b5b2cb2056632d63a8',
+      username: '구스덕하실분',
+      accountname: '구스독',
+      intro: '구스덕조아',
+      image: 'https://i.pinimg.com/750x/e0/81/9c/e0819c03a4c25514289b41a62200fb9a.jpg',
+      isfollow: false,
+      following: ['647d90b9b2cb2056632d52ae', '62d8f10617ae6665817fdccb'],
+      follower: [],
+      followerCount: 0,
+      followingCount: 2,
+    },
+  },
+  {
+    id: '6488cbd9b2cb20566333ad92',
+    content: '이건 댓글입니다22',
+    createdAt: '2022-12-20T06:10:26.803Z',
+    author: {
+      _id: '작성자 id',
+      username: '댓글작성자2',
+      accountname: '1',
+      intro: '1',
+      image: 'https://api.mandarin.weniv.co.kr/1683083205602.jpeg',
+      following: [],
+      follower: [],
+      followerCount: 0,
+      followingCount: 0,
+    },
+  },
+];
+export { products, profile, posts, topLikedPosts, postDetail, comments };
