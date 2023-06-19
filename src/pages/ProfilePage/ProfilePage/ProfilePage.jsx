@@ -10,9 +10,9 @@ import ListModal from '../../../components/common/BottomSheet/ListModal';
 import BasicModal from '../../../components/common/BottomSheet/BasicModal';
 import ProductDetailCard from '../../../components/Profile/ProductDetailCard/ProductDetailCard';
 import { posts, products } from '../../../mock/mockData';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { getProfile } from '../../../api/profileApi';
+import { getMyProfile, getProfile } from '../../../api/profileApi';
 
 const ProfilePageWrapper = styled.main``;
 
@@ -31,12 +31,17 @@ export default function ProfilePage() {
   const [isShowMorePost, setIsShowMorePost] = useState(false);
   const [isShowProductDetail, setIsShowProductDetail] = useState(false);
 
-  // getProfile에는 accountname 넘기기
-  const { data: profileData, isLoading: isProfileLoading } = useQuery('myProfile', () =>
-    getProfile('test333'),
+  const navigate = useNavigate();
+  const { accountname: accountnameByParams } = useParams();
+
+  const { data: userProfileData, isLoading: isUserProfileLoading } = useQuery('userProfile', () =>
+    accountnameByParams ? getProfile(accountnameByParams) : null,
   );
 
-  const navigate = useNavigate();
+  const { data: myProfileData, isLoading: isMyProfileLoading } = useQuery(
+    'myProfile',
+    getMyProfile,
+  );
 
   const handleClickTabButton = (tabId) => {
     setSelectedTab(tabId);
@@ -71,9 +76,11 @@ export default function ProfilePage() {
       onClickRightButton={handleClickMoreProfileButton}
     >
       <ProfilePageWrapper>
-        {!isProfileLoading && (
+        {(accountnameByParams ? !isUserProfileLoading : !isMyProfileLoading) && (
           <>
-            <ProfileCard profile={profileData.profile} />
+            <ProfileCard
+              profile={accountnameByParams ? userProfileData.profile : myProfileData.user}
+            />
             <ProductList products={products} onClick={handleClickProduct} />
             {posts.length > 0 ? (
               <>
