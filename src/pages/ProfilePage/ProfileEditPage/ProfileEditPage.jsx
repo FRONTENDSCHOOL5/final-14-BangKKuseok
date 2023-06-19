@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import BasicLayout from '../../../layout/BasicLayout';
 import SetUserProfileForm from '../../../components/LoginSignUp/SetUserProfile/SetUserProfileForm';
 import { useLocation, useNavigate } from 'react-router-dom';
