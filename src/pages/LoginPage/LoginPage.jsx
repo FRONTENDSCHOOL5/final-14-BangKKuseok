@@ -7,16 +7,6 @@ export default function LoginPage() {
 
   const navigate = useNavigate();
 
-  const handleSignUpLink = () => {
-    setStep('회원가입');
-    navigate('/signup');
-  };
-
-  const handleMainLink = () => {
-    setStep('메인');
-    navigate('/main');
-  };
-
   const handleNextLink = () => {
     setStep('홈');
     navigate('/');
@@ -24,11 +14,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <Login
-        onClickSignUpLink={handleSignUpLink}
-        onClickMainLink={handleMainLink}
-        onClickNextLink={handleNextLink}
-      />
+      <Login onClickNextLink={handleNextLink} />
     </>
   );
 }
