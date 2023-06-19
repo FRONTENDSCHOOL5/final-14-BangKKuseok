@@ -8,3 +8,21 @@ export const getProfile = async (accountname) => {
     console.error(error);
   }
 };
+
+export const getMyProfile = async () => {
+  try {
+    const response = await accessInstance.get(`/user/myinfo`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateProfile = async (formData) => {
+  try {
+    const response = await accessInstance.put(`/user`, formData);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
