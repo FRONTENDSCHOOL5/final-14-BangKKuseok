@@ -12,11 +12,14 @@ import {
   UserInfoBox,
   UserName,
 } from './ProfileCardStyle';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 export default function ProfileCard({ profile }) {
   const { accountname: accountnameByParams } = useParams();
+
   const [isFollow, setIsFollow] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleClickFollow = () => {
     setIsFollow((prev) => !prev);
@@ -25,21 +28,25 @@ export default function ProfileCard({ profile }) {
   return (
     <ProfileCardWrapper>
       <FollowFollowingBox>
-        <TextBox>
-          <strong>
-            <span>{profile.followerCount}</span>
-          </strong>
-          <span>followers</span>
-        </TextBox>
+        <Link to={`/profile/${accountnameByParams ?? profile.accountname}/followers`}>
+          <TextBox>
+            <strong>
+              <span>{profile.followerCount}</span>
+            </strong>
+            <span>followers</span>
+          </TextBox>
+        </Link>
         <ProfileImgBox>
           <img src={profile.image || basicProfileImage} alt='유저 프로필 이미지' />
         </ProfileImgBox>
-        <TextBox>
-          <strong>
-            <span>{profile.followingCount}</span>
-          </strong>
-          <span>followings</span>
-        </TextBox>
+        <Link to={`/profile/${accountnameByParams ?? profile.accountname}/followings`}>
+          <TextBox>
+            <strong>
+              <span>{profile.followingCount}</span>
+            </strong>
+            <span>followings</span>
+          </TextBox>
+        </Link>
       </FollowFollowingBox>
       <UserInfoBox>
         <UserName>{profile.username}</UserName>
@@ -63,10 +70,12 @@ export default function ProfileCard({ profile }) {
           </>
         ) : (
           <>
-            <Button size='md' variant='line'>
+            <Button size='md' variant='line' onClick={() => navigate('/profile/edit')}>
               프로필 수정
             </Button>
-            <Button size='md'>상품 등록</Button>
+            <Button size='md' onClick={() => navigate('/product/upload')}>
+              상품 등록
+            </Button>
           </>
         )}
       </UserActionBox>
