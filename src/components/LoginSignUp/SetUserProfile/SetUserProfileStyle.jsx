@@ -25,17 +25,6 @@ export const ProfileSubTitle = styled.p`
   font-size: ${({ theme }) => theme.fontSize.sm};
   color: ${({ theme }) => theme.colors.gray300};
   text-align: center;
-  margin: 0 auto 30px;
-`;
-
-export const ImgUploadBox = styled.div`
-  width: 110px;
-  height: 110px;
-  margin: 0 auto;
-`;
-
-export const ProfileImgUpload = styled.img`
-  object-fit: cover;
 `;
 
 export const UserProfileBottom = styled.div`
