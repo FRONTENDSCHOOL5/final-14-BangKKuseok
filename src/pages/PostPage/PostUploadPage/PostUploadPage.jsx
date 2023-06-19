@@ -1,9 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PostImgUpload from '../../../components/PostUpload/PostImgUpload/PostImgUpload';
 import BasicLayout from '../../../layout/BasicLayout';
 import { useNavigate } from 'react-router-dom';
 import PostProductTag from '../../../components/PostUpload/PostProductTag/PostProductTag';
 import PostTextWrite from '../../../components/PostUpload/PostTextWrite/PostTextWrite';
+import { useMutation } from 'react-query';
+import { uploadPost } from '../../../api/postApi';
+import { uploadImg } from '../../../api/imgApi';
+import { URL } from '../../../api/axiosInstance';
+import { useResetRecoilState } from 'recoil';
+import { selectedProductsAtom } from '../../../atoms/post';
 
 export default function PostUploadPage() {
   const [step, setStep] = useState('사진 선택');
@@ -13,6 +19,36 @@ export default function PostUploadPage() {
 
   const [content, setContent] = useState({});
   const [postImg, setPostImg] = useState(null);
+  const [postedImg, setPostedImg] = useState(null);
+  const [postId, setPostId] = useState(null);
+  const resetSelectedItems = useResetRecoilState(selectedProductsAtom);
+
+  //이미지 업로드 함수
+  const uploadImgMutation = useMutation(uploadImg, {
+    onSuccess(data) {
+      setPostedImg(URL + data.filename);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  //포스트 업로드 함수
+  const uploadPostMutation = useMutation(uploadPost, {
+    onSuccess(data) {
+      setPostId(data.post.id);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  //게시글 상세페이지로 이동하기
+  useEffect(() => {
+    if (postId) {
+      navigate(`/post/${postId}`);
+    }
+  }, [navigate, postId]);
 
   //이전 step으로 돌아가는 함수
   const handleClickLeftButton = useCallback(() => {
@@ -23,12 +59,17 @@ export default function PostUploadPage() {
       setIsBtnActive(true);
     } else if (step === '게시글 작성') {
       setStep('상품태그 추가');
+      setBtnText('다음');
     }
   }, [step, navigate]);
 
   //다음 step으로 넘어가는 함수
   const handleClickRightButton = () => {
     if (step === '사진 선택') {
+      const imgData = new FormData();
+      imgData.append('image', postImg);
+      uploadImgMutation.mutate(imgData);
+
       setStep('상품태그 추가');
       setIsBtnActive(false);
     } else if (step === '상품태그 추가') {
@@ -36,9 +77,10 @@ export default function PostUploadPage() {
       setIsBtnActive(false);
       setBtnText('등록');
     } else if (step === '게시글 작성') {
-      navigate('/:postId');
-      console.log(content);
-      //여기 content랑 postImg를 api post보내기
+      resetSelectedItems();
+      uploadPostMutation.mutate({
+        post: { content: JSON.stringify(content), image: postedImg },
+      });
     }
   };
 
@@ -46,9 +88,13 @@ export default function PostUploadPage() {
     '사진 선택': (
       <PostImgUpload postImg={postImg} setPostImg={setPostImg} setIsBtnActive={setIsBtnActive} />
     ),
-    '상품태그 추가': <PostProductTag postImg={postImg} setIsBtnActive={setIsBtnActive} />,
+    '상품태그 추가': <PostProductTag postedImg={postedImg} setIsBtnActive={setIsBtnActive} />,
     '게시글 작성': (
-      <PostTextWrite postImg={postImg} setIsBtnActive={setIsBtnActive} setContent={setContent} />
+      <PostTextWrite
+        postedImg={postedImg}
+        setIsBtnActive={setIsBtnActive}
+        setContent={setContent}
+      />
     ),
   };
 
@@ -64,8 +110,8 @@ export default function PostUploadPage() {
     >
       <>
         {step === '사진 선택' && StepLayout[step]}
-        {step === '상품태그 추가' && StepLayout[step]}
-        {step === '게시글 작성' && StepLayout[step]}
+        {step === '상품태그 추가' && postedImg && StepLayout[step]}
+        {step === '게시글 작성' && postedImg && StepLayout[step]}
       </>
     </BasicLayout>
   );
