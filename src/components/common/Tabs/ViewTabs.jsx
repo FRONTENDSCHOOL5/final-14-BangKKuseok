@@ -6,10 +6,15 @@ import gridImg from '../../../assets/icons/icon-gallery.svg';
 import gridActiveImg from '../../../assets/icons/icon-gallery-active.svg';
 
 const StyledViewTabs = styled.nav`
-  margin: 0 16px 20px 0;
+  padding: 10px 16px 10px 0; /* sticky일 경우 디자인을 위해 margin 대신 padding을 줌 */
+  margin-bottom: 10px;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  position: sticky;
+  top: 0;
+  background-color: ${({ theme }) => theme.colors.white};
+  z-index: 10;
 
   button {
     width: 4rem;
