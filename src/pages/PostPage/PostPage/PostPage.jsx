@@ -8,14 +8,17 @@ import CommentItem from '../../../components/PostDetail/CommentItem/CommentItem'
 import RoundedBottomInput from '../../../components/common/Input/RoundedBottomInput/RoundedBottomInput';
 import Confirm from '../../../components/common/Confirm/Confirm';
 import { CommentList, PostPageWrapper } from './PostPageStyle';
-import { useQuery } from 'react-query';
-import { getComments, getPostDetail } from '../../../api/postApi';
+import { useMutation, useQuery } from 'react-query';
+import { deletePost, getComments, getPostDetail, reportPost } from '../../../api/postApi';
 import { getMyProfile } from '../../../api/profileApi';
+import { useRecoilState } from 'recoil';
+import { isUploadBeforeAtom } from '../../../atoms/post';
 
 export default function PostPage() {
   const { postId } = useParams();
   const [data, setData] = useState();
   const [myProfile, setMyProfile] = useState();
+  const [isUploadBefore, setIsUploadBefore] = useRecoilState(isUploadBeforeAtom);
 
   //게시글 상세 정보받기
   const { data: postData, isLoading: isPostLoading } = useQuery(
@@ -66,8 +69,14 @@ export default function PostPage() {
     setIsShow((prev) => !prev);
   };
 
+  //뒤로 가기 (이전페이지가 upload일 경우 전전페이지로 이동)
   const handleClickLeftButton = () => {
-    navigate(-1);
+    if (isUploadBefore) {
+      navigate(-2);
+      setIsUploadBefore(false);
+    } else {
+      navigate(-1);
+    }
   };
 
   const handleClickRightButton = () => {

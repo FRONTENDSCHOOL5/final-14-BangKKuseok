@@ -8,20 +8,28 @@ import { useMutation } from 'react-query';
 import { uploadPost } from '../../../api/postApi';
 import { uploadImg } from '../../../api/imgApi';
 import { URL } from '../../../api/axiosInstance';
-import { useResetRecoilState } from 'recoil';
-import { selectedProductsAtom } from '../../../atoms/post';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import {
+  bubbleLocAtom,
+  isUploadBeforeAtom,
+  mouseLocAtom,
+  selectedProductsAtom,
+} from '../../../atoms/post';
 
 export default function PostUploadPage() {
   const [step, setStep] = useState('사진 선택');
   const [btnText, setBtnText] = useState('다음');
   const [isBtnActive, setIsBtnActive] = useState(false);
   const navigate = useNavigate();
+  const setIsUploadBefore = useSetRecoilState(isUploadBeforeAtom);
 
   const [content, setContent] = useState({});
   const [postImg, setPostImg] = useState(null);
   const [postedImg, setPostedImg] = useState(null);
   const [postId, setPostId] = useState(null);
   const resetSelectedItems = useResetRecoilState(selectedProductsAtom);
+  const resetMouseLoc = useResetRecoilState(mouseLocAtom);
+  const resetBubbleLoc = useResetRecoilState(bubbleLocAtom);
 
   //이미지 업로드 함수
   const uploadImgMutation = useMutation(uploadImg, {
@@ -78,6 +86,9 @@ export default function PostUploadPage() {
       setBtnText('등록');
     } else if (step === '게시글 작성') {
       resetSelectedItems();
+      resetMouseLoc();
+      resetBubbleLoc();
+      setIsUploadBefore(true);
       uploadPostMutation.mutate({
         post: { content: JSON.stringify(content), image: postedImg },
       });
