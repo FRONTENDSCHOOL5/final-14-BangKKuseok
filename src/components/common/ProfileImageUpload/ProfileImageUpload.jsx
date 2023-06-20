@@ -3,7 +3,7 @@ import defaultProfImg from '../../../assets/images/profile.png';
 import profUploadImg from '../../../assets/images/prof-upload.png';
 import { ProfileImageUploadWrapper, UploadBox } from './ProfileImageUploadStyle';
 
-export default function ProfileImageUpload({ userImg }) {
+export default function ProfileImageUpload({ userImg, setNewProfileImage }) {
   //프로필 이미지 저장 변수
   const [profImg, setProfImg] = useState(userImg ?? defaultProfImg);
   const imgRef = useRef();
@@ -15,6 +15,7 @@ export default function ProfileImageUpload({ userImg }) {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setProfImg(reader.result);
+      setNewProfileImage(reader.result);
     };
   };
 

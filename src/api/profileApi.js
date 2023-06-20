@@ -17,3 +17,12 @@ export const getMyProfile = async () => {
     console.error(error);
   }
 };
+
+export const updateProfile = async (formData) => {
+  try {
+    const response = await accessInstance.put(`/user`, formData);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
