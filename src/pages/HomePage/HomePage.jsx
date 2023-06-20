@@ -26,23 +26,6 @@ const TabWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
-const Message = styled.p`
-  font-weight: 500;
-  font-size: ${({ theme }) => theme.fontSize.base};
-  color: ${({ theme }) => theme.colors.gray200};
-  padding-top: 52px;
-  text-align: center;
-`;
-
-const TabWrapper = styled.div`
-  border-radius: 16px 16px 0 0;
-  margin-top: -16px;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background-color: ${({ theme }) => theme.colors.white};
-`;
-
 export default function HomePage() {
   const [currentTab, setCurrentTab] = useState(0);
   const [filteredPosts, setFilteredPosts] = useState(posts);
