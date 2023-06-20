@@ -27,7 +27,7 @@ const PostImgUploadWrapper = styled.div`
   }
 `;
 
-const UploadForm = styled.form`
+const UploadForm = styled.div`
   position: absolute;
   inset: auto 16px 16px auto;
   width: 40px;
