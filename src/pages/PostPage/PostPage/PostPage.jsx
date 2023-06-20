@@ -60,6 +60,27 @@ export default function PostPage() {
     },
   );
 
+  //게시글 삭제하기
+  const deletePostMutation = useMutation(deletePost, {
+    onSuccess(data) {
+      console.log(data);
+      navigate(-1);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  //게시글 신고하기
+  const reportPostMutation = useMutation(reportPost, {
+    onSuccess(data) {
+      console.log(`게시글 ${data.report.post}을 신고했습니다!`);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
   const [isShow, setIsShow] = useState(false);
   const [modalType, setModalType] = useState('userPost');
   const [isShowConfirm, setIsShowConfirm] = useState(false);
@@ -112,9 +133,27 @@ export default function PostPage() {
     }
   };
 
-  const handleClickConfirm = (e) => {
-    console.log(e.currentTarget.innerText);
-    //에 따라서 api연동 후 함수작성하기
+  //게시글,댓글 삭제,신고하기
+  const handleClickConfirm = () => {
+    //게시글을
+    if (confirmType.object === 'post') {
+      //삭제하기
+      if (confirmType.type === 'delete') {
+        deletePostMutation.mutate(postId);
+      } else {
+        //신고하기
+        reportPostMutation.mutate(postId);
+      }
+      //댓글을
+    } else {
+      //삭제하기
+      if (confirmType.type === 'delete') {
+        // deletePostMutation.mutate(postId);
+      } else {
+        //신고하기
+        // reportPostMutation.mutate(postId);
+      }
+    }
 
     setIsShowConfirm(false);
     setIsShow(false);
