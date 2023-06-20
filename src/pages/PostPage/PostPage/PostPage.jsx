@@ -13,6 +13,7 @@ import { deletePost, getComments, getPostDetail, reportPost } from '../../../api
 import { getMyProfile } from '../../../api/profileApi';
 import { useRecoilState } from 'recoil';
 import { isUploadBeforeAtom } from '../../../atoms/post';
+import Spinner from '../../../components/common/Spinner/Spinner';
 
 export default function PostPage() {
   const { postId } = useParams();
@@ -119,8 +120,9 @@ export default function PostPage() {
     setIsShow(false);
   };
 
+  //로딩 이미지
   if (isPostLoading && isCommentsLoading && isMyProfileLoading) {
-    return <p>로딩중</p>;
+    return <Spinner />;
   }
   return (
     <>
