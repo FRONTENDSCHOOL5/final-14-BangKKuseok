@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import BasicLayout from '../../../layout/BasicLayout';
-import { comments, postDetail, profile } from '../../../mock/mockData';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import BottomSheet from '../../../components/common/BottomSheet/BottomSheet';
 import ListModal from '../../../components/common/BottomSheet/ListModal';
 import PostCard from '../../../components/common/Card/PostCard/PostCard';
@@ -9,13 +8,53 @@ import CommentItem from '../../../components/PostDetail/CommentItem/CommentItem'
 import RoundedBottomInput from '../../../components/common/Input/RoundedBottomInput/RoundedBottomInput';
 import Confirm from '../../../components/common/Confirm/Confirm';
 import { CommentList, PostPageWrapper } from './PostPageStyle';
+import { useQuery } from 'react-query';
+import { getComments, getPostDetail } from '../../../api/postApi';
+import { getMyProfile } from '../../../api/profileApi';
 
 export default function PostPage() {
-  //api 연동 시 props로 데이터 받아서 뿌리기
-  // myProfile - 프로필  정보  불러오기 api
-  const data = postDetail;
-  const commentsData = comments;
-  const myProfile = profile;
+  const { postId } = useParams();
+  const [data, setData] = useState();
+  const [myProfile, setMyProfile] = useState();
+
+  //게시글 상세 정보받기
+  const { data: postData, isLoading: isPostLoading } = useQuery(
+    ['postData', postId],
+    () => getPostDetail(postId),
+    {
+      onSuccess: (data) => {
+        setData(data.post);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
+
+  //댓글 리스트 정보받기
+  const { data: commentsData, isLoading: isCommentsLoading } = useQuery(
+    ['commentsData', postId],
+    () => getComments(postId),
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
+
+  //내 프로필 정보받기
+  const { data: myProfileData, isLoading: isMyProfileLoading } = useQuery(
+    'myProfileData',
+    () => getMyProfile(),
+    {
+      onSuccess: (data) => {
+        setMyProfile(data.user);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 
   const [isShow, setIsShow] = useState(false);
   const [modalType, setModalType] = useState('userPost');
@@ -58,7 +97,7 @@ export default function PostPage() {
         setIsShowConfirm(true);
       } else {
         //수정일 경우
-        navigate('/post/:postId/edit');
+        navigate(`/post/${postId}/edit`);
       }
     }
   };
@@ -71,43 +110,50 @@ export default function PostPage() {
     setIsShow(false);
   };
 
+  if (isPostLoading && isCommentsLoading && isMyProfileLoading) {
+    return <p>로딩중</p>;
+  }
   return (
-    <BasicLayout
-      type='post'
-      isNonNav
-      title={data.author.username}
-      onClickLeftButton={handleClickLeftButton}
-      onClickRightButton={handleClickRightButton}
-    >
-      <PostPageWrapper>
-        <PostCard data={data} moreInfo />
-        <CommentList>
-          <h4 className='a11y'>댓글 목록</h4>
-          {commentsData.map((comment) => (
-            <CommentItem
-              key={comment.id}
-              data={comment}
-              myProfile={myProfile}
-              setModalType={setModalType}
-              setIsShow={setIsShow}
+    <>
+      {!isPostLoading && !isCommentsLoading && !isMyProfileLoading && (
+        <BasicLayout
+          type='post'
+          isNonNav
+          title={postData.post.author.username}
+          onClickLeftButton={handleClickLeftButton}
+          onClickRightButton={handleClickRightButton}
+        >
+          <PostPageWrapper>
+            <PostCard data={postData.post} moreInfo />
+            <CommentList>
+              <h4 className='a11y'>댓글 목록</h4>
+              {commentsData.comments.map((comment) => (
+                <CommentItem
+                  key={comment.id}
+                  data={comment}
+                  myProfile={myProfile}
+                  setModalType={setModalType}
+                  setIsShow={setIsShow}
+                />
+              ))}
+            </CommentList>
+            <RoundedBottomInput id='comment' placeholder='댓글을 남겨보세요' />
+          </PostPageWrapper>
+          {isShow && (
+            <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
+              <ListModal type={modalType} onClick={handleClickListItem}></ListModal>
+            </BottomSheet>
+          )}
+          {isShowConfirm && (
+            <Confirm
+              type={confirmType.type}
+              object={confirmType.object}
+              setIsShowConfirm={setIsShowConfirm}
+              onClick={handleClickConfirm}
             />
-          ))}
-        </CommentList>
-        <RoundedBottomInput id='comment' placeholder='댓글을 남겨보세요' />
-      </PostPageWrapper>
-      {isShow && (
-        <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
-          <ListModal type={modalType} onClick={handleClickListItem}></ListModal>
-        </BottomSheet>
+          )}
+        </BasicLayout>
       )}
-      {isShowConfirm && (
-        <Confirm
-          type={confirmType.type}
-          object={confirmType.object}
-          setIsShowConfirm={setIsShowConfirm}
-          onClick={handleClickConfirm}
-        />
-      )}
-    </BasicLayout>
+    </>
   );
 }
