@@ -63,7 +63,6 @@ export default function PostPage() {
   //게시글 삭제하기
   const deletePostMutation = useMutation(deletePost, {
     onSuccess(data) {
-      console.log(data);
       navigate(-1);
     },
     onError(error) {
@@ -74,7 +73,7 @@ export default function PostPage() {
   //게시글 신고하기
   const reportPostMutation = useMutation(reportPost, {
     onSuccess(data) {
-      console.log(`게시글 ${data.report.post}을 신고했습니다!`);
+      alert(`해당 게시글을 신고했습니다.`);
     },
     onError(error) {
       console.log(error);
