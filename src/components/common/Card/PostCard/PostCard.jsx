@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Heart from '../Heart/Heart';
 import commentIcon from '../../../../assets/icons/icon-message-small.svg';
 import { HeartCommentList, PostCardWrapper, PostDetail, PostInfoBox, Space } from './PostCardStyle';
@@ -6,7 +6,7 @@ import { convertDateFormat } from '../../../../utils/getTime';
 import { useNavigate } from 'react-router-dom';
 
 export default function PostCard({ data, moreInfo = false }) {
-  const { _id, content, image, hearted, heartCount, comments, createdAt } = data;
+  const { id, content, image, hearted, heartCount, comments, createdAt } = data;
   const { space, detail } = JSON.parse(content);
 
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function PostCard({ data, moreInfo = false }) {
             <Heart hearted={hearted} />
             {heartCount}
           </li>
-          <li onClick={moreInfo ? null : () => navigate(`/post/${_id}`)}>
+          <li onClick={moreInfo ? null : () => navigate(`/post/${id}`)}>
             <img src={commentIcon} alt='댓글' />
             {comments.length}
           </li>

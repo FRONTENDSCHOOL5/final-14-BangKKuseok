@@ -1,5 +1,14 @@
 import { accessInstance } from './axiosInstance';
 
+export const getMyPost = async (accountname) => {
+  try {
+    const response = await accessInstance.get(`/post/${accountname}/userpost`);
+    return response.data.post;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const uploadPost = async (postData) => {
   try {
     const response = await accessInstance.post(`/post`, postData);
