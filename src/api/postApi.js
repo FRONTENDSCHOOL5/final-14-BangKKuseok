@@ -35,3 +35,21 @@ export const editPost = async ({ postId, post }) => {
     console.error(error);
   }
 };
+
+export const deletePost = async (postId) => {
+  try {
+    const response = await accessInstance.delete(`/post/${postId}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const reportPost = async (postId) => {
+  try {
+    const response = await accessInstance.post(`/post/${postId}/report`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
