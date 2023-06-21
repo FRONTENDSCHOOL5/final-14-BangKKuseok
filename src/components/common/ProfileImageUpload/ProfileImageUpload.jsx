@@ -11,12 +11,14 @@ export default function ProfileImageUpload({ userImg, setNewProfileImage }) {
   // 이미지 업로드 시 profImg 변경해서 이미지 미리보기 함수
   const getProfImg = () => {
     const file = imgRef.current.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setProfImg(reader.result);
-      setNewProfileImage(reader.result);
-    };
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setProfImg(reader.result);
+        setNewProfileImage(reader.result);
+      };
+    }
   };
 
   return (
