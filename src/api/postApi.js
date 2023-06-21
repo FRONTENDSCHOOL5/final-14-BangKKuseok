@@ -18,15 +18,6 @@ export const getPostDetail = async (postId) => {
   }
 };
 
-export const getComments = async (postId) => {
-  try {
-    const response = await accessInstance.get(`/post/${postId}/comments`);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 export const editPost = async ({ postId, post }) => {
   try {
     const response = await accessInstance.put(`/post/${postId}`, { post: { ...post } });
