@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import BasicLayout from '../../../layout/BasicLayout';
 import { useNavigate, useParams } from 'react-router-dom';
 import BottomSheet from '../../../components/common/BottomSheet/BottomSheet';
 import ListModal from '../../../components/common/BottomSheet/ListModal';
 import PostCard from '../../../components/common/Card/PostCard/PostCard';
-import CommentItem from '../../../components/PostDetail/CommentItem/CommentItem';
-import RoundedBottomInput from '../../../components/common/Input/RoundedBottomInput/RoundedBottomInput';
 import Confirm from '../../../components/common/Confirm/Confirm';
-import { CommentList, PostPageWrapper } from './PostPageStyle';
-import { useMutation, useQuery } from 'react-query';
-import { deletePost, getComments, getPostDetail, reportPost } from '../../../api/postApi';
+import { PostPageWrapper } from './PostPageStyle';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
+import { deletePost, getPostDetail, reportPost } from '../../../api/postApi';
 import { getMyProfile } from '../../../api/profileApi';
 import { useRecoilState } from 'recoil';
 import { isUploadBeforeAtom } from '../../../atoms/post';
 import Spinner from '../../../components/common/Spinner/Spinner';
+import { deleteComment, getComments, reportComment } from '../../../api/commentApi';
+import CommentSection from '../../../components/PostDetail/CommentSection/CommentSection';
 
 export default function PostPage() {
   const { postId } = useParams();
   const [data, setData] = useState();
+  const [comments, setComments] = useState([]);
+  const [commentId, setCommentId] = useState();
   const [myProfile, setMyProfile] = useState();
+  const [scrollDown, setScrollDown] = useState(false);
   const [isUploadBefore, setIsUploadBefore] = useRecoilState(isUploadBeforeAtom);
 
   //게시글 상세 정보받기
@@ -40,11 +43,25 @@ export default function PostPage() {
     ['commentsData', postId],
     () => getComments(postId),
     {
+      onSuccess: (data) => {
+        setComments(data.reverse());
+        if (comments.length > 0 && data.length > comments.length) {
+          setScrollDown(true);
+        }
+      },
       onError: (error) => {
         console.log(error);
       },
     },
   );
+
+  //댓글 작성했을 때 scroll아래로 이동하기
+  useLayoutEffect(() => {
+    if (scrollDown) {
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+      setScrollDown(false);
+    }
+  }, [scrollDown]);
 
   //내 프로필 정보받기
   const { data: myProfileData, isLoading: isMyProfileLoading } = useQuery(
@@ -153,7 +170,6 @@ export default function PostPage() {
         // reportPostMutation.mutate(postId);
       }
     }
-
     setIsShowConfirm(false);
     setIsShow(false);
   };
@@ -164,7 +180,7 @@ export default function PostPage() {
   }
   return (
     <>
-      {!isPostLoading && !isCommentsLoading && !isMyProfileLoading && (
+      {!isPostLoading && !isCommentsLoading && !isMyProfileLoading && comments && (
         <BasicLayout
           type='post'
           isNonNav
@@ -174,19 +190,14 @@ export default function PostPage() {
         >
           <PostPageWrapper>
             <PostCard data={postData.post} moreInfo />
-            <CommentList>
-              <h4 className='a11y'>댓글 목록</h4>
-              {commentsData.comments.map((comment) => (
-                <CommentItem
-                  key={comment.id}
-                  data={comment}
-                  myProfile={myProfile}
-                  setModalType={setModalType}
-                  setIsShow={setIsShow}
-                />
-              ))}
-            </CommentList>
-            <RoundedBottomInput id='comment' placeholder='댓글을 남겨보세요' />
+            <CommentSection
+              data={comments}
+              myProfile={myProfile}
+              setModalType={setModalType}
+              setIsShow={setIsShow}
+              postId={postId}
+              setCommentId={setCommentId}
+            />
           </PostPageWrapper>
           {isShow && (
             <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>

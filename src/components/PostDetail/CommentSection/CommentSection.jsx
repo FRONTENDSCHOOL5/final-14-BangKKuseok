@@ -20,6 +20,38 @@ export default function CommentSection({
   postId,
   setCommentId,
 }) {
+  const queryClient = useQueryClient();
+  //댓글 작성하기
+  const uploadCommentMutation = useMutation(uploadComment, {
+    onSuccess() {
+      queryClient.invalidateQueries(['commentsData', postId]);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  const [comment, setComment] = useState({ content: '' });
+
+  //인풋의 변화감지해서 해당밸류넣기
+  const handleChangeComment = useCallback(
+    (e) => {
+      setComment({ content: e.target.value });
+    },
+    [setComment],
+  );
+
+  //댓글 등록하기
+  const handleSubmitComment = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (comment.content !== '') {
+        uploadCommentMutation.mutate({ postId, comment: { ...comment } });
+        setComment({ content: '' });
+      }
+    },
+    [comment, postId, uploadCommentMutation],
+  );
 
   return (
     <CommentSectionWrapper>
