@@ -9,13 +9,15 @@ export default function PostImgUpload({ setPostImg, setIsBtnActive }) {
   // 이미지 업로드 시 postImg 변경해서 이미지 미리보기 함수
   const HandleUploadPostImg = () => {
     const file = imgRef.current.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setPostImg(file);
-      setPreviewImg(reader.result);
-      setIsBtnActive(true);
-    };
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setPostImg(file);
+        setPreviewImg(reader.result);
+        setIsBtnActive(true);
+      };
+    }
   };
 
   //초기에 박스 클릭해도 업로드가 가능하도록
