@@ -55,10 +55,17 @@ const HeaderH3 = styled.h3`
   font-size: ${({ theme }) => theme.fontSize.base};
 `;
 
+const HeaderSpan = styled.span`
+  display: inline-block;
+  color: ${({ theme }) => theme.colors.gray200};
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  margin-left: 0.6rem;
+`;
+
 const SearchBtn = styled.button`
   display: inline-block;
   position: absolute;
   right: 1.6rem;
 `;
 
-export { HeaderWrapper, HeaderH2, HeaderH3, SearchBtn };
+export { HeaderWrapper, HeaderH2, HeaderH3, HeaderSpan, SearchBtn };

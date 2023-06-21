@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderWrapper, SearchBtn, HeaderH2, HeaderH3 } from './HeaderStyle';
+import { HeaderWrapper, SearchBtn, HeaderH2, HeaderH3, HeaderSpan } from './HeaderStyle';
 import { ReactComponent as BackIcon } from '../../../assets/icons/icon-arrow-left.svg';
 import { ReactComponent as MoreIcon } from '../../../assets/icons/icon-more.svg';
 import { ReactComponent as SearchIcon } from '../../../assets/icons/icon-search.svg';
@@ -9,6 +9,7 @@ import RoundedInput from '../Input/RoundedInput/RoundedInput';
 export default function Header({
   type,
   title,
+  subtitle,
   btnText,
   isBtnActive,
   onClickLeftButton,
@@ -59,7 +60,10 @@ export default function Header({
         <button type='button' onClick={onClickLeftButton}>
           <BackIcon stroke='#000' />
         </button>
-        <HeaderH3>{title}</HeaderH3>
+        <HeaderH3>
+          {title}
+          <HeaderSpan>{subtitle}</HeaderSpan>
+        </HeaderH3>
         <button type='button' onClick={onClickRightButton}>
           <MoreIcon fill='#000' stroke='#000' />
         </button>
