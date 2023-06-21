@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import BasicLayout from '../../../layout/BasicLayout';
 import { comments, postDetail, profile } from '../../../mock/mockData';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BottomSheet from '../../../components/common/BottomSheet/BottomSheet';
 import ListModal from '../../../components/common/BottomSheet/ListModal';
 import PostCard from '../../../components/common/Card/PostCard/PostCard';
@@ -13,7 +13,9 @@ import { CommentList, PostPageWrapper } from './PostPageStyle';
 export default function PostPage() {
   //api 연동 시 props로 데이터 받아서 뿌리기
   // myProfile - 프로필  정보  불러오기 api
-  const data = postDetail;
+  const location = useLocation();
+
+  const data = location.state.data;
   const commentsData = comments;
   const myProfile = profile;
 
@@ -75,7 +77,8 @@ export default function PostPage() {
     <BasicLayout
       type='post'
       isNonNav
-      title={data.author.username}
+      title={data.username}
+      subtitle={data.accountname}
       onClickLeftButton={handleClickLeftButton}
       onClickRightButton={handleClickRightButton}
     >

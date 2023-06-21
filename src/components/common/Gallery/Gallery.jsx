@@ -23,8 +23,8 @@ export default function Gallery({ data }) {
     <GalleryWrapper>
       {data.map((item) => (
         <GalleryBox key={item.id}>
-          <Link to={`/post/${item.id}`}>
-            <GalleryImg src={item.imgUrl} alt={`${item.author}님의 공간 이미지`} />
+          <Link to={`/post/${item.id}`} state={{ data: item }}>
+            <GalleryImg src={item.imgUrl} alt={`${item.accountname}님의 공간 이미지`} />
           </Link>
         </GalleryBox>
       ))}

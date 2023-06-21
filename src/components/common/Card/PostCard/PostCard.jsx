@@ -6,14 +6,14 @@ import { convertDateFormat } from '../../../../utils/getTime';
 import { useNavigate } from 'react-router-dom';
 
 export default function PostCard({ data, moreInfo = false }) {
-  const { _id, content, image, hearted, heartCount, comments, createdAt } = data;
+  const { _id, content, imgUrl, hearted, heartCount, comments, createdAt } = data;
   const { space, detail } = JSON.parse(content);
 
   const navigate = useNavigate();
 
   return (
     <PostCardWrapper moreInfo={moreInfo}>
-      <img src={image} alt={`${space} 이미지`} />
+      <img src={imgUrl} alt={`${space} 이미지`} />
       <PostInfoBox moreInfo={moreInfo}>
         <Space moreInfo={moreInfo}> {space} </Space>
         <HeartCommentList moreInfo={moreInfo}>
