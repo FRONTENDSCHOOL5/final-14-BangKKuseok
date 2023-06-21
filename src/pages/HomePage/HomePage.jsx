@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { topLikedPosts } from '../../mock/mockData';
 import Carousel from '../../components/common/Carousel/Carousel';
 import SpaceTabs from '../../components/common/Tabs/SpaceTabs';
@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { SPACES } from '../../constants/spaces';
 import Search from '../SearchPage/SearchPage';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import { getAllPost } from '../../api/homeApi';
 
 const Message = styled.p`
@@ -34,32 +34,40 @@ export default function HomePage() {
   const [isClickSearchButton, setIsClickSearchButton] = useState(false);
   const [filteredAllPosts, setFilteredAllPosts] = useState([]);
   const [filteredPosts, setfilteredPosts] = useState([]);
-  const [postDataSkip, setPostDataSkip] = useState(0);
   const [allPosts, setAllPosts] = useState([]);
   const [isTabClick, setIsTabClick] = useState(false);
-  const [isFetchDone, setIsFetchDone] = useState(false);
 
-  const { data: postData, isLoading: isPostLoading } = useQuery(
-    ['posts', postDataSkip],
-    () => {
-      return allPosts.length >= postDataSkip && getAllPost(postDataSkip);
+  const count = useRef(0);
+  const [isLast, setIsLast] = useState(false);
+
+  const {
+    data: postData,
+    fetchNextPage,
+    isLoading,
+    hasPreviousPage,
+  } = useInfiniteQuery('posts', ({ skip = count.current }) => getAllPost({ limit: 100, skip }), {
+    getNextPageParam: (lastPage) => {
+      return lastPage.nextPage + 1;
     },
-    {
-      onSuccess: (newData) => {
-        // 이전 데이터와 새로운 데이터를 조합하여 전체 데이터로 업데이트
-        if (allPosts.length >= postDataSkip) {
-          setAllPosts((prevData) => [...prevData, ...newData.posts]);
-          setPostDataSkip((prevSkip) => prevSkip + 1000);
-        } else {
-          setIsFetchDone(true);
-        }
-      },
+    onSuccess: (newData) => {
+      const pageParam = newData.pageParams.length - 1;
+      setAllPosts([...newData.pages[pageParam].data]);
+      if (newData.pages[pageParam].isLast) {
+        setIsLast(true);
+      }
     },
-  );
+  });
+
+  useEffect(() => {
+    if (!isLoading && !isLast) {
+      count.current += 100;
+      fetchNextPage();
+    }
+  }, [postData, fetchNextPage, isLoading, isLast]);
 
   useEffect(() => {
     const allFiltered = allPosts.filter((post) => post.content?.includes('"space"'));
-    setFilteredAllPosts(allFiltered);
+    setFilteredAllPosts((prevData) => [...prevData, ...allFiltered]);
   }, [allPosts, postData]);
 
   const handleClickTabButton = (e) => {
@@ -88,7 +96,7 @@ export default function HomePage() {
     setIsClickSearchButton(true);
   };
 
-  if (!isFetchDone)
+  if (hasPreviousPage)
     return (
       <BasicLayout>
         <span>로딩중..</span>
