@@ -3,11 +3,12 @@ import { getTimeGap } from '../../../utils/getTime';
 import moreIcon from '../../../assets/icons/icon-more-small.svg';
 import { CommentInfoBox, StyledCommentItem } from './CommentItemStyle';
 
-export default function CommentItem({ data, myProfile, setModalType, setIsShow }) {
+export default function CommentItem({ data, myProfile, setModalType, setIsShow, setCommentId }) {
   const { author, createdAt, content } = data;
 
-  //_id 구분 (내 댓글 - 삭제 / 남 댓글 - 신고)
+  //댓글 더보기를 눌렀을때 _id 구분 (내 댓글 - 삭제 / 남 댓글 - 신고)
   const handleClickMoreButton = () => {
+    setCommentId(data.id);
     if (myProfile._id === author._id) {
       setModalType('myComment');
     } else {

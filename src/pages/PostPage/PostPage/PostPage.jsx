@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import BasicLayout from '../../../layout/BasicLayout';
 import { useNavigate, useParams } from 'react-router-dom';
 import BottomSheet from '../../../components/common/BottomSheet/BottomSheet';
@@ -97,6 +97,27 @@ export default function PostPage() {
     },
   });
 
+  //댓글 삭제하기
+  const queryClient = useQueryClient();
+  const deleteCommentMutation = useMutation(deleteComment, {
+    onSuccess(data) {
+      queryClient.invalidateQueries(['commentsData', postId]);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  //댓글 신고하기
+  const reportCommentMutation = useMutation(reportComment, {
+    onSuccess(data) {
+      alert(`해당 댓글을 신고했습니다.`);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
   const [isShow, setIsShow] = useState(false);
   const [modalType, setModalType] = useState('userPost');
   const [isShowConfirm, setIsShowConfirm] = useState(false);
@@ -117,6 +138,7 @@ export default function PostPage() {
     }
   };
 
+  //게시글 더보기 버튼 눌렀을 때
   const handleClickRightButton = () => {
     if (myProfile._id === data.author._id) {
       setModalType('myPost');
@@ -164,10 +186,10 @@ export default function PostPage() {
     } else {
       //삭제하기
       if (confirmType.type === 'delete') {
-        // deletePostMutation.mutate(postId);
+        deleteCommentMutation.mutate({ postId, commentId });
       } else {
         //신고하기
-        // reportPostMutation.mutate(postId);
+        reportCommentMutation.mutate({ postId, commentId });
       }
     }
     setIsShowConfirm(false);
