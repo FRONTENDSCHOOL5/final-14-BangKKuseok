@@ -11,8 +11,10 @@ import BasicModal from '../../../components/common/BottomSheet/BasicModal';
 import ProductDetailCard from '../../../components/Profile/ProductDetailCard/ProductDetailCard';
 import { posts, products } from '../../../mock/mockData';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getMyProfile, getProfile } from '../../../api/profileApi';
+import { deleteProduct } from '../../../api/productApi';
+import { deletePost, getMyPost, reportPost } from '../../../api/postApi';
 
 const ProfilePageWrapper = styled.main``;
 
@@ -25,23 +27,68 @@ const Message = styled.p`
 `;
 
 export default function ProfilePage() {
+  const navigate = useNavigate();
+  const { accountname: accountnameByParams } = useParams();
+
   const [selectedTab, setSelectedTab] = useState('list');
   const [selectedProduct, setSelectedProduct] = useState('');
   const [isShowMoreProfile, setIsShowMoreProfile] = useState(false);
   const [isShowMorePost, setIsShowMorePost] = useState(false);
   const [isShowProductDetail, setIsShowProductDetail] = useState(false);
 
-  const navigate = useNavigate();
-  const { accountname: accountnameByParams } = useParams();
 
-  const { data: userProfileData, isLoading: isUserProfileLoading } = useQuery('userProfile', () =>
-    accountnameByParams ? getProfile(accountnameByParams) : null,
+  const queryClient = useQueryClient();
+
+  // 프로필 정보 받기
+  const { data: profileData, isLoading: isProfileLoading } = useQuery('profile', () =>
+    accountnameByParams ? getProfile(accountnameByParams) : getMyProfile(),
   );
 
   const { data: myProfileData, isLoading: isMyProfileLoading } = useQuery(
     'myProfile',
     getMyProfile,
   );
+
+  // 게시글 정보 가져오기
+  const { data: myPostData, isLoading: isMyPostLoading } = useQuery(
+    ['myPost', profileData],
+    () => getMyPost(profileData.accountname),
+    {
+      enabled: !!profileData && !!myProfileData,
+    },
+  );
+
+  // 상품 삭제하기
+  const deleteProductMutation = useMutation(deleteProduct, {
+    onSuccess() {
+      alert('상품이 삭제되었습니다.');
+      // queryClient.invalidateQueries('myProduct');
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  // 게시글 삭제하기
+  const deletePostMutation = useMutation(deletePost, {
+    onSuccess() {
+      alert('게시물이 삭제되었습니다.');
+      queryClient.invalidateQueries('myPost');
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  //게시글 신고하기
+  const reportPostMutation = useMutation(reportPost, {
+    onSuccess() {
+      alert(`해당 게시글을 신고했습니다.`);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
 
   const handleClickTabButton = (tabId) => {
     setSelectedTab(tabId);
