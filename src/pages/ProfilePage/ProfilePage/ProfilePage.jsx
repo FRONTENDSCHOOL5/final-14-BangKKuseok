@@ -47,8 +47,9 @@ export default function ProfilePage() {
   const queryClient = useQueryClient();
 
   // 프로필 정보 받기
-  const { data: profileData, isLoading: isProfileLoading } = useQuery('profile', () =>
-    accountnameByParams ? getProfile(accountnameByParams) : getMyProfile(),
+  const { data: profileData, isLoading: isProfileLoading } = useQuery(
+    ['profile', accountnameByParams],
+    () => (accountnameByParams ? getProfile(accountnameByParams) : getMyProfile()),
   );
 
   const { data: myProfileData, isLoading: isMyProfileLoading } = useQuery(
