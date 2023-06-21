@@ -14,7 +14,7 @@ import {
 } from './ProfileCardStyle';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 
-export default function ProfileCard({ profile }) {
+export default function ProfileCard({ profile, isMyProfile }) {
   const { accountname: accountnameByParams } = useParams();
 
   const [isFollow, setIsFollow] = useState(false);
@@ -54,7 +54,7 @@ export default function ProfileCard({ profile }) {
         <Intro>{profile.intro}</Intro>
       </UserInfoBox>
       <UserActionBox>
-        {accountnameByParams ? (
+        {!isMyProfile ? (
           <>
             <Link to={`/chat/${accountnameByParams}`} title='상대방과 채팅하기'></Link>
             {isFollow ? (
