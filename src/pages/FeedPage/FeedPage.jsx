@@ -25,6 +25,17 @@ export default function FeedPage() {
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState();
   const [isClickSearchButton, setIsClickSearchButton] = useState(false);
+
+  //서치컴포에서 서치 눌렀을떄
+  const handleClickLeftButton = () => {
+    setIsClickSearchButton(false);
+  };
+
+  //search 버튼 눌렀을때
+  const handleClickRightButton = () => {
+    setIsClickSearchButton(true);
+  };
+
   //팔로잉 게시글 목록 불러오기
   const {
     data: feedPostData,
@@ -67,6 +78,40 @@ export default function FeedPage() {
       return () => observer.unobserve(element);
     }
   }, [fetchNextPage, handleObserver, isLast, isLoading]);
+
+  //게시글 신고하기
+  const reportPostMutation = useMutation(reportPost, {
+    onSuccess() {
+      alert(`해당 게시글을 신고했습니다.`);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  const handleClickModalOpen = () => {
+    setIsShow((prev) => !prev);
+  };
+
+  //게시글 더보기 누르기
+  const handleClickMorePostButton = (selectedPost) => {
+    setSelectedPostId(selectedPost.id);
+    setIsShow(true);
+  };
+
+  //모달안의 신고하기 목록 누르기
+  const handleClickListItem = (e) => {
+    setIsShowConfirm(true);
+    console.log(e);
+  };
+
+  //컨펌창에서 게시글을 신고하기
+  const handleClickConfirm = (e) => {
+    reportPostMutation.mutate(selectedPostId);
+    setIsShowConfirm(false);
+    setIsShow(false);
+  };
+
   if (isLoading && feedPosts.length === 0) {
     return (
       <BasicLayout type='feed'>
