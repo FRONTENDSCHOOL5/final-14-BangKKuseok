@@ -17,6 +17,56 @@ import { useRecoilState } from 'recoil';
 import { feedDataAtom, isLastFeedAtom } from '../../atoms/feed';
 
 export default function FeedPage() {
+  const navigate = useNavigate();
+  const count = useRef(0);
+  const [isLast, setIsLast] = useRecoilState(isLastFeedAtom);
+  const [feedPosts, setFeedPosts] = useRecoilState(feedDataAtom);
+  const [isShow, setIsShow] = useState(false);
+  const [isShowConfirm, setIsShowConfirm] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState();
+  const [isClickSearchButton, setIsClickSearchButton] = useState(false);
+  //팔로잉 게시글 목록 불러오기
+  const {
+    data: feedPostData,
+    fetchNextPage,
+    isLoading,
+    isFetching,
+  } = useInfiniteQuery('feedPostData', ({ skip = count.current }) => getFeedPost({ skip }), {
+    enabled: !isLast,
+    getNextPageParam: (lastPage) => {
+      return lastPage.nextPage + 1;
+    },
+    onSuccess: (newData) => {
+      const pageParam = newData.pageParams.length - 1;
+      setFeedPosts([...newData.pages.flatMap((pages) => pages.data)]);
+      if (newData.pages[pageParam].isLast) {
+        setIsLast(true);
+      }
+    },
+  });
+
+  //스크롤 감지를 위한 IntersectionObserver API
+  const observerRef = useRef();
+  const handleObserver = useCallback(
+    (entries) => {
+      const [target] = entries;
+      if (target.isIntersecting) {
+        count.current += 10;
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage],
+  );
+
+  useEffect(() => {
+    const element = observerRef.current;
+    const option = { threshold: 0 };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (element && !isLast) {
+      observer.observe(element);
+      return () => observer.unobserve(element);
+    }
+  }, [fetchNextPage, handleObserver, isLast, isLoading]);
   if (isLoading && feedPosts.length === 0) {
     return (
       <BasicLayout type='feed'>
