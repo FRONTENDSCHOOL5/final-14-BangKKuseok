@@ -6,7 +6,7 @@ import ListModal from '../../../components/common/BottomSheet/ListModal';
 import PostCard from '../../../components/common/Card/PostCard/PostCard';
 import Confirm from '../../../components/common/Confirm/Confirm';
 import { PostPageWrapper } from './PostPageStyle';
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deletePost, getPostDetail, reportPost } from '../../../api/postApi';
 import { getMyProfile } from '../../../api/profileApi';
 import { useRecoilState } from 'recoil';
@@ -69,7 +69,7 @@ export default function PostPage() {
     () => getMyProfile(),
     {
       onSuccess: (data) => {
-        setMyProfile(data.user);
+        setMyProfile(data);
       },
       onError: (error) => {
         console.log(error);
@@ -110,7 +110,7 @@ export default function PostPage() {
 
   //댓글 신고하기
   const reportCommentMutation = useMutation(reportComment, {
-    onSuccess(data) {
+    onSuccess() {
       alert(`해당 댓글을 신고했습니다.`);
     },
     onError(error) {
@@ -206,12 +206,12 @@ export default function PostPage() {
         <BasicLayout
           type='post'
           isNonNav
-          title={postData.post.author.username}
+          title={postData?.post.author.username}
           onClickLeftButton={handleClickLeftButton}
           onClickRightButton={handleClickRightButton}
         >
           <PostPageWrapper>
-            <PostCard data={postData.post} moreInfo />
+            <PostCard data={postData?.post} moreInfo />
             <CommentSection
               data={comments}
               myProfile={myProfile}
