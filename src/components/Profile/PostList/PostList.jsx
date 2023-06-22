@@ -5,13 +5,13 @@ import UserSimpleInfo from '../../common/UserSimpleInfo/UserSimpleInfo/UserSimpl
 import { PostCardList, PostListWrapper } from './PostListStyle';
 import { filterUserPosts } from '../../../utils/filterPosts';
 
-export default function PostList({ selectedTab, profile, posts, moreInfo, onClick }) {
+export default function PostList({ selectedTab, posts, moreInfo, onClick }) {
   const layout = {
     list: (
       <PostCardList>
         {posts.map((item) => (
           <li key={item.id}>
-            <UserSimpleInfo profile={profile} type={'more'} onClick={() => onClick(item)} />
+            <UserSimpleInfo profile={item.author} type={'more'} onClick={() => onClick(item)} />
             <PostCard data={item} moreInfo={moreInfo} />
           </li>
         ))}
