@@ -18,7 +18,8 @@ const HeaderWrapper = styled.header`
       case 'feed':
         return css`
           background-color: ${({ theme }) => theme.colors.white};
-          position: absolute;
+          position: fixed;
+          z-index: 1;
         `;
       case 'search':
         return css`

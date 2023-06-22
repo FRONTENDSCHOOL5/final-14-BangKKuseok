@@ -26,7 +26,7 @@ export default function Header({
     ),
     feed: (
       <HeaderWrapper type={type}>
-        <SearchBtn>
+        <SearchBtn type='button' onClick={onClickRightButton}>
           <SearchIcon stroke='#000' />
         </SearchBtn>
       </HeaderWrapper>
