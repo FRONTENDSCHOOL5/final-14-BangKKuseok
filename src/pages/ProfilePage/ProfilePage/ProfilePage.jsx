@@ -217,7 +217,6 @@ export default function ProfilePage() {
             <>
               <ViewTabs selectedTab={selectedTab} onClick={handleClickTabButton} />
               <PostList
-                profile={profileData}
                 selectedTab={selectedTab}
                 posts={myPostData}
                 moreInfo={false}
