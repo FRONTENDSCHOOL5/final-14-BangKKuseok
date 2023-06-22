@@ -5,7 +5,7 @@ import { HeartCommentList, PostCardWrapper, PostDetail, PostInfoBox, Space } fro
 import { convertDateFormat } from '../../../../utils/getTime';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import { SetDislike, SetLike } from '../../../../api/likeApi';
+import { deleteLike, postLike } from '../../../../api/likeApi';
 
 export default function PostCard({ data, moreInfo = false }) {
   const { id, content, image, hearted, heartCount, comments, createdAt } = data;
@@ -16,14 +16,14 @@ export default function PostCard({ data, moreInfo = false }) {
   const [nowHeartCount, setNowHeartCount] = useState(heartCount);
 
   //좋아요
-  const setLikeMutation = useMutation(SetLike, {
+  const postLikeMutation = useMutation(postLike, {
     onError(error) {
       console.log(error);
     },
   });
 
   //좋아요 취소
-  const setDislikeMutation = useMutation(SetDislike, {
+  const deleteLikeMutation = useMutation(deleteLike, {
     onError(error) {
       console.log(error);
     },
@@ -33,12 +33,12 @@ export default function PostCard({ data, moreInfo = false }) {
   const handleClickHeartButton = () => {
     //하트가 눌러진 상태라면 좋아요 취소
     if (isHearted) {
-      setDislikeMutation.mutate(id);
+      deleteLikeMutation.mutate(id);
       setIsHearted(false);
       setNowHeartCount((count) => (count -= 1));
     } else {
       //아니면 좋아요
-      setLikeMutation.mutate(id);
+      postLikeMutation.mutate(id);
       setIsHearted(true);
       setNowHeartCount((count) => (count += 1));
     }

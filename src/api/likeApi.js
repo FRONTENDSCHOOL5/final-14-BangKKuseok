@@ -1,6 +1,6 @@
 import { accessInstance } from './axiosInstance';
 
-export const SetLike = async (postId) => {
+export const postLike = async (postId) => {
   try {
     const response = await accessInstance.post(`/post/${postId}/heart`);
     return response.data;
@@ -8,7 +8,7 @@ export const SetLike = async (postId) => {
     console.error(error);
   }
 };
-export const SetDislike = async (postId) => {
+export const deleteLike = async (postId) => {
   try {
     const response = await accessInstance.delete(`/post/${postId}/unHeart`);
     return response.data;
