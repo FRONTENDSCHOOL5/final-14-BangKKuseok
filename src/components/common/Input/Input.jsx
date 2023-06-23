@@ -35,8 +35,9 @@ export default function Input({
     setIsFocused(false);
   };
 
-  const handleClickEye = () => {
-    console.log('눈 클릭');
+  const handleClickEye = (e) => {
+    e.preventDefault();
+
     if (type === 'password') {
       setType('text');
       setIsEye(true);
