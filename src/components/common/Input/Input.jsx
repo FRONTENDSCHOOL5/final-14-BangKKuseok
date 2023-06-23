@@ -35,9 +35,7 @@ export default function Input({
     setIsFocused(false);
   };
 
-  const handleClickEye = (e) => {
-    e.preventDefault();
-
+  const handleClickEye = () => {
     if (type === 'password') {
       setType('text');
       setIsEye(true);
@@ -64,7 +62,9 @@ export default function Input({
           isInValid={isInValid}
           warningMsg={warningMsg}
         />
-        {inputType === 'password' && <EyeButton onClick={handleClickEye} isEye={isEye}></EyeButton>}
+        {inputType === 'password' && (
+          <EyeButton type='button' onClick={handleClickEye} isEye={isEye}></EyeButton>
+        )}
       </InputBox>
       {warningMsg && <InputShowWarning>{warningMsg}</InputShowWarning>}
     </InputWrapper>

@@ -7,7 +7,6 @@ import Button from '../../common/Button/Button/Button';
 import { SignUpHeader, SignUpLogo, SignUpBottomBox, SignUpGoBack } from './SignUpStyle';
 
 const SignUp = ({ setStep, setPreData, preData }) => {
-  // console.log(preData);
   // 이메일, 비밀번호 값을 받아옴
   const [emailValue, setEmailValue] = useState(preData.email);
   const [passwordValue, setPasswordValue] = useState(preData.password);
@@ -19,7 +18,7 @@ const SignUp = ({ setStep, setPreData, preData }) => {
   // 이메일이 유효하지 않으면 true
   const [isEmailInValid, setIsEmailInValid] = useState(true);
   // 비밀번호가 유효하지 않으면 true
-  const [isPasswordInValid, setIsPasswordInValid] = useState(false);
+  const [isPasswordInValid, setIsPasswordInValid] = useState(true);
 
   // 버튼 활성화를 위해 만듦.
   const [btnDisabled, setBtnDisabled] = useState(false);
@@ -36,7 +35,6 @@ const SignUp = ({ setStep, setPreData, preData }) => {
         setEmailError(formData.message);
         setIsEmailInValid(true);
         setBtnDisabled(true);
-        console.log('dd', btnDisabled);
       }
     },
     onError: (error) => {
