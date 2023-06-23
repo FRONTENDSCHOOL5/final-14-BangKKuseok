@@ -11,7 +11,7 @@ export default function ModalProductList({ setIsShow, setTagStep, setIsBubbleSho
 
   return (
     <ModalProductListWrapper>
-      {canSelectItems.length > 1 ? (
+      {canSelectItems.length > 0 ? (
         canSelectItems.map((item) => (
           <ModalProductItem
             data={item}

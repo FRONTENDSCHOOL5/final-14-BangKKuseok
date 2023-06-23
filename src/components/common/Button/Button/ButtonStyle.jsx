@@ -52,7 +52,7 @@ const StyledButton = styled.button`
   padding: var(--padding, 9px 14px);
   color: var(--color, ${({ theme }) => theme.colors.white});
   background-color: var(--bg-color, ${({ theme }) => theme.colors.mainCoral});
-  border: var(--border, none);
+  border: var(--border, 1px solid currentColor);
 
   &:disabled {
     cursor: default;

@@ -13,10 +13,12 @@ export default function Header({
   isBtnActive,
   onClickLeftButton,
   onClickRightButton,
+  value,
+  onChange,
 }) {
   const HeaderLayout = {
     home: (
-      <HeaderWrapper type={type}>
+      <HeaderWrapper type={type} onClick={onClickRightButton}>
         <SearchBtn>
           <SearchIcon stroke='#fff' />
         </SearchBtn>
@@ -24,36 +26,52 @@ export default function Header({
     ),
     feed: (
       <HeaderWrapper type={type}>
-        <SearchBtn>
+        <SearchBtn type='button' onClick={onClickRightButton}>
           <SearchIcon stroke='#000' />
         </SearchBtn>
       </HeaderWrapper>
     ),
     search: (
       <HeaderWrapper type={type}>
-        <button>
+        <button onClick={onClickLeftButton}>
           <BackIcon stroke='#000' />
         </button>
-        <RoundedInput id='search' placeholder='계정을 검색하세요' />
+        <RoundedInput
+          id='search'
+          placeholder='계정을 검색하세요'
+          value={value}
+          onChange={onChange}
+        />
       </HeaderWrapper>
     ),
     profile: (
       <HeaderWrapper type={type}>
-        <button>
+        <button type='button' onClick={onClickLeftButton}>
           <BackIcon stroke='#fff' />
         </button>
-        <button>
+        <button type='button' onClick={onClickRightButton}>
           <MoreIcon fill='#fff' stroke='#fff' />
         </button>
       </HeaderWrapper>
     ),
-    post: (
+    profileEdit: (
       <HeaderWrapper type={type}>
-        <button>
+        <button type='button' onClick={onClickLeftButton}>
           <BackIcon stroke='#000' />
         </button>
-        <HeaderH3>애월읍 위니브 감귤농장</HeaderH3>
-        <button>
+        <HeaderH2>{title}</HeaderH2>
+        <Button disabled={!isBtnActive} size='sm' onClick={onClickRightButton}>
+          {btnText}
+        </Button>
+      </HeaderWrapper>
+    ),
+    post: (
+      <HeaderWrapper type={type}>
+        <button type='button' onClick={onClickLeftButton}>
+          <BackIcon stroke='#000' />
+        </button>
+        <HeaderH3>{title}</HeaderH3>
+        <button type='button' onClick={onClickRightButton}>
           <MoreIcon fill='#000' stroke='#000' />
         </button>
       </HeaderWrapper>

@@ -56,9 +56,10 @@ export const BottomSheetWrapper = styled.article`
 `;
 
 export const ModalBox = styled.div`
-  position: relative;
+  position: fixed;
+  width: clamp(390px, 100%, 720px);
   bottom: 0;
-  z-index: 50;
+  z-index: 51;
   border-radius: 20px 20px 0 0;
   padding-top: 48px;
   display: flex;
@@ -72,13 +73,12 @@ export const ModalHandle = styled.button`
   height: 48px;
   position: absolute;
   top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &::before {
     content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 50px;
     height: 4px;
     background-color: ${({ theme }) => theme.colors.gray100};

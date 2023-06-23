@@ -10,7 +10,7 @@ const ProductListWrapper = styled.section`
 `;
 
 const ProductCardList = styled.ul`
-  padding: 15px 0 36px 0;
+  padding: 15px 0 26px 0;
   display: flex;
   overflow: hidden;
 `;

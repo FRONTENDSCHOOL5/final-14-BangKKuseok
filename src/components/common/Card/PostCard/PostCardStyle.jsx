@@ -2,10 +2,8 @@ import styled, { css } from 'styled-components';
 
 const PostCardWrapper = styled.article`
   position: relative;
-  width: 358px;
-  max-width: calc(100% - 32px);
+  width: 100%;
   padding-bottom: 14px;
-  cursor: ${(props) => props.moreInfo ? 'default' : 'pointer'};
 
   /* ---게시글 이미지--- */
   img {
@@ -30,19 +28,22 @@ const PostDetail = styled.p`
   line-height: 160%;
 
   ${(props) =>
-    props.moreInfo ? null : css`
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    `}
+    props.moreInfo
+      ? null
+      : css`
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        `}
 `;
 
 /* ---게시글 정보--- */
 const MoreInfolayout = css`
   ${(props) =>
-    props.moreInfo && css`
+    props.moreInfo &&
+    css`
       position: relative;
       inset: unset;
       aspect-ratio: unset;
@@ -55,7 +56,6 @@ const MoreInfolayout = css`
 const PostInfoBox = styled.div`
   position: absolute;
   inset: 0 0;
-  z-index: 2;
   width: 100%;
   aspect-ratio: 1;
   padding: 10px;
@@ -70,12 +70,18 @@ const PostInfoBox = styled.div`
 
 const onPhotoStyle = css`
   ${(props) =>
-    props.moreInfo ? null : css`
-      background: ${({ theme }) => theme.colors.white50};
-      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04);
-      backdrop-filter: blur(15px);
-      overflow: hidden;
-    `}
+    props.moreInfo
+      ? null
+      : css`
+          background: ${({ theme }) => theme.colors.white50};
+          box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04);
+          backdrop-filter: blur(15px);
+          overflow: hidden;
+
+          li {
+            cursor: pointer;
+          }
+        `}
 `;
 
 const Space = styled.span`
@@ -83,29 +89,34 @@ const Space = styled.span`
   font-size: ${({ theme }) => theme.fontSize.sm};
   border-radius: 20px;
 
-  ${(props) => 
-    props.moreInfo && css`
+  ${(props) =>
+    props.moreInfo &&
+    css`
       padding: 0.7rem 1.2rem;
       font-size: ${({ theme }) => theme.fontSize.xm};
       border: 1.4px solid ${({ theme }) => theme.colors.gray400};
     `}
-    ${onPhotoStyle}
+  ${onPhotoStyle}
 `;
 
 const HeartCommentList = styled.ul`
   display: flex;
   align-items: center;
-  padding:  ${(props) => props.moreInfo ? '0' : '0.6rem 1rem'};
-  font-size: ${(props) => props.moreInfo ? ({ theme }) => theme.fontSize.sm : ({ theme }) => theme.fontSize.xs};
+  padding: ${(props) => (props.moreInfo ? '0' : '0.6rem 1rem')};
+  font-size: ${(props) =>
+    props.moreInfo ? ({ theme }) => theme.fontSize.sm : ({ theme }) => theme.fontSize.xs};
   line-height: 2rem;
   border-radius: 10px;
 
   li:first-child {
+    cursor: pointer;
     margin-right: 0.8rem;
   }
-  img, svg {
-    width: ${(props) => props.moreInfo ? '2.4rem' : 'unset'};
-    height: ${(props) => props.moreInfo ? '2.4rem' : 'unset'};
+
+  img,
+  svg {
+    width: ${(props) => (props.moreInfo ? '2.4rem' : 'unset')};
+    height: ${(props) => (props.moreInfo ? '2.4rem' : 'unset')};
     margin-right: 0.4rem;
   }
   ${onPhotoStyle}

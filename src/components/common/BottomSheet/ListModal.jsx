@@ -26,9 +26,7 @@ export default function ListModal({ type, onClick }) {
     <BottomSheetListWrapper>
       {TYPES[type].map((item, index) => (
         <ListItem key={index} onClick={onClick}>
-          <button type='button' onClick={onClick}>
-            {item}
-          </button>
+          <button type='button'>{item}</button>
         </ListItem>
       ))}
     </BottomSheetListWrapper>
