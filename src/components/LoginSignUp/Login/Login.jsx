@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import { postLogin } from '../../../api/loginApi';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button/Button';
 import { LoginHeader, LoginLogo, LoginBottomBox, LoginGoBack } from './LoginStyle';
 
-const Login = ({ onClickNextLink }) => {
+const Login = () => {
   // 이메일의 값을 받아옴
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
@@ -14,60 +16,78 @@ const Login = ({ onClickNextLink }) => {
   const [passwordError, setPasswordError] = useState('');
 
   // 이메일이 유효하지 않으면 true
-  const [isEmailInValid, setIsEmailInValid] = useState(false);
+  const [isEmailInValid, setIsEmailInValid] = useState(true);
   // 비밀번호가 유효하지 않으면 true
-  const [isPwInValid, setIsPwInValid] = useState(false);
+  const [isPwInValid, setIsPwInValid] = useState(true);
 
-  // 버튼 활성화를 위해 만듦. 사용자가 입력하는 동안은 버튼 활성화가 되지만, 버튼을 눌렀을 때 이메일 혹은 비밀번호가 유효하지 않으면 값을 true로 바꿔줌으로써 버튼을 disabled 시킴
-  const [isInValid, setIsInValid] = useState(true);
+  // 버튼 활성화를 위해 만듦.
+  const [btnDisabled, setBtnDisabled] = useState(true);
+
+  const navigate = useNavigate();
+
+  const loginMutation = useMutation(postLogin, {
+    onSuccess: (formData) => {
+      if (formData.message === '이메일 또는 비밀번호가 일치하지 않습니다.') {
+        // 비밀번호쪽에 에러메시지를 띄우기 위함
+        setPasswordError(formData.message);
+        setIsPwInValid(true);
+        setBtnDisabled(true);
+      } else {
+        // 성공
+        localStorage.setItem('token', formData.user.token);
+        navigate('/');
+      }
+    },
+    onError: (formData) => {
+      console.error(formData.message);
+    },
+  });
 
   // 이메일 입력값 받아오기
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmailValue(value);
+    setEmailError('');
   };
 
   // 비밀번호 입력값 받아오기
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPasswordValue(value);
+    setPasswordError('');
   };
 
-  // 이메일 입력값이 바뀔때마다
+  // 이메일과 비밀번호에 값이 있으면 버튼 활성화
   useEffect(() => {
-    setEmailError('');
-    // 버튼 활성화를 위해 IsInvalid를 false로
-    setIsInValid(false);
-    // @문자가 포함되어있지 않거나, @뒤에 글자가 입력되지 않았을 때
-    if (!emailValue.includes('@') || emailValue.split('@')[1].length === 0) {
-      setIsEmailInValid(true);
-    } else {
-      setIsEmailInValid(false);
+    if (emailValue.length > 0 && passwordValue.length > 0) {
+      setBtnDisabled(false);
     }
-  }, [emailValue]);
+  }, [emailValue, passwordValue]);
 
-  // 비밀번호 입력값이 바뀔때마다
-  useEffect(() => {
-    setPasswordError('');
-    // 버튼 활성화를 위해 IsInvalid를 false로
-    setIsInValid(false);
-    // 비밀번호 길이가 6보다 작다면
-    if (passwordValue.length < 6) {
-      setIsPwInValid(true);
+  // 이메일 또는 비밀번호 onfocus일 경우, 이메일 또는 비밀번호가 빈칸이라면 에러메시지 출력
+  const checkIsBlank = () => {
+    if (emailValue.length === 0) {
+      setEmailError('이메일을 입력해주세요.');
+    } else if (passwordValue.length === 0) {
+      setPasswordError('비밀번호를 입력해주세요.');
     } else {
-      setIsPwInValid(false);
+      setEmailError('');
+      setPasswordError('');
     }
-  }, [passwordValue]);
+  };
 
   // 이메일 유효성 검사 후 에러메시지 갱신
   const handleValidateEmail = () => {
-    if (isEmailInValid) {
-      if (emailValue === '') {
-        setEmailError('이메일을 입력해주세요.');
-      } else {
-        setEmailError('잘못된 이메일 형식입니다.');
-      }
+    if (
+      !/^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(emailValue) &&
+      emailValue.length > 0
+    ) {
       setIsEmailInValid(true);
+      setEmailError('잘못된 이메일 형식입니다.');
+      console.log(isEmailInValid);
+    } else if (emailValue.length === 0) {
+      setIsEmailInValid(true);
+      setEmailError('이메일을 입력해주세요.');
     } else {
       setEmailError('');
       setIsEmailInValid(false);
@@ -76,13 +96,9 @@ const Login = ({ onClickNextLink }) => {
 
   // 비밀번호 유효성 검사 후 에러메시지 갱신
   const handleValidatePassword = () => {
-    if (isPwInValid) {
-      if (passwordValue === '') {
-        setPasswordError('비밀번호를 입력해주세요.');
-      } else {
-        setPasswordError('비밀번호는 6자 이상이어야 합니다.');
-      }
+    if (passwordValue.length === 0) {
       setIsPwInValid(true);
+      setPasswordError('비밀번호를 입력해주세요.');
     } else {
       setPasswordError('');
       setIsPwInValid(false);
@@ -97,11 +113,11 @@ const Login = ({ onClickNextLink }) => {
     handleValidatePassword();
 
     // 이메일, 비밀번호 둘 중 유효하지 않은 값이 있다면 isInValid가 true
-    setIsInValid(isEmailInValid || isPwInValid);
+    setBtnDisabled(isEmailInValid || isPwInValid);
 
     // 이메일, 비밀번호 유효성 통과하면 Home으로 이동
-    if (!isEmailInValid && !isPwInValid) {
-      onClickNextLink();
+    if (!btnDisabled) {
+      loginMutation.mutate({ user: { email: emailValue, password: passwordValue } });
     }
   };
 
@@ -114,6 +130,7 @@ const Login = ({ onClickNextLink }) => {
         inputType='email'
         labelText='이메일'
         placeHolder='이메일을 입력하세요'
+        onBlur={checkIsBlank}
         value={emailValue}
         warningMsg={emailError}
         onChange={handleEmailChange}
@@ -125,6 +142,7 @@ const Login = ({ onClickNextLink }) => {
         inputType='password'
         labelText='비밀번호'
         placeHolder='비밀번호를 입력하세요'
+        onBlur={checkIsBlank}
         value={passwordValue}
         warningMsg={passwordError}
         onChange={handlePasswordChange}
@@ -137,7 +155,7 @@ const Login = ({ onClickNextLink }) => {
           size='lg'
           onClick={handleSubmit}
           // 이메일 혹은 비번이 입력되지 않았거나, 이메일 혹은 비번이 유효하지 않을 때 disabled
-          disabled={emailValue === '' || passwordValue === '' || isInValid}
+          disabled={btnDisabled}
         >
           로그인
         </Button>

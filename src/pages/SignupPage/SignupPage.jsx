@@ -5,6 +5,14 @@ import SetUserProfile from '../../components/LoginSignUp/SetUserProfile/SetUserP
 
 export default function SignupPage() {
   const [step, setStep] = useState('회원가입');
+  const [preData, setPreData] = useState({
+    email: '',
+    password: '',
+    username: 'usernameTest',
+    accountname: 'accountnameTest',
+    intro: '',
+    image: '',
+  });
 
   const navigate = useNavigate();
 
@@ -27,8 +35,13 @@ export default function SignupPage() {
   return (
     <>
       {step === '회원가입' && <SignUp onClickNextLink={handleNextLink} />}
+      {step === '회원가입' && (
+        <SignUp setStep={setStep} setPreData={setPreData} preData={preData} />
+      )}
       {step === '프로필설정' && (
         <SetUserProfile onClickBackLink={handleBackLink} onClickNextLink={handleNextLink} />
+        <SetUserProfile
+        />
       )}
     </>
   );
