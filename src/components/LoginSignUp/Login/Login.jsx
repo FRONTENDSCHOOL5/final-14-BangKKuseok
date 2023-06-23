@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import { postLogin } from '../../../api/loginApi';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button/Button';
 import { LoginHeader, LoginLogo, LoginBottomBox, LoginGoBack } from './LoginStyle';
 
-const Login = ({ onClickNextLink }) => {
+const Login = () => {
   // 이메일의 값을 받아옴
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
@@ -20,6 +22,24 @@ const Login = ({ onClickNextLink }) => {
 
   // 버튼 활성화를 위해 만듦. 사용자가 입력하는 동안은 버튼 활성화가 되지만, 버튼을 눌렀을 때 이메일 혹은 비밀번호가 유효하지 않으면 값을 true로 바꿔줌으로써 버튼을 disabled 시킴
   const [isInValid, setIsInValid] = useState(true);
+
+  const navigate = useNavigate();
+
+  const loginMutation = useMutation(postLogin, {
+    onSuccess: (formData) => {
+      if (formData.message) {
+        setPasswordError(formData.message);
+        setIsInValid(true);
+      } else {
+        // 성공
+        localStorage.setItem('token', formData.user.token);
+        navigate('/');
+      }
+    },
+    onError: (formData) => {
+      console.error(formData.message);
+    },
+  });
 
   // 이메일 입력값 받아오기
   const handleEmailChange = (e) => {
@@ -101,7 +121,7 @@ const Login = ({ onClickNextLink }) => {
 
     // 이메일, 비밀번호 유효성 통과하면 Home으로 이동
     if (!isEmailInValid && !isPwInValid) {
-      onClickNextLink();
+      loginMutation.mutate({ user: { email: emailValue, password: passwordValue } });
     }
   };
 
