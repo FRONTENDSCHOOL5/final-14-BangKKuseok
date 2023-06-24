@@ -19,8 +19,8 @@ export default function Header({
 }) {
   const HeaderLayout = {
     home: (
-      <HeaderWrapper type={type} onClick={onClickRightButton}>
-        <SearchBtn>
+      <HeaderWrapper type={type}>
+        <SearchBtn onClick={onClickRightButton}>
           <SearchIcon stroke='#fff' />
         </SearchBtn>
       </HeaderWrapper>
