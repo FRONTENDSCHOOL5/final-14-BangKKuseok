@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import BasicLayout from '../../layout/BasicLayout';
-import { useNavigate } from 'react-router-dom';
 import PostList from '../../components/Profile/PostList/PostList';
 import { useInfiniteQuery, useMutation } from 'react-query';
 import { getFeedPost } from '../../api/feedApi';
@@ -13,14 +12,8 @@ import BottomSheet from '../../components/common/BottomSheet/BottomSheet';
 import ListModal from '../../components/common/BottomSheet/ListModal';
 import Confirm from '../../components/common/Confirm/Confirm';
 import Search from '../SearchPage/SearchPage';
-import { useRecoilState } from 'recoil';
-import { feedDataAtom, isLastFeedAtom } from '../../atoms/feed';
 
 export default function FeedPage() {
-  const navigate = useNavigate();
-  const count = useRef(0);
-  const [isLast, setIsLast] = useRecoilState(isLastFeedAtom);
-  const [feedPosts, setFeedPosts] = useRecoilState(feedDataAtom);
   const [isShow, setIsShow] = useState(false);
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState();
@@ -42,42 +35,44 @@ export default function FeedPage() {
     fetchNextPage,
     isLoading,
     isFetching,
-  } = useInfiniteQuery('feedPostData', ({ skip = count.current }) => getFeedPost({ skip }), {
-    enabled: !isLast,
-    getNextPageParam: (lastPage) => {
-      return lastPage.nextPage + 1;
+    hasNextPage,
+  } = useInfiniteQuery(
+    'feedPostData',
+    ({ pageParam = { skip: 0 } }) => getFeedPost({ skip: pageParam.skip }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = allPages.length > 0 ? allPages.length * 10 : 0;
+        return lastPage.data.length < 10 ? undefined : { skip: nextPage };
+      },
+      select: (data) => {
+        return {
+          pages: data.pages.flatMap((page) => page.data),
+        };
+      },
     },
-    onSuccess: (newData) => {
-      const pageParam = newData.pageParams.length - 1;
-      setFeedPosts([...newData.pages.flatMap((pages) => pages.data)]);
-      if (newData.pages[pageParam].isLast) {
-        setIsLast(true);
-      }
-    },
-  });
+  );
 
   //스크롤 감지를 위한 IntersectionObserver API
   const observerRef = useRef();
   const handleObserver = useCallback(
     (entries) => {
       const [target] = entries;
-      if (target.isIntersecting) {
-        count.current += 10;
+      if (target.isIntersecting && hasNextPage) {
         fetchNextPage();
       }
     },
-    [fetchNextPage],
+    [fetchNextPage, hasNextPage],
   );
 
   useEffect(() => {
     const element = observerRef.current;
     const option = { threshold: 0 };
     const observer = new IntersectionObserver(handleObserver, option);
-    if (element && !isLast) {
+    if (element) {
       observer.observe(element);
       return () => observer.unobserve(element);
     }
-  }, [fetchNextPage, handleObserver, isLast, isLoading]);
+  }, [fetchNextPage, handleObserver, isLoading]);
 
   //게시글 신고하기
   const reportPostMutation = useMutation(reportPost, {
@@ -112,13 +107,13 @@ export default function FeedPage() {
     setIsShow(false);
   };
 
-  if (isLoading && feedPosts.length === 0) {
+  if (isLoading) {
     return (
       <BasicLayout type='feed'>
         <Spinner />
       </BasicLayout>
     );
-  } else if (!isLoading && !isFetching && feedPosts.length === 0) {
+  } else if (!isLoading && !isFetching && feedPostData.pages.length === 0) {
     return (
       <BasicLayout type='feed' onClickRightButton={handleClickRightButton}>
         <NoneFeedWrapper>
@@ -141,7 +136,7 @@ export default function FeedPage() {
           <FeedPageWrapper>
             <PostList
               selectedTab='list'
-              posts={feedPosts}
+              posts={feedPostData.pages}
               moreInfo={false}
               onClick={handleClickMorePostButton}
             />
