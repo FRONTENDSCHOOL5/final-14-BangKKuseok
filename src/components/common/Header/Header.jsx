@@ -27,7 +27,7 @@ export default function Header({
     ),
     feed: (
       <HeaderWrapper type={type}>
-        <SearchBtn>
+        <SearchBtn type='button' onClick={onClickRightButton}>
           <SearchIcon stroke='#000' />
         </SearchBtn>
       </HeaderWrapper>
@@ -53,6 +53,17 @@ export default function Header({
         <button type='button' onClick={onClickRightButton}>
           <MoreIcon fill='#fff' stroke='#fff' />
         </button>
+      </HeaderWrapper>
+    ),
+    profileEdit: (
+      <HeaderWrapper type={type}>
+        <button type='button' onClick={onClickLeftButton}>
+          <BackIcon stroke='#000' />
+        </button>
+        <HeaderH2>{title}</HeaderH2>
+        <Button disabled={!isBtnActive} size='sm' onClick={onClickRightButton}>
+          {btnText}
+        </Button>
       </HeaderWrapper>
     ),
     post: (

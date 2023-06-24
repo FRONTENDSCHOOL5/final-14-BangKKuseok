@@ -77,6 +77,10 @@ const onPhotoStyle = css`
           box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04);
           backdrop-filter: blur(15px);
           overflow: hidden;
+
+          li {
+            cursor: pointer;
+          }
         `}
 `;
 
@@ -104,13 +108,11 @@ const HeartCommentList = styled.ul`
   line-height: 2rem;
   border-radius: 10px;
 
-  li {
-    cursor: pointer;
-  }
-
   li:first-child {
+    cursor: pointer;
     margin-right: 0.8rem;
   }
+
   img,
   svg {
     width: ${(props) => (props.moreInfo ? '2.4rem' : 'unset')};

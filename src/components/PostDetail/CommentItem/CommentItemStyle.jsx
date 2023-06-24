@@ -26,6 +26,7 @@ export const CommentInfoBox = styled.div`
   }
   h5 {
     padding: 6px 6px 0;
+    font-weight: 500;
   }
   time {
     padding-top: 7px;

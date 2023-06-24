@@ -3,10 +3,11 @@ import Input from '../../common/Input/Input';
 import { ImgUploadBox, ProfileForm } from './SetUserProfileFormStyle';
 import ProfileImgUpload from '../../common/ProfileImageUpload/ProfileImageUpload';
 
-export default function SetUserProfileForm({ setIsButtonActive, userData = '' }) {
-  const [nameValue, setNameValue] = useState(userData.username ?? '');
-  const [idValue, setIdValue] = useState(userData.accountname ?? '');
-  const [introValue, setIntroValue] = useState(userData.intro ?? '');
+export default function SetUserProfileForm({ setIsButtonActive, myData = '', setData }) {
+  const [nameValue, setNameValue] = useState(myData.username ?? '');
+  const [idValue, setIdValue] = useState(myData.accountname ?? '');
+  const [introValue, setIntroValue] = useState(myData.intro ?? '');
+  const [image, setImage] = useState(myData.image ?? '');
 
   const [nameError, setNameError] = useState('');
   const [idError, setIdError] = useState('');
@@ -68,10 +69,30 @@ export default function SetUserProfileForm({ setIsButtonActive, userData = '' })
     }
   }, [isNameInValid, isIdInValid, isInValid, setIsButtonActive]);
 
+  /**
+   * 프로필 설정 값이 변경되면 상위 컴포넌트의 data를 변경한다.
+   */
+  useEffect(() => {
+    setData({
+      username: nameValue,
+      accountname: idValue,
+      intro: introValue,
+      image: image,
+    });
+  }, [nameValue, idValue, introValue, image]);
+
+  /**
+   * ProfileForm이 초기에 렌더링 되었을 때 Validate 체크
+   */
+  useEffect(() => {
+    handleValidateId();
+    handleValidateName();
+  }, []);
+
   return (
     <ProfileForm>
       <ImgUploadBox>
-        <ProfileImgUpload userImg={userData.image} />
+        <ProfileImgUpload userImg={myData.image} setNewProfileImage={setImage} />
       </ImgUploadBox>
 
       <Input

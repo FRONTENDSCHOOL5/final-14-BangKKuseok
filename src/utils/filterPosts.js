@@ -1,15 +1,19 @@
 export const filterPosts = (posts) => {
-  const postDetailInfo = posts.map(({ _id, author, image, comments, content, heartCount }) => ({
+  const postDetailInfo = posts.map(({ _id, author, image }) => ({
     id: _id,
-    username: author.username,
     accountname: author.accountname,
     imgUrl: image,
-    content: content,
-    comments: comments,
-    createdAt: author.createdAt,
-    hearted: !!author.hearts.length,
-    heartCount: heartCount,
   }));
 
   return postDetailInfo;
+};
+
+export const filterUserPosts = (posts) => {
+  const imgInfoArr = posts.map(({ id, author, image }) => ({
+    id: id,
+    author: author.accountname,
+    imgUrl: image,
+  }));
+
+  return imgInfoArr;
 };

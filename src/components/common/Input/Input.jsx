@@ -47,7 +47,9 @@ export default function Input({
 
   return (
     <InputWrapper onFocus={handleFocus} onBlur={handleBlur} isFocused={isFocused}>
-      <InputLabel htmlFor={id}>{labelText}</InputLabel>
+      <InputLabel htmlFor={id} labelText={labelText}>
+        {labelText}
+      </InputLabel>
       <InputBox>
         <StyledInput
           type={type}
@@ -60,27 +62,11 @@ export default function Input({
           isInValid={isInValid}
           warningMsg={warningMsg}
         />
-        {inputType === 'password' && <EyeButton onClick={handleClickEye} isEye={isEye}></EyeButton>}
+        {inputType === 'password' && (
+          <EyeButton type='button' onClick={handleClickEye} isEye={isEye}></EyeButton>
+        )}
       </InputBox>
-
-      {value && warningMsg && id === 'email' && <InputShowWarning>{warningMsg}</InputShowWarning>}
-
-      {value && warningMsg && id === 'password' && (
-        <InputShowWarning>{warningMsg}</InputShowWarning>
-      )}
-
-      {isInValid && warningMsg && id === 'emailSignup' && (
-        <InputShowWarning>{warningMsg}</InputShowWarning>
-      )}
-      {isInValid && warningMsg && id === 'passwordSignup' && (
-        <InputShowWarning>{warningMsg}</InputShowWarning>
-      )}
-
-      {isInValid && warningMsg && id === 'name' && (
-        <InputShowWarning>{warningMsg}</InputShowWarning>
-      )}
-
-      {isInValid && warningMsg && id === 'id' && <InputShowWarning>{warningMsg}</InputShowWarning>}
+      {warningMsg && <InputShowWarning>{warningMsg}</InputShowWarning>}
     </InputWrapper>
   );
 }
