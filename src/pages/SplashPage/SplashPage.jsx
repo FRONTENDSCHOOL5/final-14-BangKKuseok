@@ -10,7 +10,7 @@ export default function SplashPage() {
   useEffect(() => {
     const timer = setTimeout(() => navigate('/main'), 2500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [navigate]);
 
   return (
     <SplashPageWrapper>
