@@ -57,10 +57,12 @@ const HeaderH3 = styled.h3`
 `;
 
 const HeaderSpan = styled.span`
-  display: inline-block;
   color: ${({ theme }) => theme.colors.gray200};
   font-size: ${({ theme }) => theme.fontSize.xs};
-  margin-left: 0.6rem;
+  letter-spacing: 0.02rem;
+  font-weight: 400;
+  position: relative;
+  inset: -0.2rem 0 0 1rem;
 `;
 
 const SearchBtn = styled.button`

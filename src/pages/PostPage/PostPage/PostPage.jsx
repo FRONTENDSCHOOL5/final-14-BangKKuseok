@@ -199,8 +199,8 @@ export default function PostPage() {
         <BasicLayout
           type='post'
           isNonNav
-          title={postData?.post.author.username}
-          subtitle={postData?.post.author.accountname}
+          title={postData?.author.username}
+          subtitle={`@${postData.author.accountname}`}
           onClickLeftButton={handleClickLeftButton}
           onClickRightButton={handleClickRightButton}
         >
