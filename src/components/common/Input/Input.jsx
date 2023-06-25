@@ -61,6 +61,7 @@ export default function Input({
           onBlur={onBlur}
           isInValid={isInValid}
           warningMsg={warningMsg}
+          autoComplete='off'
         />
         {inputType === 'password' && (
           <EyeButton type='button' onClick={handleClickEye} isEye={isEye}></EyeButton>
