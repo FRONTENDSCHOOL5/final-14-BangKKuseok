@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import BasicLayout from '../../layout/BasicLayout';
 import UserSimpleInfo from '../../components/common/UserSimpleInfo/UserSimpleInfo/UserSimpleInfo';
 import styled from 'styled-components';
@@ -26,6 +26,14 @@ const Message = styled.p`
 export default function Search({ onClickLeftButton }) {
   const [inputValue, setInputValue] = useState('');
   const { debouncedValue: debouncedSearchUser, cancel } = useDebounce(inputValue, 500);
+  const [initialSearchResult, setInitialSearchResult] = useState(null);
+
+  useEffect(() => {
+    const savedSearchResult = localStorage.getItem('searchResult');
+    if (savedSearchResult) {
+      setInitialSearchResult(JSON.parse(savedSearchResult));
+    }
+  }, []);
 
   const { data: searchResult, isFetching } = useQuery(
     ['searchUser', debouncedSearchUser],
@@ -46,6 +54,17 @@ export default function Search({ onClickLeftButton }) {
     }
   };
 
+  const handleSaveSearchResult = useCallback((user) => {
+    const savedSearchResult = localStorage.getItem('searchResult');
+    let searchResults = savedSearchResult ? JSON.parse(savedSearchResult) : [];
+
+    const existingUser = searchResults.find((savedUser) => savedUser._id === user._id);
+    if (!existingUser) {
+      searchResults = [...searchResults, user];
+      localStorage.setItem('searchResult', JSON.stringify(searchResults));
+    }
+  }, []);
+
   return (
     <BasicLayout
       type='search'
@@ -54,7 +73,13 @@ export default function Search({ onClickLeftButton }) {
       onChange={handleChangeInput}
     >
       <UserInfoList>
-        {isFetching ? (
+        {!inputValue && initialSearchResult ? (
+          initialSearchResult.map((user) => (
+            <li key={user._id} onClick={() => handleSaveSearchResult(user)}>
+              <UserSimpleInfo profile={user} isLink={true} />
+            </li>
+          ))
+        ) : isFetching ? (
           <>
             {Array(10)
               .fill()
@@ -66,7 +91,7 @@ export default function Search({ onClickLeftButton }) {
           </>
         ) : inputValue && debouncedSearchUser && searchResult?.length > 0 ? (
           searchResult.map((user) => (
-            <li key={user._id}>
+            <li key={user._id} onClick={() => handleSaveSearchResult(user)}>
               <UserSimpleInfo profile={user} isLink={true} />
             </li>
           ))
