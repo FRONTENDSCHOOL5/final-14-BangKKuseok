@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Skeleton from '../components/common/UserSimpleInfo/Skeleton/Skeleton';
 
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -14,7 +13,11 @@ const useDebounce = (value, delay) => {
     }; //value 변경 시점에 clearTimeout을 해줘야함.
   }, [value, delay]);
 
-  return debouncedValue;
+  function cancel() {
+    setDebouncedValue(value);
+  }
+
+  return { debouncedValue, cancel };
 };
 
 export default useDebounce;

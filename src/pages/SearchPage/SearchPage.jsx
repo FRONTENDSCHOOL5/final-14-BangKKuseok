@@ -25,7 +25,7 @@ const Message = styled.p`
 
 export default function Search({ onClickLeftButton }) {
   const [inputValue, setInputValue] = useState('');
-  const debouncedSearchUser = useDebounce(inputValue, 500);
+  const { debouncedValue: debouncedSearchUser, cancel } = useDebounce(inputValue, 500);
 
   const { data: searchResult, isFetching } = useQuery(
     ['searchUser', debouncedSearchUser],
@@ -41,6 +41,9 @@ export default function Search({ onClickLeftButton }) {
 
   const handleChangeInput = (e) => {
     setInputValue(e.target.value);
+    if (inputValue === '') {
+      cancel(); // inputValue를 모두 지웠을 때 debounce값도 초기화
+    }
   };
 
   return (
@@ -51,15 +54,7 @@ export default function Search({ onClickLeftButton }) {
       onChange={handleChangeInput}
     >
       <UserInfoList>
-        {inputValue && debouncedSearchUser && searchResult?.length >= 1 ? (
-          <>
-            {searchResult.map((profile) => (
-              <li key={profile._id}>
-                <UserSimpleInfo profile={profile} isLink={true} />
-              </li>
-            ))}
-          </>
-        ) : isFetching ? (
+        {isFetching ? (
           <>
             {Array(10)
               .fill()
@@ -69,6 +64,12 @@ export default function Search({ onClickLeftButton }) {
                 </li>
               ))}
           </>
+        ) : inputValue && debouncedSearchUser && searchResult?.length > 0 ? (
+          searchResult.map((user) => (
+            <li key={user._id}>
+              <UserSimpleInfo profile={user} isLink={true} />
+            </li>
+          ))
         ) : (
           inputValue && <Message>일치하는 유저가 없습니다.</Message>
         )}
