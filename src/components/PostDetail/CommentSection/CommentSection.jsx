@@ -52,7 +52,7 @@ export default function CommentSection({
   );
 
   return (
-    <>
+    <section>
       <CommentList>
         <h4 className='a11y'>댓글 목록</h4>
         {data.map((comment) => (
@@ -73,6 +73,6 @@ export default function CommentSection({
         onChange={handleChangeComment}
         onSubmit={handleSubmitComment}
       />
-    </>
+    </section>
   );
 }
