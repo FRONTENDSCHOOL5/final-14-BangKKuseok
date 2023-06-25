@@ -207,6 +207,7 @@ export default function PostPage() {
           type='post'
           isNonNav
           title={postData?.post.author.username}
+          subtitle={postData?.post.author.accountname}
           onClickLeftButton={handleClickLeftButton}
           onClickRightButton={handleClickRightButton}
         >
