@@ -35,3 +35,12 @@ export const getProductDetail = async (productId) => {
     console.error(error);
   }
 };
+
+export const updateProduct = async ({ productId, product }) => {
+  try {
+    const response = await accessInstance.put(`/product/${productId}`, { product: product });
+    return response.data.product;
+  } catch (error) {
+    console.error(error);
+  }
+};
