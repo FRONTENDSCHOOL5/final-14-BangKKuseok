@@ -17,10 +17,7 @@ import CommentSection from '../../../components/PostDetail/CommentSection/Commen
 
 export default function PostPage() {
   const { postId } = useParams();
-  const [data, setData] = useState();
-  const [comments, setComments] = useState([]);
   const [commentId, setCommentId] = useState();
-  const [myProfile, setMyProfile] = useState();
   const [scrollDown, setScrollDown] = useState(false);
   const [isUploadBefore, setIsUploadBefore] = useRecoilState(isUploadBeforeAtom);
   const [commentCount, setCommentCount] = useState();
@@ -30,9 +27,6 @@ export default function PostPage() {
     ['postData', postId],
     () => getPostDetail(postId),
     {
-      onSuccess: (data) => {
-        setData(data.post);
-      },
       onError: (error) => {
         console.log(error);
       },
@@ -70,9 +64,6 @@ export default function PostPage() {
     'myProfileData',
     () => getMyProfile(),
     {
-      onSuccess: (data) => {
-        setMyProfile(data);
-      },
       onError: (error) => {
         console.log(error);
       },
@@ -142,7 +133,7 @@ export default function PostPage() {
 
   //게시글 더보기 버튼 눌렀을 때
   const handleClickRightButton = () => {
-    if (myProfile._id === data.author._id) {
+    if (myProfileData._id === postData.author._id) {
       setModalType('myPost');
     } else {
       setModalType('userPost');
@@ -199,24 +190,24 @@ export default function PostPage() {
   };
 
   //로딩 이미지
-  if (isPostLoading && isCommentsLoading && isMyProfileLoading) {
+  if (!commentsData || !postData || !myProfileData || !commentCount) {
     return <Spinner />;
   }
   return (
     <>
-      {!isPostLoading && !isCommentsLoading && !isMyProfileLoading && comments && (
+      {commentsData && postData && myProfileData && commentCount && (
         <BasicLayout
           type='post'
           isNonNav
-          title={postData?.post.author.username}
+          title={postData?.author.username}
           onClickLeftButton={handleClickLeftButton}
           onClickRightButton={handleClickRightButton}
         >
           <PostPageWrapper>
             <PostCard data={postData} commentCount={commentCount} moreInfo />
             <CommentSection
-              data={comments}
-              myProfile={myProfile}
+              data={commentsData}
+              myProfile={myProfileData}
               setModalType={setModalType}
               setIsShow={setIsShow}
               postId={postId}
