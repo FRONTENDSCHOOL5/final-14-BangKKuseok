@@ -1,11 +1,26 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const PostImgUploadWrapper = styled.div`
+  ${(p) =>
+    p.type === 'post'
+      ? css`
+          width: calc(100% - 48px);
+          aspect-ratio: 1;
+          p {
+            font-size: ${({ theme }) => theme.fontSize.md};
+          }
+        `
+      : css`
+          width: calc(100% - 64px);
+          aspect-ratio: 322 / 236;
+          p {
+            font-size: ${({ theme }) => theme.fontSize.sm};
+          }
+        `};
+
   position: relative;
   margin: 0 auto;
   max-width: 342px;
-  width: calc(100% - 48px);
-  aspect-ratio: 1;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   background-color: ${({ theme }) => theme.colors.gray50};
@@ -18,7 +33,6 @@ const PostImgUploadWrapper = styled.div`
   p {
     width: 100%;
     height: 100%;
-    font-size: ${({ theme }) => theme.fontSize.md};
     color: ${({ theme }) => theme.colors.gray200};
     display: flex;
     justify-content: center;

@@ -1,19 +1,22 @@
 import React, { useCallback, useRef, useState } from 'react';
 import imageUploadBtn from '../../../assets/images/image-upload.png';
 import { PostImgUploadWrapper, UploadForm } from './PostImgUploadStyle';
+import { useLocation } from 'react-router-dom';
 
-export default function PostImgUpload({ setPostImg, setIsBtnActive }) {
+export default function PostImgUpload({ type = 'post', defaultImg = '', setImg, setIsBtnActive }) {
   const imgRef = useRef();
-  const [previewImg, setPreviewImg] = useState(null);
+  const [previewImg, setPreviewImg] = useState(defaultImg ?? null);
+
+  const locationPath = useLocation().pathname;
 
   // 이미지 업로드 시 postImg 변경해서 이미지 미리보기 함수
-  const HandleUploadPostImg = () => {
+  const handleUploadImg = () => {
     const file = imgRef.current.files[0];
     if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-        setPostImg(file);
+        locationPath.includes('/post') ? setImg(file) : setImg(reader.result);
         setPreviewImg(reader.result);
         setIsBtnActive(true);
       };
@@ -21,7 +24,7 @@ export default function PostImgUpload({ setPostImg, setIsBtnActive }) {
   };
 
   //초기에 박스 클릭해도 업로드가 가능하도록
-  const HandleMakeFormClick = useCallback(() => {
+  const handleMakeFormClick = useCallback(() => {
     if (!imgRef.current) {
       return;
     }
@@ -29,22 +32,24 @@ export default function PostImgUpload({ setPostImg, setIsBtnActive }) {
   }, []);
 
   return (
-    <PostImgUploadWrapper>
+    <PostImgUploadWrapper type={type}>
       {previewImg ? (
         <img src={previewImg} alt='게시글 이미지' />
       ) : (
-        <p onClick={HandleMakeFormClick}>회원님의 공간을 공유해주세요</p>
+        <p onClick={handleMakeFormClick}>
+          {type === 'post' ? '회원님의 공간을 공유해주세요' : '판매할 상품이미지를 등록해주세요'}
+        </p>
       )}
       <UploadForm>
         <input
           type='file'
-          id='postImgUpload'
+          id={`${type}ImgUpload`}
           className='a11y'
           accept='image/*'
-          onChange={HandleUploadPostImg}
+          onChange={handleUploadImg}
           ref={imgRef}
         ></input>
-        <label htmlFor='postImgUpload'>
+        <label htmlFor={`${type}ImgUpload`}>
           <img src={imageUploadBtn} alt='업로드 버튼 이미지' />
         </label>
       </UploadForm>
