@@ -14,6 +14,18 @@ export const InputLabel = styled.label`
   font-size: ${({ theme }) => theme.fontSize.xs};
   color: ${({ theme }) => theme.colors.gray300};
   margin-bottom: 10px;
+  ${({ labelText }) =>
+    labelText === '사용자 이름' || labelText === '계정 ID'
+      ? css`
+          &::after {
+            content: ' *';
+            color: ${({ theme }) => theme.colors.subCoral};
+            font-size: 0.8rem;
+            position: relative;
+            top: -3px;
+          }
+        `
+      : ''}
 `;
 
 export const InputBox = styled.div`

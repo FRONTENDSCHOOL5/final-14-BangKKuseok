@@ -4,12 +4,29 @@ import Carousel from '../../components/common/Carousel/Carousel';
 import SpaceTabs from '../../components/common/Tabs/SpaceTabs';
 import BasicLayout from '../../layout/BasicLayout';
 import PostList from '../../components/Profile/PostList/PostList';
-import styled from 'styled-components';
 import { useState } from 'react';
 import { SPACES } from '../../constants/spaces';
 import Search from '../SearchPage/SearchPage';
 import { useInfiniteQuery } from 'react-query';
 import { getAllPost } from '../../api/homeApi';
+import styled from 'styled-components';
+
+const Message = styled.p`
+  font-weight: 500;
+  font-size: ${({ theme }) => theme.fontSize.base};
+  color: ${({ theme }) => theme.colors.gray200};
+  padding-top: 52px;
+  text-align: center;
+`;
+
+const TabWrapper = styled.div`
+  border-radius: 16px 16px 0 0;
+  margin-top: -16px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: ${({ theme }) => theme.colors.white};
+`;
 
 export default function HomePage() {
   const [currentTab, setCurrentTab] = useState(0);
