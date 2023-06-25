@@ -14,8 +14,12 @@ import { Link } from 'react-router-dom';
 
 export default function UserSimpleInfo({ profile, isLink = false, type, onClick }) {
   const [isfollow, setIsFollow] = useState(false);
+  const [error, setError] = useState(false);
   const handleClickFollow = () => {
     setIsFollow(!isfollow);
+  };
+  const handleImageError = () => {
+    setError(true);
   };
 
   return (
@@ -23,7 +27,11 @@ export default function UserSimpleInfo({ profile, isLink = false, type, onClick 
       <UserInfoBox isLink={isLink}>
         {isLink ? (
           <Link to={'/profile/' + profile.accountname}>
-            <img src={profile.image || basicProfileImage} alt='유저 프로필 이미지' />
+            {!error ? (
+              <img src={profile.image} alt='유저 프로필 이미지' onError={handleImageError} />
+            ) : (
+              <img src={basicProfileImage} alt='기본 프로필 이미지' />
+            )}
             <UserNameBox>
               <UserName>{profile.username}</UserName>
               <AccountName>@ {profile.accountname}</AccountName>
@@ -31,7 +39,11 @@ export default function UserSimpleInfo({ profile, isLink = false, type, onClick 
           </Link>
         ) : (
           <>
-            <img src={profile.image || basicProfileImage} alt='유저 프로필 이미지' />
+            {!error ? (
+              <img src={profile.image} alt='유저 프로필 이미지' onError={handleImageError} />
+            ) : (
+              <img src={basicProfileImage} alt='기본 프로필 이미지' />
+            )}
             <UserNameBox>
               <UserName>{profile.username}</UserName>
               <AccountName>@ {profile.accountname}</AccountName>
