@@ -5,8 +5,6 @@ import RoundedBottomInput from '../../common/Input/RoundedBottomInput/RoundedBot
 import { useMutation, useQueryClient } from 'react-query';
 import { uploadComment } from '../../../api/commentApi';
 
-const CommentSectionWrapper = styled.section``;
-
 export const CommentList = styled.ul`
   padding: 16px 16px 84px;
   border-top: 1px solid ${({ theme }) => theme.colors.gray100};
@@ -20,8 +18,8 @@ export default function CommentSection({
   postId,
   setCommentId,
 }) {
-  const queryClient = useQueryClient();
   //댓글 작성하기
+  const queryClient = useQueryClient();
   const uploadCommentMutation = useMutation(uploadComment, {
     onSuccess() {
       queryClient.invalidateQueries(['commentsData', postId]);
@@ -54,7 +52,7 @@ export default function CommentSection({
   );
 
   return (
-    <CommentSectionWrapper>
+    <>
       <CommentList>
         <h4 className='a11y'>댓글 목록</h4>
         {data.map((comment) => (
@@ -75,6 +73,6 @@ export default function CommentSection({
         onChange={handleChangeComment}
         onSubmit={handleSubmitComment}
       />
-    </CommentSectionWrapper>
+    </>
   );
 }
