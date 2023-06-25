@@ -65,10 +65,6 @@ export default function Search({ onClickLeftButton }) {
     }
   }, []);
 
-  // const handleChangeTextColor = () => {
-
-  // }
-
   return (
     <BasicLayout
       type='search'
