@@ -11,11 +11,10 @@ import BasicModal from '../../../components/common/BottomSheet/BasicModal';
 import ProductDetailCard from '../../../components/Profile/ProductDetailCard/ProductDetailCard';
 import Confirm from '../../../components/common/Confirm/Confirm';
 import Spinner from '../../../components/common/Spinner/Spinner';
-import { products } from '../../../mock/mockData';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getMyProfile, getProfile } from '../../../api/profileApi';
-import { deleteProduct } from '../../../api/productApi';
+import { deleteProduct, getProducts } from '../../../api/productApi';
 import { deletePost, getMyPost, reportPost } from '../../../api/postApi';
 
 const ProfilePageWrapper = styled.main``;
@@ -33,8 +32,8 @@ export default function ProfilePage() {
   const { accountname: accountnameByParams } = useParams();
 
   const [selectedTab, setSelectedTab] = useState('list');
-  const [selectedProduct, setSelectedProduct] = useState([]);
   const [selectedPost, setSelectedPost] = useState({});
+  const [productId, setProductId] = useState(0);
 
   const [isShowMoreProfile, setIsShowMoreProfile] = useState(false);
   const [isShowMorePost, setIsShowMorePost] = useState(false);
@@ -66,11 +65,20 @@ export default function ProfilePage() {
     },
   );
 
+  // 상품 정보 가져오기
+  const { data: myProductData, isLoading: isProductLoading } = useQuery(
+    ['myProduct', profileData],
+    () => getProducts(profileData.accountname),
+    {
+      enabled: !!profileData && !!myProfileData,
+    },
+  );
+
   // 상품 삭제하기
   const deleteProductMutation = useMutation(deleteProduct, {
     onSuccess() {
       alert('상품이 삭제되었습니다.');
-      // queryClient.invalidateQueries('myProduct');
+      queryClient.invalidateQueries('myProduct');
     },
     onError(error) {
       console.log(error);
@@ -117,9 +125,8 @@ export default function ProfilePage() {
     }
   };
 
-  const handleClickProduct = (productId) => {
-    const selectedProductInfo = products.filter((product) => product.id === productId);
-    setSelectedProduct(selectedProductInfo);
+  const handleClickProduct = (selectedProductId) => {
+    setProductId(selectedProductId);
     setIsShowProductDetail(true);
   };
 
@@ -142,7 +149,7 @@ export default function ProfilePage() {
       if (e.target.innerText === '삭제') {
         setConfirmType({ type: 'delete', object: 'product' });
       } else {
-        navigate(`/product/${selectedProduct[0].id}/edit`);
+        navigate(`/product/${productId}/edit`, { state: productId });
       }
     }
 
@@ -163,9 +170,7 @@ export default function ProfilePage() {
     switch (confirmType.object) {
       case 'product':
         if (confirmType.type === 'delete') {
-          deleteProductMutation.mutate(selectedProduct[0].id);
-        } else {
-          navigate(`/product/${selectedProduct[0].id}/edit`);
+          deleteProductMutation.mutate(productId);
         }
         break;
       case 'post':
@@ -173,8 +178,6 @@ export default function ProfilePage() {
           deletePostMutation.mutate(selectedPost.id);
         } else if (confirmType.type === 'report') {
           reportPostMutation.mutate(selectedPost.id);
-        } else {
-          navigate(`/post/${selectedPost.id}/edit`);
         }
         break;
       default:
@@ -188,7 +191,7 @@ export default function ProfilePage() {
   };
 
   // 로딩중일때
-  if (isMyPostLoading || isProfileLoading || isMyProfileLoading) {
+  if (isMyPostLoading || isProfileLoading || isMyProfileLoading || isProductLoading) {
     return (
       <BasicLayout
         type={'profile'}
@@ -206,52 +209,58 @@ export default function ProfilePage() {
       onClickLeftButton={() => navigate(-1)}
       onClickRightButton={handleClickMoreProfileButton}
     >
-      <ProfilePageWrapper>
-        <>
-          <ProfileCard
-            profile={profileData}
-            isMyProfile={profileData.accountname === myProfileData.accountname}
-          />
-          <ProductList products={products} onClick={handleClickProduct} />
-          {myPostData.length > 0 ? (
-            <>
-              <ViewTabs selectedTab={selectedTab} onClick={handleClickTabButton} />
-              <PostList
-                selectedTab={selectedTab}
-                posts={myPostData}
-                moreInfo={false}
-                onClick={handleClickMorePostButton}
-              />
-            </>
-          ) : (
-            <Message>작성된 게시물이 없습니다.</Message>
-          )}
-        </>
-
-        {/* -- BottomSheet */}
-        <BottomSheet isShow={isShowMoreProfile || isShowMorePost} onClick={handleClickCloseModal}>
-          <ListModal type={modalType} onClick={handleClickLModalItem} />
-        </BottomSheet>
-        <BottomSheet isShow={isShowProductDetail} onClick={handleClickCloseModal}>
-          <BasicModal>
-            <ProductDetailCard
+      {!isProfileLoading && !isMyProfileLoading && !isMyPostLoading && !isProductLoading && (
+        <ProfilePageWrapper>
+          <>
+            <ProfileCard
+              profile={profileData}
               isMyProfile={profileData.accountname === myProfileData.accountname}
-              selectedProduct={selectedProduct}
-              onClick={handleClickLModalItem}
             />
-          </BasicModal>
-        </BottomSheet>
+            {myProductData.length > 0 && (
+              <ProductList products={myProductData} onClick={handleClickProduct} />
+            )}
+            {myPostData.length > 0 ? (
+              <>
+                <ViewTabs selectedTab={selectedTab} onClick={handleClickTabButton} />
+                <PostList
+                  selectedTab={selectedTab}
+                  posts={myPostData}
+                  moreInfo={false}
+                  onClick={handleClickMorePostButton}
+                />
+              </>
+            ) : (
+              <Message>작성된 게시물이 없습니다.</Message>
+            )}
+          </>
 
-        {/* -- Confirm */}
-        {isShowConfirm && (
-          <Confirm
-            type={confirmType.type}
-            object={confirmType.object}
-            setIsShowConfirm={setIsShowConfirm}
-            onClick={handleClickConfirm}
-          />
-        )}
-      </ProfilePageWrapper>
+          {/* -- BottomSheet */}
+          <BottomSheet isShow={isShowMoreProfile || isShowMorePost} onClick={handleClickCloseModal}>
+            <ListModal type={modalType} onClick={handleClickLModalItem} />
+          </BottomSheet>
+          <BottomSheet isShow={isShowProductDetail} onClick={handleClickCloseModal}>
+            <BasicModal>
+              {productId && (
+                <ProductDetailCard
+                  isMyProfile={profileData.accountname === myProfileData.accountname}
+                  productId={productId}
+                  onClick={handleClickLModalItem}
+                />
+              )}
+            </BasicModal>
+          </BottomSheet>
+
+          {/* -- Confirm */}
+          {isShowConfirm && (
+            <Confirm
+              type={confirmType.type}
+              object={confirmType.object}
+              setIsShowConfirm={setIsShowConfirm}
+              onClick={handleClickConfirm}
+            />
+          )}
+        </ProfilePageWrapper>
+      )}
     </BasicLayout>
   );
 }

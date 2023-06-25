@@ -9,13 +9,30 @@ import {
   ProductName,
   ProductPrice,
 } from './ProductDetailCardStyle';
+import { useQuery } from 'react-query';
+import { getProductDetail } from '../../../api/productApi';
+import Spinner from '../../common/Spinner/Spinner';
 
-export default function ProductDetailCard({ isMyProfile, selectedProduct, onClick }) {
-  const { itemName, price, link, itemImage } = selectedProduct[0];
+export default function ProductDetailCard({ isMyProfile, productId, onClick }) {
+  // 상품 상세정보 가져오기
+  const { data: productDetail, isLoading: isProductDetailLoading } = useQuery(
+    ['productDetail', productId],
+    () => getProductDetail(productId),
+    {
+      enabled: !!productId,
+    },
+  );
+
+  // 로딩중 일 때
+  if (isProductDetailLoading) {
+    return <Spinner />;
+  }
+
+  const { itemName, price, link, itemImage } = productDetail;
   const { name, keyword } = JSON.parse(itemName);
 
   const handleClickOpenSite = () => {
-    window.open(`https://${link}`, '_blank', 'noopener, noreferrer');
+    window.open(`${link}`, '_blank', 'noopener, noreferrer');
   };
 
   return (
