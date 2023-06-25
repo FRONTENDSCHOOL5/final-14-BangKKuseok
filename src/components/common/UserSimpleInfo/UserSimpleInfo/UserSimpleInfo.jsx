@@ -12,7 +12,7 @@ import Button from '../../Button/Button/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function UserSimpleInfo({ profile, isLink = false, type, onClick }) {
+export default function UserSimpleInfo({ profile, isLink = false, type, onClick, inputValue }) {
   const [isfollow, setIsFollow] = useState(false);
   const [error, setError] = useState(false);
   const handleClickFollow = () => {
@@ -33,7 +33,26 @@ export default function UserSimpleInfo({ profile, isLink = false, type, onClick 
               <img src={basicProfileImage} alt='기본 프로필 이미지' />
             )}
             <UserNameBox>
-              <UserName>{profile.username}</UserName>
+              <UserName>
+                {inputValue ? (
+                  <>
+                    {profile.username.split(inputValue).map((part, index) =>
+                      index === 0 ? (
+                        part
+                      ) : (
+                        <>
+                          <span className='highlight' key={index}>
+                            {inputValue}
+                          </span>
+                          {part}
+                        </>
+                      ),
+                    )}
+                  </>
+                ) : (
+                  profile.username
+                )}
+              </UserName>
               <AccountName>@ {profile.accountname}</AccountName>
             </UserNameBox>
           </Link>

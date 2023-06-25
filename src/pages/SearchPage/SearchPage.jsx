@@ -65,6 +65,10 @@ export default function Search({ onClickLeftButton }) {
     }
   }, []);
 
+  // const handleChangeTextColor = () => {
+
+  // }
+
   return (
     <BasicLayout
       type='search'
@@ -92,7 +96,7 @@ export default function Search({ onClickLeftButton }) {
         ) : inputValue && debouncedSearchUser && searchResult?.length > 0 ? (
           searchResult.map((user) => (
             <li key={user._id} onClick={() => handleSaveSearchResult(user)}>
-              <UserSimpleInfo profile={user} isLink={true} />
+              <UserSimpleInfo profile={user} isLink={true} inputValue={inputValue} />
             </li>
           ))
         ) : (
