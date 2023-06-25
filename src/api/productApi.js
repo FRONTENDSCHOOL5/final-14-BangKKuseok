@@ -17,3 +17,21 @@ export const uploadProduct = async (product) => {
     console.error(error);
   }
 };
+
+export const getProducts = async (accountname) => {
+  try {
+    const response = await accessInstance.get(`/product/${accountname}`);
+    return response.data.product;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getProductDetail = async (productId) => {
+  try {
+    const response = await accessInstance.get(`/product/detail/${productId}`);
+    return response.data.product;
+  } catch (error) {
+    console.error(error);
+  }
+};
