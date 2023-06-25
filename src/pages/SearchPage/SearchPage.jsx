@@ -25,7 +25,7 @@ const Message = styled.p`
 export default function Search({ onClickLeftButton }) {
   const [inputValue, setInputValue] = useState('');
 
-  const { data: searchResult, isLoading } = useQuery(
+  const { data: searchResult, isFetching } = useQuery(
     ['searchUser', inputValue],
     () => getSearchResult(inputValue),
     {
@@ -59,15 +59,17 @@ export default function Search({ onClickLeftButton }) {
               ))}
             </>
           ) : (
-            <>
-              {Array(10)
-                .fill()
-                .map((_, idx) => (
-                  <li key={idx}>
-                    <Skeleton />
-                  </li>
-                ))}
-            </>
+            isFetching && (
+              <>
+                {Array(10)
+                  .fill()
+                  .map((_, idx) => (
+                    <li key={idx}>
+                      <Skeleton />
+                    </li>
+                  ))}
+              </>
+            )
           ))}
       </UserInfoList>
     </BasicLayout>
