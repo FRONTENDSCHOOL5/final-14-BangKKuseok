@@ -8,8 +8,8 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteLike, postLike } from '../../../../api/likeApi';
 import { getMyProfile, getProfile } from '../../../../api/profileApi';
 
-export default function PostCard({ data, moreInfo = false }) {
-  const { id, content, image, hearted, heartCount, comments, createdAt } = data;
+export default function PostCard({ data, commentCount, moreInfo = false }) {
+  const { id, content, image, hearted, heartCount, createdAt } = data;
   const { space, detail } = JSON.parse(content);
   const navigate = useNavigate();
 
@@ -73,7 +73,7 @@ export default function PostCard({ data, moreInfo = false }) {
           </li>
           <li onClick={moreInfo ? null : () => navigate(`/post/${id}`)}>
             <img src={commentIcon} alt='댓글' />
-            {comments.length}
+            {commentCount}
           </li>
         </HeartCommentList>
       </PostInfoBox>

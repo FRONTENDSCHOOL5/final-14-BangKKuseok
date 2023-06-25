@@ -12,7 +12,7 @@ export default function PostList({ selectedTab, posts, moreInfo, onClick }) {
         {posts.map((item) => (
           <li key={item.id}>
             <UserSimpleInfo profile={item.author} type={'more'} onClick={() => onClick(item)} />
-            <PostCard data={item} moreInfo={moreInfo} />
+            <PostCard data={item} commentCount={item.comments.length} moreInfo={moreInfo} />
           </li>
         ))}
       </PostCardList>

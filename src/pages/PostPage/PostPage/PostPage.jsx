@@ -23,6 +23,7 @@ export default function PostPage() {
   const [myProfile, setMyProfile] = useState();
   const [scrollDown, setScrollDown] = useState(false);
   const [isUploadBefore, setIsUploadBefore] = useRecoilState(isUploadBeforeAtom);
+  const [commentCount, setCommentCount] = useState();
 
   //게시글 상세 정보받기
   const { data: postData, isLoading: isPostLoading } = useQuery(
@@ -43,11 +44,12 @@ export default function PostPage() {
     ['commentsData', postId],
     () => getComments(postId),
     {
+      select: (data) => [...data].reverse(),
       onSuccess: (data) => {
-        setComments(data.reverse());
-        if (comments.length > 0 && data.length > comments.length) {
+        if (data.length > commentCount) {
           setScrollDown(true);
         }
+        setCommentCount(data.length);
       },
       onError: (error) => {
         console.log(error);
@@ -211,7 +213,7 @@ export default function PostPage() {
           onClickRightButton={handleClickRightButton}
         >
           <PostPageWrapper>
-            <PostCard data={postData?.post} moreInfo />
+            <PostCard data={postData} commentCount={commentCount} moreInfo />
             <CommentSection
               data={comments}
               myProfile={myProfile}
