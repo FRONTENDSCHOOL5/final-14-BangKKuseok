@@ -1,15 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import { topLikedPosts } from '../../mock/mockData';
 import Carousel from '../../components/common/Carousel/Carousel';
 import SpaceTabs from '../../components/common/Tabs/SpaceTabs';
 import BasicLayout from '../../layout/BasicLayout';
-import PostList from '../../components/Profile/PostList/PostList';
 import { useState } from 'react';
 import { SPACES } from '../../constants/spaces';
 import Search from '../SearchPage/SearchPage';
 import { useInfiniteQuery } from 'react-query';
 import { getAllPost } from '../../api/homeApi';
 import styled from 'styled-components';
+import Gallery from '../../components/common/Gallery/Gallery';
+import { filterPosts } from '../../utils/filterPosts';
 
 const Message = styled.p`
   font-weight: 500;
@@ -36,15 +36,17 @@ export default function HomePage() {
   const [filteredPosts, setfilteredPosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [isTabClick, setIsTabClick] = useState(false);
+  const [sortedPosts, setSortedPosts] = useState([]);
 
   const count = useRef(0);
   const [isLast, setIsLast] = useState(false);
 
   const {
     data: postData,
-    fetchNextPage,
     isLoading,
-    hasPreviousPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
   } = useInfiniteQuery('posts', ({ skip = count.current }) => getAllPost({ limit: 100, skip }), {
     getNextPageParam: (lastPage) => {
       return lastPage.nextPage + 1;
@@ -55,20 +57,18 @@ export default function HomePage() {
       if (newData.pages[pageParam].isLast) {
         setIsLast(true);
       }
+
+      const allFiltered = allPosts.filter((post) => post.content?.includes('"space"'));
+      setFilteredAllPosts((prevData) => [...prevData, ...allFiltered]);
     },
   });
 
   useEffect(() => {
-    if (!isLoading && !isLast) {
-      count.current += 100;
+    if (!isLast) {
       fetchNextPage();
+      count.current += 100;
     }
-  }, [postData, fetchNextPage, isLoading, isLast]);
-
-  useEffect(() => {
-    const allFiltered = allPosts.filter((post) => post.content?.includes('"space"'));
-    setFilteredAllPosts((prevData) => [...prevData, ...allFiltered]);
-  }, [allPosts, postData]);
+  }, [postData, isLoading, isLast, fetchNextPage]);
 
   const handleClickTabButton = (e) => {
     const index = ['전체', ...SPACES].indexOf(e.target.innerText);
@@ -78,10 +78,8 @@ export default function HomePage() {
       setIsTabClick(true);
 
       const filter = filteredAllPosts.filter((post) => {
-        const parsedContent = JSON.parse(post.content);
-        return e.target.innerText === '전체'
-          ? parsedContent.space
-          : parsedContent.space === e.target.innerText;
+        const { space } = JSON.parse(post.content);
+        return e.target.innerText === '전체' ? space : space === e.target.innerText;
       });
 
       setfilteredPosts(filter);
@@ -96,7 +94,7 @@ export default function HomePage() {
     setIsClickSearchButton(true);
   };
 
-  if (hasPreviousPage)
+  if (hasNextPage && isLoading && isFetchingNextPage)
     return (
       <BasicLayout>
         <span>로딩중..</span>
@@ -109,7 +107,7 @@ export default function HomePage() {
         <Search onClickLeftButton={handleClickLeftButton} />
       ) : (
         <BasicLayout type='home' onClickRightButton={handleClickRightButton}>
-          <Carousel data={topLikedPosts} />
+          <Carousel data={sortedPosts} />
           <TabWrapper>
             <SpaceTabs
               currentTab={currentTab}
@@ -120,7 +118,7 @@ export default function HomePage() {
           {filteredAllPosts.length === 0 ? (
             <Message>작성된 게시물이 없습니다.</Message>
           ) : (
-            <PostList selectedTab='grid' posts={isTabClick ? filteredPosts : filteredAllPosts} />
+            <Gallery data={filterPosts(isTabClick ? filteredPosts : filteredAllPosts)} />
           )}
         </BasicLayout>
       )}

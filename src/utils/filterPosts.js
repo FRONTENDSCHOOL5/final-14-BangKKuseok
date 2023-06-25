@@ -1,7 +1,7 @@
 export const filterPosts = (posts) => {
   const postDetailInfo = posts.map(({ _id, author, image }) => ({
     id: _id,
-    accountname: author.accountname,
+    author: author.accountname,
     imgUrl: image,
   }));
 
