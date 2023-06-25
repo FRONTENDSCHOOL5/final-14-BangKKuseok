@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import { getSearchResult } from '../../api/searchApi';
 import Skeleton from '../../components/common/UserSimpleInfo/Skeleton/Skeleton';
+import useDebounce from '../../hooks/useDebounce';
 
 const UserInfoList = styled.ul`
   padding: 16px;
@@ -24,15 +25,16 @@ const Message = styled.p`
 
 export default function Search({ onClickLeftButton }) {
   const [inputValue, setInputValue] = useState('');
+  const debouncedSearchUser = useDebounce(inputValue, 500);
 
   const { data: searchResult, isFetching } = useQuery(
-    ['searchUser', inputValue],
-    () => getSearchResult(inputValue),
+    ['searchUser', debouncedSearchUser],
+    () => getSearchResult(debouncedSearchUser),
     {
-      enabled: !!inputValue,
+      enabled: !!debouncedSearchUser,
       select: (result) =>
         result.filter((user) => {
-          return user.username.includes(inputValue);
+          return user.username.includes(debouncedSearchUser);
         }),
     },
   );
@@ -49,28 +51,27 @@ export default function Search({ onClickLeftButton }) {
       onChange={handleChangeInput}
     >
       <UserInfoList>
-        {inputValue &&
-          (searchResult?.length >= 1 ? (
-            <>
-              {searchResult.map((profile) => (
-                <li key={profile._id}>
-                  <UserSimpleInfo profile={profile} isLink={true} />
+        {inputValue && debouncedSearchUser && searchResult?.length >= 1 ? (
+          <>
+            {searchResult.map((profile) => (
+              <li key={profile._id}>
+                <UserSimpleInfo profile={profile} isLink={true} />
+              </li>
+            ))}
+          </>
+        ) : isFetching ? (
+          <>
+            {Array(10)
+              .fill()
+              .map((_, idx) => (
+                <li key={idx}>
+                  <Skeleton />
                 </li>
               ))}
-            </>
-          ) : (
-            isFetching && (
-              <>
-                {Array(10)
-                  .fill()
-                  .map((_, idx) => (
-                    <li key={idx}>
-                      <Skeleton />
-                    </li>
-                  ))}
-              </>
-            )
-          ))}
+          </>
+        ) : (
+          inputValue && <Message>일치하는 유저가 없습니다.</Message>
+        )}
       </UserInfoList>
     </BasicLayout>
   );
