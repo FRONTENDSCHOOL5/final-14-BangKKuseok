@@ -3,9 +3,10 @@ import Heart from '../Heart/Heart';
 import commentIcon from '../../../../assets/icons/icon-message-small.svg';
 import { HeartCommentList, PostCardWrapper, PostDetail, PostInfoBox, Space } from './PostCardStyle';
 import { convertDateFormat } from '../../../../utils/getTime';
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteLike, postLike } from '../../../../api/likeApi';
+import { getMyProfile, getProfile } from '../../../../api/profileApi';
 
 export default function PostCard({ data, moreInfo = false }) {
   const { id, content, image, hearted, heartCount, comments, createdAt } = data;
@@ -14,9 +15,21 @@ export default function PostCard({ data, moreInfo = false }) {
 
   const [isHearted, setIsHearted] = useState(hearted);
   const [nowHeartCount, setNowHeartCount] = useState(heartCount);
+  const { accountname: accountnameByParams } = useParams();
 
+  // 프로필 정보 받기
+  const { data: profileData, isLoading: isProfileLoading } = useQuery(
+    ['profile', accountnameByParams],
+    () => (accountnameByParams ? getProfile(accountnameByParams) : getMyProfile()),
+  );
+
+  const queryClient = useQueryClient();
   //좋아요
   const postLikeMutation = useMutation(postLike, {
+    onSuccess() {
+      queryClient.invalidateQueries('feedPostData');
+      queryClient.invalidateQueries(['myPost', profileData]);
+    },
     onError(error) {
       console.log(error);
     },
@@ -24,6 +37,10 @@ export default function PostCard({ data, moreInfo = false }) {
 
   //좋아요 취소
   const deleteLikeMutation = useMutation(deleteLike, {
+    onSuccess() {
+      queryClient.invalidateQueries('feedPostData');
+      queryClient.invalidateQueries(['myPost', profileData]);
+    },
     onError(error) {
       console.log(error);
     },

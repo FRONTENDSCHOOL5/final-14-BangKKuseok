@@ -8,7 +8,6 @@ export const getFeedPost = async ({ skip }) => {
     return {
       data: posts,
       nextPage: skip,
-      isLast: posts.length < 10,
     };
   } catch (error) {
     console.error(error);
