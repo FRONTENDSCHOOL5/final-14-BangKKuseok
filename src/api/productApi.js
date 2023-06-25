@@ -8,3 +8,12 @@ export const deleteProduct = async (productId) => {
     console.error(error);
   }
 };
+
+export const uploadProduct = async (product) => {
+  try {
+    const response = await accessInstance.post(`/product`, product);
+    return response.product;
+  } catch (error) {
+    console.error(error);
+  }
+};
