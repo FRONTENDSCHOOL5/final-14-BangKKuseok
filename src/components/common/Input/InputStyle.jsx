@@ -42,16 +42,8 @@ export const StyledInput = styled.input`
     border-bottom: 1px solid ${({ theme }) => theme.colors.black};
   }
 
-  ${({ warningMsg, value }) =>
-    warningMsg && value
-      ? css`
-          border-bottom: 1px solid ${({ theme }) => theme.colors.subCoral};
-        `
-      : css`
-          border-bottom: 1px solid ${({ theme }) => theme.colors.gray100};
-        `};
-  ${({ warningMsg, isInValid }) =>
-    warningMsg && isInValid
+  ${({ warningMsg }) =>
+    warningMsg
       ? css`
           border-bottom: 1px solid ${({ theme }) => theme.colors.subCoral};
         `

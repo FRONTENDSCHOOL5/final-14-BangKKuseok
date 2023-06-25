@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../common/Button/Button/Button';
 import {
   UserProfileWrapper,
@@ -10,8 +10,21 @@ import {
 } from './SetUserProfileStyle';
 import SetUserProfileForm from './SetUserProfileForm';
 
-const SetUserProfile = ({ onClickBackLink, onClickNextLink }) => {
+const SetUserProfile = ({
+  onClickBackLink,
+  onClickNextLink,
+  setStep,
+  setData,
+  preEmail,
+  prePassword,
+  message,
+}) => {
   const [isButtonActive, setIsButtonActive] = useState(false);
+  const [idErrMsg, setIdErrMsg] = useState(false);
+
+  useEffect(() => {
+    setIdErrMsg(message);
+  }, [message]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,11 +38,18 @@ const SetUserProfile = ({ onClickBackLink, onClickNextLink }) => {
         <ProfileSubTitle>나중에 얼마든지 변경할 수 있습니다.</ProfileSubTitle>
       </UserProfileHeader>
 
-      <SetUserProfileForm setIsButtonActive={setIsButtonActive} />
+      <SetUserProfileForm
+        setIsButtonActive={setIsButtonActive}
+        setStep={setStep}
+        setData={setData}
+        preEmail={preEmail}
+        prePassword={prePassword}
+        message={idErrMsg}
+      />
 
       <UserProfileBottom>
         <Button type='submit' size='lg' onClick={handleSubmit} disabled={!isButtonActive}>
-          방꾸석 들어가기
+          저장
         </Button>
         <IsAlreadyUser onClick={onClickBackLink}>이전으로 돌아가기</IsAlreadyUser>
       </UserProfileBottom>

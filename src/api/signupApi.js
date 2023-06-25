@@ -4,7 +4,7 @@ import { instance } from './axiosInstance';
 // 의도된 에러인지 모르기 때문에 onError로 넘어가지 않았음.
 export const postSignUp = async (formData) => {
   const response = await instance.post(`/user`, formData);
-  return response;
+  return response.data;
 };
 
 export const checkEmailExist = async (email) => {
@@ -16,10 +16,6 @@ export const checkEmailExist = async (email) => {
   }
 };
 export const checkIdExist = async (accountname) => {
-  try {
-    const response = await instance.post(`user/accountnamevalid`, accountname);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
+  const response = await instance.post(`user/accountnamevalid`, accountname);
+  return response.data;
 };
