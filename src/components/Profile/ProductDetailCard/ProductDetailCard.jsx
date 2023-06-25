@@ -9,13 +9,30 @@ import {
   ProductName,
   ProductPrice,
 } from './ProductDetailCardStyle';
+import { useQuery } from 'react-query';
+import { getProductDetail } from '../../../api/productApi';
+import Spinner from '../../common/Spinner/Spinner';
 
-export default function ProductDetailCard({ selectedProduct }) {
-  const { itemName, price, link, itemImage } = selectedProduct[0];
+export default function ProductDetailCard({ isMyProfile, productId, onClick }) {
+  // 상품 상세정보 가져오기
+  const { data: productDetail, isLoading: isProductDetailLoading } = useQuery(
+    ['productDetail', productId],
+    () => getProductDetail(productId),
+    {
+      enabled: !!productId,
+    },
+  );
+
+  // 로딩중 일 때
+  if (isProductDetailLoading) {
+    return <Spinner />;
+  }
+
+  const { itemName, price, link, itemImage } = productDetail;
   const { name, keyword } = JSON.parse(itemName);
 
   const handleClickOpenSite = () => {
-    window.open(`https://${link}`, '_blank', 'noopener, noreferrer');
+    window.open(`${link}`, '_blank', 'noopener, noreferrer');
   };
 
   return (
@@ -29,14 +46,19 @@ export default function ProductDetailCard({ selectedProduct }) {
         <ProductKeyword>{keyword}</ProductKeyword>
       </ProductInfoWrapper>
       <ProductActionWrapper>
-        {/* TODO: API 연동 후 현재 사용자 토큰과 페이지 param이 같지 않다면 웹 사이트에서 보기 버튼만 화면에 렌더링 */}
         <Button size='lg' onClick={handleClickOpenSite}>
           웹사이트에서 보기
         </Button>
-        <Button size='lg' variant='line'>
-          삭제
-        </Button>
-        <Button size='lg'>수정</Button>
+        {isMyProfile && (
+          <>
+            <Button size='lg' variant='line' onClick={onClick}>
+              삭제
+            </Button>
+            <Button size='lg' onClick={onClick}>
+              수정
+            </Button>
+          </>
+        )}
       </ProductActionWrapper>
     </ProductDetailCardWrapper>
   );

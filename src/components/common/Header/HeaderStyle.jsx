@@ -19,6 +19,7 @@ const HeaderWrapper = styled.header`
         return css`
           background-color: ${({ theme }) => theme.colors.white};
           position: absolute;
+          z-index: 1;
         `;
       case 'search':
         return css`
@@ -55,10 +56,19 @@ const HeaderH3 = styled.h3`
   font-size: ${({ theme }) => theme.fontSize.base};
 `;
 
+const HeaderSpan = styled.span`
+  color: ${({ theme }) => theme.colors.gray200};
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  letter-spacing: 0.02rem;
+  font-weight: 400;
+  position: relative;
+  inset: -0.2rem 0 0 1rem;
+`;
+
 const SearchBtn = styled.button`
   display: inline-block;
   position: absolute;
   right: 1.6rem;
 `;
 
-export { HeaderWrapper, HeaderH2, HeaderH3, SearchBtn };
+export { HeaderWrapper, HeaderH2, HeaderH3, HeaderSpan, SearchBtn };

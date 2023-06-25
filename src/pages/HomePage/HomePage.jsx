@@ -1,13 +1,15 @@
-import React from 'react';
-import { posts, topLikedPosts } from '../../mock/mockData';
+import React, { useEffect, useRef } from 'react';
 import Carousel from '../../components/common/Carousel/Carousel';
 import SpaceTabs from '../../components/common/Tabs/SpaceTabs';
 import BasicLayout from '../../layout/BasicLayout';
-import PostList from '../../components/Profile/PostList/PostList';
-import styled from 'styled-components';
 import { useState } from 'react';
 import { SPACES } from '../../constants/spaces';
 import Search from '../SearchPage/SearchPage';
+import { useInfiniteQuery } from 'react-query';
+import { getAllPost } from '../../api/homeApi';
+import styled from 'styled-components';
+import Gallery from '../../components/common/Gallery/Gallery';
+import { filterPosts } from '../../utils/filterPosts';
 
 const Message = styled.p`
   font-weight: 500;
@@ -28,20 +30,59 @@ const TabWrapper = styled.div`
 
 export default function HomePage() {
   const [currentTab, setCurrentTab] = useState(0);
-  const [filteredPosts, setFilteredPosts] = useState(posts);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isClickSearchButton, setIsClickSearchButton] = useState(false);
+  const [filteredAllPosts, setFilteredAllPosts] = useState([]);
+  const [filteredPosts, setfilteredPosts] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
+  const [isTabClick, setIsTabClick] = useState(false);
+  const [sortedPosts, setSortedPosts] = useState([]);
+
+  const count = useRef(0);
+  const [isLast, setIsLast] = useState(false);
+
+  const {
+    data: postData,
+    isLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery('posts', ({ skip = count.current }) => getAllPost({ limit: 100, skip }), {
+    getNextPageParam: (lastPage) => {
+      return lastPage.nextPage + 1;
+    },
+    onSuccess: (newData) => {
+      const pageParam = newData.pageParams.length - 1;
+      setAllPosts([...newData.pages[pageParam].data]);
+      if (newData.pages[pageParam].isLast) {
+        setIsLast(true);
+      }
+
+      const allFiltered = allPosts.filter((post) => post.content?.includes('"space"'));
+      setFilteredAllPosts((prevData) => [...prevData, ...allFiltered]);
+    },
+  });
+
+  useEffect(() => {
+    if (!isLast) {
+      fetchNextPage();
+      count.current += 100;
+    }
+  }, [postData, isLoading, isLast, fetchNextPage]);
 
   const handleClickTabButton = (e) => {
     const index = ['전체', ...SPACES].indexOf(e.target.innerText);
     if (e.target.tagName === 'BUTTON') {
       setScrollLeft(e.currentTarget.scrollLeft); // 버튼 클릭했을 때 scrollLeft 위치 유지
       setCurrentTab(index);
-      const filtered = posts.filter((post) => {
-        const parsedContent = JSON.parse(post.content);
-        return e.target.innerText === '전체' ? posts : parsedContent.space === e.target.innerText;
+      setIsTabClick(true);
+
+      const filter = filteredAllPosts.filter((post) => {
+        const { space } = JSON.parse(post.content);
+        return e.target.innerText === '전체' ? space : space === e.target.innerText;
       });
-      setFilteredPosts(filtered);
+
+      setfilteredPosts(filter);
     }
   };
 
@@ -53,13 +94,20 @@ export default function HomePage() {
     setIsClickSearchButton(true);
   };
 
+  if (hasNextPage && isLoading && isFetchingNextPage)
+    return (
+      <BasicLayout>
+        <span>로딩중..</span>
+      </BasicLayout>
+    );
+
   return (
     <>
       {isClickSearchButton ? (
         <Search onClickLeftButton={handleClickLeftButton} />
       ) : (
         <BasicLayout type='home' onClickRightButton={handleClickRightButton}>
-          <Carousel data={topLikedPosts} />
+          <Carousel data={sortedPosts} />
           <TabWrapper>
             <SpaceTabs
               currentTab={currentTab}
@@ -67,10 +115,10 @@ export default function HomePage() {
               scrollLeft={scrollLeft}
             />
           </TabWrapper>
-          {filteredPosts.length >= 1 ? (
-            <PostList selectedTab='grid' posts={filteredPosts} />
-          ) : (
+          {filteredAllPosts.length === 0 ? (
             <Message>작성된 게시물이 없습니다.</Message>
+          ) : (
+            <Gallery data={filterPosts(isTabClick ? filteredPosts : filteredAllPosts)} />
           )}
         </BasicLayout>
       )}

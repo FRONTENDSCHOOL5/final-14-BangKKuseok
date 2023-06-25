@@ -9,6 +9,8 @@ import SearchPage from './SearchPage/SearchPage';
 import PostPage from './PostPage/PostPage/PostPage';
 import PostUploadPage from './PostPage/PostUploadPage/PostUploadPage';
 import PostEditPage from './PostPage/PostEditPage/PostEditPage';
+import ProductUploadPage from './ProductPage/ProductUploadPage/ProductUploadPage';
+import ProductEditPage from './ProductPage/ProductEditPage/ProductEditPage';
 import ProfilePage from './ProfilePage/ProfilePage/ProfilePage';
 import ProfileEditPage from './ProfilePage/ProfileEditPage/ProfileEditPage';
 import FollowersPage from './ProfilePage/FollowPage/FollowersPage/FollowersPage';
@@ -31,6 +33,8 @@ export default function AppRouter() {
         <Route path='/post/upload' element={<PostUploadPage />} />
         <Route path='/post/:postId' element={<PostPage />} />
         <Route path='/post/:postId/edit' element={<PostEditPage />} />
+        <Route path='/product/upload' element={<ProductUploadPage />} />
+        <Route path='/product/:productId/edit' element={<ProductEditPage />} />
         <Route path='/profile'>
           <Route index element={<ProfilePage />} />
           <Route path='edit' element={<ProfileEditPage />} />
