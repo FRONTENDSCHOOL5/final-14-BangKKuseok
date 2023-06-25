@@ -21,7 +21,7 @@ export const uploadPost = async (postData) => {
 export const getPostDetail = async (postId) => {
   try {
     const response = await accessInstance.get(`/post/${postId}`);
-    return response.data;
+    return response.data.post;
   } catch (error) {
     console.error(error);
   }
