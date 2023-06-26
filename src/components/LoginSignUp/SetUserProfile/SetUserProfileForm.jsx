@@ -3,7 +3,14 @@ import Input from '../../common/Input/Input';
 import { ImgUploadBox, ProfileForm } from './SetUserProfileFormStyle';
 import ProfileImgUpload from '../../common/ProfileImageUpload/ProfileImageUpload';
 
-export default function SetUserProfileForm({ setIsButtonActive, myData = '', setData }) {
+export default function SetUserProfileForm({
+  setIsButtonActive,
+  myData = '',
+  setData,
+  preEmail,
+  prePassword,
+  message,
+}) {
   const [nameValue, setNameValue] = useState(myData.username ?? '');
   const [idValue, setIdValue] = useState(myData.accountname ?? '');
   const [introValue, setIntroValue] = useState(myData.intro ?? '');
@@ -16,6 +23,11 @@ export default function SetUserProfileForm({ setIsButtonActive, myData = '', set
   const [isIdInValid, setIsIdInValid] = useState(true);
   const [isInValid, setIsInValid] = useState(true);
 
+  useEffect(() => {
+    setIdError(message);
+    setIsIdInValid(true);
+  }, [message]);
+
   const handleNameChange = (e) => {
     const value = e.target.value;
     setNameValue(value);
@@ -24,14 +36,20 @@ export default function SetUserProfileForm({ setIsButtonActive, myData = '', set
 
   const handleIdChange = (e) => {
     const value = e.target.value;
-    setIdValue(value);
     setIdError('');
+    setIdValue(value);
   };
 
   const handleIntroChange = (e) => {
     const value = e.target.value;
     setIntroValue(value);
   };
+
+  useEffect(() => {
+    if (nameValue !== '' && idValue !== '') {
+      setIsButtonActive(true);
+    }
+  }, [nameValue, idValue]);
 
   const handleValidateName = () => {
     if (!/^[a-zA-Z0-9가-힣]*$/.test(nameValue) || nameValue.length < 2 || nameValue.length > 10) {
@@ -44,9 +62,12 @@ export default function SetUserProfileForm({ setIsButtonActive, myData = '', set
   };
 
   const handleValidateId = () => {
-    if (!/^[a-zA-Z0-9_.]*$/.test(idValue)) {
+    if (!/^[a-zA-Z0-9_.]*$/.test(idValue) && idValue.length > 0) {
       setIdError('영문, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.');
       setIsIdInValid(true);
+    } else if (idValue === '') {
+      setIsIdInValid(true);
+      setIdError('ID를 입력해주세요.');
     } else {
       setIdError('');
       setIsIdInValid(false);
@@ -61,7 +82,6 @@ export default function SetUserProfileForm({ setIsButtonActive, myData = '', set
    */
   useEffect(() => {
     setIsInValid(isNameInValid || isIdInValid);
-
     if (isInValid) {
       setIsButtonActive(false);
     } else {
@@ -74,6 +94,8 @@ export default function SetUserProfileForm({ setIsButtonActive, myData = '', set
    */
   useEffect(() => {
     setData({
+      email: preEmail,
+      password: prePassword,
       username: nameValue,
       accountname: idValue,
       intro: introValue,
@@ -87,6 +109,8 @@ export default function SetUserProfileForm({ setIsButtonActive, myData = '', set
   useEffect(() => {
     handleValidateId();
     handleValidateName();
+    setIdError('');
+    setNameError('');
   }, []);
 
   return (

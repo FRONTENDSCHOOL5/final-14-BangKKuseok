@@ -84,7 +84,6 @@ const Login = () => {
     ) {
       setIsEmailInValid(true);
       setEmailError('잘못된 이메일 형식입니다.');
-      console.log(isEmailInValid);
     } else if (emailValue.length === 0) {
       setIsEmailInValid(true);
       setEmailError('이메일을 입력해주세요.');

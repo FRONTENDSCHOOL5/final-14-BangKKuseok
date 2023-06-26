@@ -12,7 +12,7 @@ export const LoginHeader = styled.header`
 export const LoginLogo = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.lg};
   text-align: center;
-  margin-top: 55px;
+  padding-top: 55px;
   margin-bottom: 40px;
 `;
 
