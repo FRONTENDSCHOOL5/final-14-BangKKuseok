@@ -12,10 +12,6 @@ export default function FollowersPage() {
   const navigate = useNavigate();
   const accountname = useLocation().state.accountname;
 
-  const handleClickBackButton = () => {
-    navigate(-1);
-  };
-
   const {
     data: followers,
     fetchNextPage,
@@ -40,6 +36,18 @@ export default function FollowersPage() {
 
   const observerRef = useObserver(hasNextPage, fetchNextPage, isLoading);
 
+  const handleClickBackButton = () => {
+    navigate(-1);
+  };
+
+  const handleClickFollow = () => {
+    // 팔로우 API 요청
+  };
+
+  const handleClickUnFollow = () => {
+    // 언팔로우 API 요청
+  };
+
   if (isLoading && isFetching) {
     return <Spinner />;
   }
@@ -52,7 +60,12 @@ export default function FollowersPage() {
             <FollowerList>
               {followers?.map((follower) => (
                 <FollowItem key={follower._id}>
-                  <UserSimpleInfo profile={follower} type='follow' isLink={true} />
+                  <UserSimpleInfo
+                    profile={follower}
+                    type='follow'
+                    isLink={true}
+                    onClickFollow={follower.isfollow ? handleClickUnFollow : handleClickFollow}
+                  />
                 </FollowItem>
               ))}
             </FollowerList>

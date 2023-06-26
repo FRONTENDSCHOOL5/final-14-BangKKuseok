@@ -12,12 +12,16 @@ import Button from '../../Button/Button/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function UserSimpleInfo({ profile, isLink = false, type, onClick, inputValue }) {
-  const [isfollow, setIsFollow] = useState(false);
+export default function UserSimpleInfo({
+  profile,
+  isLink = false,
+  type,
+  onClick,
+  onClickFollow,
+  inputValue,
+}) {
   const [error, setError] = useState(false);
-  const handleClickFollow = () => {
-    setIsFollow(!isfollow);
-  };
+
   const handleImageError = () => {
     setError(true);
   };
@@ -78,13 +82,13 @@ export default function UserSimpleInfo({ profile, isLink = false, type, onClick,
         </button>
       ) : type === 'follow' ? (
         <>
-          {isfollow ? (
-            <Button size='xs' onClick={handleClickFollow}>
-              팔로우
+          {profile.isfollow ? (
+            <Button variant='white' size='xs' onClick={onClickFollow}>
+              언팔로우
             </Button>
           ) : (
-            <Button variant='white' size='xs' onClick={handleClickFollow}>
-              언팔로우
+            <Button size='xs' onClick={onClickFollow}>
+              팔로우
             </Button>
           )}
         </>
