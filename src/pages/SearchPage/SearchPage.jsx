@@ -51,13 +51,13 @@ export default function Search({ onClickLeftButton }) {
     {
       enabled: !!debouncedSearchUser,
       select: (result) =>
-        result
-          .filter((user) => {
-            return user.username.includes(debouncedSearchUser);
-          })
-          .slice(0, view * 7),
+        result.filter((user) => {
+          return user.username.includes(debouncedSearchUser);
+        }),
     },
   );
+
+  const paginatedSearchResult = searchResult?.slice(0, view * 7);
 
   const handleChangeInput = (e) => {
     setInputValue(e.target.value);
@@ -108,13 +108,15 @@ export default function Search({ onClickLeftButton }) {
           </>
         ) : inputValue && debouncedSearchUser && searchResult?.length > 0 ? (
           <>
-            {searchResult.map((user) => (
+            {paginatedSearchResult.map((user) => (
               <li key={user._id} onClick={() => handleSaveSearchResult(user)}>
                 <UserSimpleInfo profile={user} isLink={true} inputValue={inputValue} />
               </li>
             ))}
-            {(searchResult?.length % view) * 7 < 7 && (
-              <MoreButton onClick={handleClickMore}>검색결과 더보기</MoreButton>
+            {paginatedSearchResult?.length % (view * 7) < 7 && searchResult?.length > 7 && (
+              <MoreButton type='button' onClick={handleClickMore}>
+                검색결과 더보기
+              </MoreButton>
             )}
           </>
         ) : (
