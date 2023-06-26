@@ -29,6 +29,10 @@ const TabWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
+const PostWrapper = styled.section`
+  padding: 0 16px 16px;
+`;
+
 export default function HomePage() {
   const [currentTab, setCurrentTab] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -120,7 +124,9 @@ export default function HomePage() {
           {filteredAllPosts.length === 0 ? (
             <Message>작성된 게시물이 없습니다.</Message>
           ) : (
-            <Gallery data={filterPosts(isTabClick ? filteredPosts : filteredAllPosts)} />
+            <PostWrapper>
+              <Gallery data={filterPosts(isTabClick ? filteredPosts : filteredAllPosts)} />
+            </PostWrapper>
           )}
         </BasicLayout>
       )}
