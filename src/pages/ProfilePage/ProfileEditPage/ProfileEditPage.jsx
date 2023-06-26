@@ -3,7 +3,7 @@ import BasicLayout from '../../../layout/BasicLayout';
 import SetUserProfileForm from '../../../components/LoginSignUp/SetUserProfile/SetUserProfileForm';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { updateProfile } from '../../../api/profileApi';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 export default function ProfileEditPage() {
   const [isButtonActive, setIsButtonActive] = useState(false);
@@ -18,9 +18,15 @@ export default function ProfileEditPage() {
   const location = useLocation();
   const myData = location.state;
 
-  const updateProfileMutation = useMutation((formData) => updateProfile(formData), {
+  const queryClient = useQueryClient();
+
+  const updateProfileMutation = useMutation(updateProfile, {
     onSuccess: () => {
       navigate('/profile');
+    },
+    onMutate: () => {
+      // 이전 데이터를 캐시에서 제거
+      queryClient.removeQueries('myProfile');
     },
     onError: () => {
       console.error('프로필 수정 실패');
@@ -28,14 +34,7 @@ export default function ProfileEditPage() {
   });
 
   const handleClickSaveButton = () => {
-    updateProfileMutation.mutate({
-      user: {
-        username: newProfile.username,
-        accountname: newProfile.accountname,
-        intro: newProfile.intro,
-        image: newProfile.image,
-      },
-    });
+    updateProfileMutation.mutate({ user: { ...newProfile } });
   };
 
   return (
