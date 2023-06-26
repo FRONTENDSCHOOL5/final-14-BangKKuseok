@@ -74,7 +74,7 @@ export default function ChatListPage() {
                 <Link
                   to={`/chat/${profile.accountname}`}
                   state={{
-                    accountname: profile.accountname,
+                    username: profile.username,
                     image: profile.image,
                     otherChatArr: profile.messages,
                   }}

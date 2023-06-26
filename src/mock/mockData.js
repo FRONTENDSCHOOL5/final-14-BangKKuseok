@@ -67,8 +67,8 @@ const products = [
 const profile = [
   {
     _id: '647fe3b5b2cb2056632d63a8',
-    username: '구스덕하실분',
-    accountname: '구스독',
+    username: '구스구스',
+    accountname: 'goose2023',
     intro: '구스덕조아',
     image: 'https://i.pinimg.com/750x/e0/81/9c/e0819c03a4c25514289b41a62200fb9a.jpg',
     isfollow: false,
@@ -83,10 +83,10 @@ const profile = [
   },
   {
     _id: '1',
-    username: '구스덕하실분',
-    accountname: '구스독',
+    username: '꾸덕이',
+    accountname: 'bangkkuseok',
     intro: '구스덕조아',
-    image: 'https://i.pinimg.com/750x/e0/81/9c/e0819c03a4c25514289b41a62200fb9a.jpg',
+    image: 'https://i.pinimg.com/564x/96/62/9d/96629d2fc302fb9f4c04d14b5160f77f.jpg',
     isfollow: false,
     following: ['647d90b9b2cb2056632d52ae', '62d8f10617ae6665817fdccb'],
     follower: [],
@@ -100,10 +100,10 @@ const profile = [
   },
   {
     _id: '2',
-    username: '구스덕하실분',
-    accountname: '구스독',
+    username: '집순이',
+    accountname: 'jipjoa',
     intro: '구스덕조아',
-    image: 'https://i.pinimg.com/750x/e0/81/9c/e0819c03a4c25514289b41a62200fb9a.jpg',
+    image: 'https://i.pinimg.com/564x/b5/8f/2f/b58f2f6c940f8bc9e36e10211dcacfa2.jpg',
     isfollow: false,
     following: ['647d90b9b2cb2056632d52ae', '62d8f10617ae6665817fdccb'],
     follower: [],

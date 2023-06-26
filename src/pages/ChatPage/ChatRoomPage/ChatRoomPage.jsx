@@ -141,7 +141,7 @@ export default function ChatRoomPage() {
     <BasicLayout
       name={'chat'}
       type={'post'}
-      title={location.state.accountname}
+      title={location.state.username}
       isNonNav={true}
       onClickLeftButton={() => navigate(-1)}
       onClickRightButton={handleClickRightButton}

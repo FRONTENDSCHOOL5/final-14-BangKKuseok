@@ -35,9 +35,13 @@ const ImgWrapper = styled.div`
   width: 42px;
   height: 42px;
   border-radius: 50%;
-
   overflow: hidden;
-  object-fit: cover;
+
+  img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+  }
 `;
 const ChatText = styled.div`
   margin-top: 5px;
