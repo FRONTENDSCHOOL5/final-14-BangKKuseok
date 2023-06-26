@@ -49,7 +49,7 @@ const SetUserProfile = ({
 
       <UserProfileBottom>
         <Button type='submit' size='lg' onClick={handleSubmit} disabled={!isButtonActive}>
-          방꾸석 들어가기
+          방꾸석 시작하기
         </Button>
         <IsAlreadyUser onClick={onClickBackLink}>이전으로 돌아가기</IsAlreadyUser>
       </UserProfileBottom>
