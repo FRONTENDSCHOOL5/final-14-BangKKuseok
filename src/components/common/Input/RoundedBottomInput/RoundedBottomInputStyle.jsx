@@ -11,6 +11,12 @@ const BottomInputWrapper = styled.div`
   position: fixed;
   bottom: 0;
   z-index: 5;
+  display: flex;
+`;
+
+const ImageBtnBox = styled.button`
+  margin-right: 8px;
+  width: 40px;
 `;
 
 const RoundedInputBox = styled(RoundedInputWrapper)`
@@ -31,4 +37,4 @@ const SubmitBtn = styled.button`
   inset: 0 0 auto auto;
 `;
 
-export { BottomInputWrapper, RoundedInputBox, SubmitBtn };
+export { BottomInputWrapper, RoundedInputBox, SubmitBtn, ImageBtnBox };

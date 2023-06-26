@@ -67,8 +67,8 @@ const products = [
 const profile = [
   {
     _id: '647fe3b5b2cb2056632d63a8',
-    username: '구스덕하실분',
-    accountname: '구스독',
+    username: '구스구스',
+    accountname: 'goose2023',
     intro: '구스덕조아',
     image: 'https://i.pinimg.com/750x/e0/81/9c/e0819c03a4c25514289b41a62200fb9a.jpg',
     isfollow: false,
@@ -76,6 +76,45 @@ const profile = [
     follower: [],
     followerCount: 0,
     followingCount: 2,
+    messages: [
+      '안녕하세요! 저는 최근에 새로운 인테리어 상품을 찾고 있는데, 정말로 이번에 구매하고 싶은 상품을 발견했습니다. 이 제품은 매우 훌륭한 성능과 기능을 제공하며, 디자인도 매력적입니다. 리뷰들을 읽어보니 다른 사용자들도 이 제품을 강력히 추천하고 있더라구요. 그래서 저도 이 제품을 구매하고 싶은데, 혹시 제가 궁금한 몇 가지 질문이 있어서 여쭤보려고 합니다. 제가 질문을 몇 가지 할 수 있을까요?',
+      '오늘 날씨가 좋네요',
+    ],
+  },
+  {
+    _id: '1',
+    username: '꾸덕이',
+    accountname: 'bangkkuseok',
+    intro: '구스덕조아',
+    image: 'https://i.pinimg.com/564x/96/62/9d/96629d2fc302fb9f4c04d14b5160f77f.jpg',
+    isfollow: false,
+    following: ['647d90b9b2cb2056632d52ae', '62d8f10617ae6665817fdccb'],
+    follower: [],
+    followerCount: 0,
+    followingCount: 2,
+    messages: [
+      '제 상품에 대해 궁금한 점이 있으시면 언제든지 물어보실 수 있습니다.',
+      '반갑습니다!',
+      '무슨 일로 오셨나요?',
+    ],
+  },
+  {
+    _id: '2',
+    username: '집순이',
+    accountname: 'jipjoa',
+    intro: '구스덕조아',
+    image: 'https://i.pinimg.com/564x/b5/8f/2f/b58f2f6c940f8bc9e36e10211dcacfa2.jpg',
+    isfollow: false,
+    following: ['647d90b9b2cb2056632d52ae', '62d8f10617ae6665817fdccb'],
+    follower: [],
+    followerCount: 0,
+    followingCount: 2,
+    messages: [
+      '반갑습니다~~~~~',
+      '상품구매 희망하여 연락을 드리게 되었습니다',
+      '사고싶어요오오오오오오오',
+      '얼마인가요???',
+    ],
   },
 ];
 
