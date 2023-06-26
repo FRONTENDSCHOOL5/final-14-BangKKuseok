@@ -1,8 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import WhiteLogo from '../../../assets/images/logo-white.png';
+import magnifierImg from '../../../assets/images/magnifier.png';
 import SocialButton from '../../common/Button/SocialButton/SocialButton';
-import { MainPageWrapper, WhiteLogoImg, BottomBox, BtnBox, AccountSignUpBox } from './MainStyle';
+import {
+  MainPageWrapper,
+  WhiteLogoImg,
+  BtnBox,
+  AccountSignUpBox,
+  CanvasBox,
+  BottomSection,
+} from './MainStyle';
+import Furniture from './Furniture/Furniture';
 
 export default function Main({ onClickLoginLink }) {
   const handleGotoLogin = () => {
@@ -12,7 +21,11 @@ export default function Main({ onClickLoginLink }) {
   return (
     <MainPageWrapper>
       <WhiteLogoImg src={WhiteLogo} />
-      <BottomBox>
+      <CanvasBox>
+        <Furniture />
+        <img src={magnifierImg} alt='돋보기 배경' />
+      </CanvasBox>
+      <BottomSection>
         <BtnBox>
           <SocialButton social='mail' onClick={handleGotoLogin}>
             이메일로 로그인
@@ -24,7 +37,7 @@ export default function Main({ onClickLoginLink }) {
             <Link to={'/signup'}>회원가입</Link>
           </AccountSignUpBox>
         </BtnBox>
-      </BottomBox>
+      </BottomSection>
     </MainPageWrapper>
   );
 }
