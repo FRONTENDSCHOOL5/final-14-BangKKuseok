@@ -4,6 +4,7 @@ import SignUp from '../../components/LoginSignUp/SignUp/SignUp';
 import SetUserProfile from '../../components/LoginSignUp/SetUserProfile/SetUserProfile';
 import { useMutation } from 'react-query';
 import { checkIdExist, postSignUp } from '../../api/signupApi';
+import Welcome from '../../components/LoginSignUp/Welcome/Welcome';
 
 export default function SignupPage() {
   const [isAlreadyIdMsg, setIsAlreadyIdMsg] = useState('');
@@ -23,7 +24,6 @@ export default function SignupPage() {
     onSuccess: (formData) => {
       if (formData.message === '회원가입 성공') {
         setStep('로그인');
-        navigate('/login');
       }
     },
     onError: (formData) => {
@@ -65,6 +65,7 @@ export default function SignupPage() {
   const handleNextLink = () => {
     if (step === '프로필설정') {
       idMutation.mutate({ user: { accountname: preData.accountname } });
+      setStep('환영합니다');
     }
   };
 
@@ -88,6 +89,7 @@ export default function SignupPage() {
           message={isAlreadyIdMsg}
         />
       )}
+      {step === '환영합니다' && <Welcome />}
     </>
   );
 }
