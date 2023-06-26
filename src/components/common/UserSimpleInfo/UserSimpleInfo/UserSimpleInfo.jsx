@@ -53,7 +53,9 @@ export default function UserSimpleInfo({ profile, isLink = false, type, onClick,
                   profile.username
                 )}
               </UserName>
-              <AccountName>@ {profile.accountname}</AccountName>
+              <AccountName>
+                {type === 'follow' ? profile.intro : `@ ${profile.accountname}`}
+              </AccountName>
             </UserNameBox>
           </Link>
         ) : (
@@ -82,7 +84,7 @@ export default function UserSimpleInfo({ profile, isLink = false, type, onClick,
             </Button>
           ) : (
             <Button variant='white' size='xs' onClick={handleClickFollow}>
-              취소
+              언팔로우
             </Button>
           )}
         </>
