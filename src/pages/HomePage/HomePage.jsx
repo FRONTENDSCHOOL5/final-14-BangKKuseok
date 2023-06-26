@@ -10,6 +10,7 @@ import { getAllPost } from '../../api/homeApi';
 import styled from 'styled-components';
 import Gallery from '../../components/common/Gallery/Gallery';
 import { filterPosts } from '../../utils/filterPosts';
+import Spinner from '../../components/common/Spinner/Spinner';
 
 const Message = styled.p`
   font-weight: 500;
@@ -103,6 +104,7 @@ export default function HomePage() {
 
   return (
     <>
+      {(isLoading || filteredAllPosts.length === 0) && <Spinner />}
       {isClickSearchButton ? (
         <Search onClickLeftButton={handleClickLeftButton} />
       ) : (
