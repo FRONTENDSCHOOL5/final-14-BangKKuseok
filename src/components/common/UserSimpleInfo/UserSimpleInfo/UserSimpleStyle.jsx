@@ -40,6 +40,11 @@ const UserName = styled.span`
   font-size: ${({ theme }) => theme.fontSize.sm};
   font-weight: 500;
   margin-bottom: 6px;
+
+  .highlight {
+    color: ${({ theme }) => theme.colors.mainCoral};
+    font-weight: 600;
+  }
 `;
 
 const AccountName = styled.span`
