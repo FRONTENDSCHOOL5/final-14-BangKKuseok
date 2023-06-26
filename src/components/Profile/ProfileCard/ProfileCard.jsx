@@ -28,7 +28,10 @@ export default function ProfileCard({ profile, isMyProfile }) {
   return (
     <ProfileCardWrapper>
       <FollowFollowingBox>
-        <Link to={`/profile/${accountnameByParams ?? profile.accountname}/followers`}>
+        <Link
+          to={`/profile/${accountnameByParams ?? profile.accountname}/followers`}
+          state={{ accountname: profile.accountname }}
+        >
           <TextBox>
             <strong>
               <span>{profile.followerCount}</span>
@@ -39,7 +42,10 @@ export default function ProfileCard({ profile, isMyProfile }) {
         <ProfileImgBox>
           <img src={profile.image || basicProfileImage} alt='유저 프로필 이미지' />
         </ProfileImgBox>
-        <Link to={`/profile/${accountnameByParams ?? profile.accountname}/followings`}>
+        <Link
+          to={`/profile/${accountnameByParams ?? profile.accountname}/followings`}
+          state={{ accountname: profile.accountname }}
+        >
           <TextBox>
             <strong>
               <span>{profile.followingCount}</span>
