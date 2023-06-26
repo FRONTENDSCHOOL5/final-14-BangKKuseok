@@ -12,6 +12,7 @@ import BottomSheet from '../../components/common/BottomSheet/BottomSheet';
 import ListModal from '../../components/common/BottomSheet/ListModal';
 import Confirm from '../../components/common/Confirm/Confirm';
 import Search from '../SearchPage/SearchPage';
+import useObserver from '../../hooks/useObserver';
 
 export default function FeedPage() {
   const [isShow, setIsShow] = useState(false);
@@ -52,27 +53,7 @@ export default function FeedPage() {
     },
   );
 
-  //스크롤 감지를 위한 IntersectionObserver API
-  const observerRef = useRef();
-  const handleObserver = useCallback(
-    (entries) => {
-      const [target] = entries;
-      if (target.isIntersecting && hasNextPage) {
-        fetchNextPage();
-      }
-    },
-    [fetchNextPage, hasNextPage],
-  );
-
-  useEffect(() => {
-    const element = observerRef.current;
-    const option = { threshold: 0 };
-    const observer = new IntersectionObserver(handleObserver, option);
-    if (element) {
-      observer.observe(element);
-      return () => observer.unobserve(element);
-    }
-  }, [fetchNextPage, handleObserver, isLoading]);
+  const observerRef = useObserver(hasNextPage, fetchNextPage, isLoading);
 
   //게시글 신고하기
   const reportPostMutation = useMutation(reportPost, {
