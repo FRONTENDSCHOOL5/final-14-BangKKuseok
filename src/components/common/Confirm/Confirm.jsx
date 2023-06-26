@@ -3,11 +3,14 @@ import { ButtonBox, ConfirmBackdrop, ConfirmWrapper } from './ConfirmStyle';
 
 export default function Confirm({ type, object, setIsShowConfirm, onClick }) {
   const confirmMsg = {
+    upload: '업로드',
     delete: '삭제',
     report: '신고',
     logout: '로그아웃',
   };
   const confirmObject = {
+    chat: '채팅',
+    file: '파일',
     product: '상품',
     comment: '댓글',
     post: '게시글',
