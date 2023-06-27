@@ -79,7 +79,10 @@ export default function ChatListPage() {
                     otherChatArr: profile.messages,
                   }}
                 >
-                  <OtherSimpleInfo profile={profile} message={profile.messages[0]} />
+                  <OtherSimpleInfo
+                    profile={profile}
+                    message={profile.messages[profile.messages.length - 1]}
+                  />
                   {index === 1 && <UnreadDot />}
                 </Link>
               </li>
