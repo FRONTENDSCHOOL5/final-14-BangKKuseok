@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 export default function UserSimpleInfo({
   profile,
   isLink = false,
+  isMyProfile,
   type,
   onClick,
   onClickFollow,
@@ -81,17 +82,19 @@ export default function UserSimpleInfo({
           <MoreIcon />
         </button>
       ) : type === 'follow' ? (
-        <>
-          {profile.isfollow ? (
-            <Button variant='white' size='xs' onClick={onClickFollow}>
-              언팔로우
-            </Button>
-          ) : (
-            <Button size='xs' onClick={onClickFollow}>
-              팔로우
-            </Button>
-          )}
-        </>
+        !isMyProfile && (
+          <>
+            {profile.isfollow ? (
+              <Button variant='white' size='xs' onClick={() => onClickFollow(profile.accountname)}>
+                언팔로우
+              </Button>
+            ) : (
+              <Button size='xs' onClick={() => onClickFollow(profile.accountname)}>
+                팔로우
+              </Button>
+            )}
+          </>
+        )
       ) : null}
     </UserSimpleInfoWrapper>
   );
