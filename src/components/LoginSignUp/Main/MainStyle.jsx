@@ -8,20 +8,25 @@ export const MainPageWrapper = styled.main`
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  position: relative;
 `;
 
 export const WhiteLogoImg = styled.img`
+  display: inline-block;
   width: 187px;
   max-width: calc(100% - 102px);
-  margin: 107px auto 0;
-  display: inline-block;
+  margin: 15vh auto -1vh;
+  @media screen and (max-width: 500px) {
+    margin: 15vh auto 16vw;
+  }
+  @media screen and (min-height: 812px) {
+    margin: 15vh auto 15vh;
+  }
 `;
 
 export const CanvasBox = styled.div`
-  position: relative;
   margin: 0 auto;
-  width: 170px;
+  width: 50%;
   min-width: 150px;
   aspect-ratio: 1;
   & > div {
@@ -29,13 +34,23 @@ export const CanvasBox = styled.div`
   }
   canvas {
     filter: saturate(1.5);
+    width: 100%;
   }
-  img {
-    position: absolute;
-    top: -8px;
-    left: -8px;
-    width: 202px;
-    min-width: 182px;
+`;
+
+export const BackgroundImg = styled.img`
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 40%;
+  min-width: 200px;
+  height: 490px;
+  min-height: 50vh;
+  @media screen and (max-width: 500px) {
+    height: 60vh;
+  }
+  @media screen and (min-height: 812px) {
+    width: 50%;
   }
 `;
 
@@ -43,6 +58,9 @@ export const BottomSection = styled.section`
   border-radius: 20px 20px 0 0;
   background-color: ${({ theme }) => theme.colors.white};
   padding: 4vh 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 `;
 
 export const BtnBox = styled.div`

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import WhiteLogo from '../../../assets/images/logo-white.png';
-import magnifierImg from '../../../assets/images/magnifier.png';
 import SocialButton from '../../common/Button/SocialButton/SocialButton';
+import spotLightImg from '../../../assets/images/spotlight.png';
 import {
   MainPageWrapper,
   WhiteLogoImg,
@@ -10,6 +10,7 @@ import {
   AccountSignUpBox,
   CanvasBox,
   BottomSection,
+  BackgroundImg,
 } from './MainStyle';
 import Furniture from './Furniture/Furniture';
 
@@ -23,8 +24,8 @@ export default function Main({ onClickLoginLink }) {
       <WhiteLogoImg src={WhiteLogo} />
       <CanvasBox>
         <Furniture />
-        <img src={magnifierImg} alt='돋보기 배경' />
       </CanvasBox>
+      <BackgroundImg src={spotLightImg} alt='배경 조명 이미지' />
       <BottomSection>
         <BtnBox>
           <SocialButton social='mail' onClick={handleGotoLogin}>
