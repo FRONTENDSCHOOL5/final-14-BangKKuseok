@@ -96,7 +96,9 @@ export default function PostUploadPage() {
   };
 
   const StepLayout = {
-    '사진 선택': <PostImgUpload setImg={setPostImg} setIsBtnActive={setIsBtnActive} />,
+    '사진 선택': (
+      <PostImgUpload setImg={setPostImg} setIsBtnActive={setIsBtnActive} postedImg={postedImg} />
+    ),
     '상품태그 추가': <PostProductTag postedImg={postedImg} setIsBtnActive={setIsBtnActive} />,
     '게시글 작성': (
       <PostTextWrite
