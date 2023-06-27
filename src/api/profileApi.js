@@ -19,10 +19,6 @@ export const getMyProfile = async () => {
 };
 
 export const updateProfile = async (formData) => {
-  try {
-    const response = await accessInstance.put(`/user`, formData);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
+  const response = await accessInstance.put(`/user`, formData);
+  return response.data;
 };
