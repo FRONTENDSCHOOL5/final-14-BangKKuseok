@@ -78,4 +78,11 @@ const ChatTime = styled.div`
   color: ${({ theme }) => theme.colors.gray300};
 `;
 
-export { ChatRoomWrapper, ChatRoomContainer, ChatBox, ChatText, ChatTime, ImgWrapper };
+const Message = styled.p`
+  text-align: center;
+  color: ${({ theme }) => theme.colors.gray200};
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  padding: 6px 0;
+`;
+
+export { ChatRoomWrapper, ChatRoomContainer, ChatBox, ChatText, ChatTime, ImgWrapper, Message };

@@ -15,7 +15,7 @@ import ProfilePage from './ProfilePage/ProfilePage/ProfilePage';
 import ProfileEditPage from './ProfilePage/ProfileEditPage/ProfileEditPage';
 import FollowersPage from './ProfilePage/FollowPage/FollowersPage/FollowersPage';
 import FollowingsPage from './ProfilePage/FollowPage/FollowingsPage/FollowingsPage';
-import ChatPage from './ChatPage/ChatRoomPage/ChatRoomPage';
+import ChatRoomPage from './ChatPage/ChatRoomPage/ChatRoomPage';
 import ChatListPage from './ChatPage/ChatListPage/ChatListPage';
 import NotFoundPage from './404/NotFoundPage';
 
@@ -45,7 +45,7 @@ export default function AppRouter() {
           </Route>
         </Route>
         <Route path='/chat' element={<ChatListPage />} />
-        <Route path='/chat/:accountname' element={<ChatPage />} />
+        <Route path='/chat/:accountname' element={<ChatRoomPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
