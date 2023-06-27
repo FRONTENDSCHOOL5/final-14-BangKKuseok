@@ -20,7 +20,10 @@ export default function Sofa() {
     return (deg * Math.PI) / 180;
   }
 
+  const count = useRef(0);
   const [isMain, setIsMain] = useState(true);
+  const [matCap, setMatCap] = useState();
+
   const mainMaterial = new THREE.MeshPhysicalMaterial({
     color: new THREE.Color('#ff7f71'),
     emissive: new THREE.Color('#000'),
@@ -31,18 +34,17 @@ export default function Sofa() {
     clearcoatRoughness: 0,
   });
 
-  const matCaps = useLoader(TextureLoader, [green, green, yellow, blue, beige, pink, orange]);
-  const count = useRef(0);
-  const [matCap, setMatCap] = useState();
+  const matCaps = useLoader(TextureLoader, [green, yellow, orange, blue, beige, pink]);
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       const loop = setInterval(() => {
-        if (count.current > matCaps.length) {
+        setMatCap(matCaps[count.current]);
+        if (count.current - 1 >= matCaps.length) {
           count.current = 0;
         } else {
           count.current += 1;
         }
-        setMatCap(matCaps[count.current]);
         return () => clearInterval(loop);
       }, 2000);
       return () => clearTimeout(timeout);
@@ -62,7 +64,7 @@ export default function Sofa() {
       ref={group}
       dispose={null}
       scale={1.2}
-      rotation={[toRadian(6), -toRadian(120), toRadian(-2)]}
+      rotation={[toRadian(0), -toRadian(120), toRadian(-2)]}
       position={[0, -0.1, 0]}
     >
       <mesh castShadow receiveShadow geometry={nodes.Cube002.geometry}>
