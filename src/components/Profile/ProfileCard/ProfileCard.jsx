@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import basicProfileImage from '../../../assets/images/profile.png';
 import Button from '../../common/Button/Button/Button';
 import {
@@ -20,7 +20,6 @@ export default function ProfileCard({ profile, isMyProfile }) {
   const { accountname: accountnameByParams } = useParams();
 
   const navigate = useNavigate();
-
   const queryClient = useQueryClient();
 
   // 팔로우 API
@@ -50,6 +49,12 @@ export default function ProfileCard({ profile, isMyProfile }) {
       : postFollowMutation.mutate(accountnameByParams);
   };
 
+  // 이미지 에러처리
+  const [error, setError] = useState(false);
+  const handleImageError = () => {
+    setError(true);
+  };
+
   return (
     <ProfileCardWrapper>
       <FollowFollowingBox>
@@ -65,7 +70,11 @@ export default function ProfileCard({ profile, isMyProfile }) {
           </TextBox>
         </Link>
         <ProfileImgBox>
-          <img src={profile.image || basicProfileImage} alt='유저 프로필 이미지' />
+          {!error ? (
+            <img src={profile.image} alt='유저 프로필 이미지' onError={handleImageError} />
+          ) : (
+            <img src={basicProfileImage} alt='기본 프로필 이미지' />
+          )}
         </ProfileImgBox>
         <Link
           to={`/profile/${accountnameByParams ?? profile.accountname}/followings`}
