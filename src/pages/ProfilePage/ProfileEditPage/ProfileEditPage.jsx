@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BasicLayout from '../../../layout/BasicLayout';
 import SetUserProfileForm from '../../../components/LoginSignUp/SetUserProfile/SetUserProfileForm';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { updateProfile } from '../../../api/profileApi';
 import { useMutation, useQueryClient } from 'react-query';
 
 export default function ProfileEditPage() {
+  const [isAlreadyIdMsg, setIsAlreadyIdMsg] = useState('');
   const [isButtonActive, setIsButtonActive] = useState(false);
   const [newProfile, setNewProfile] = useState({
     username: '',
@@ -28,14 +29,18 @@ export default function ProfileEditPage() {
       // 이전 데이터를 캐시에서 제거
       queryClient.removeQueries('myProfile');
     },
-    onError: () => {
-      console.error('프로필 수정 실패');
+    onError: (error) => {
+      setIsAlreadyIdMsg(error.response.data.message);
     },
   });
 
   const handleClickSaveButton = () => {
     updateProfileMutation.mutate({ user: { ...newProfile } });
   };
+
+  useEffect(() => {
+    setIsAlreadyIdMsg('');
+  }, [newProfile.accountname]);
 
   return (
     <BasicLayout
@@ -50,6 +55,7 @@ export default function ProfileEditPage() {
         myData={myData}
         setIsButtonActive={setIsButtonActive}
         setData={setNewProfile}
+        message={isAlreadyIdMsg}
       />
     </BasicLayout>
   );
