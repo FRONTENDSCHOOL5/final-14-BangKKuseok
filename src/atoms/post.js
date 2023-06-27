@@ -1,9 +1,8 @@
 import { atom, selector } from 'recoil';
-import { products } from '../mock/mockData';
 
 export const userProductsAtom = atom({
   key: 'userProductsAtom',
-  default: products,
+  default: [],
 });
 
 export const selectedProductsAtom = atom({
