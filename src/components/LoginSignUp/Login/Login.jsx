@@ -35,7 +35,7 @@ const Login = () => {
       } else {
         // 성공
         localStorage.setItem('token', formData.user.token);
-        navigate('/');
+        navigate('/home');
       }
     },
     onError: (formData) => {
@@ -160,7 +160,7 @@ const Login = () => {
         </Button>
         <LoginGoBack>
           <Link to={'/signup'}>회원가입</Link>
-          <Link to={'/main'}>메인으로 돌아가기</Link>
+          <Link to={'/'}>메인으로 돌아가기</Link>
         </LoginGoBack>
       </LoginBottomBox>
     </LoginHeader>
