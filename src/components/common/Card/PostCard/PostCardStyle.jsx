@@ -53,6 +53,22 @@ const MoreInfolayout = css`
     `}
 `;
 
+const NoSpacelayout = css`
+  ${(props) =>
+    props.noSpace &&
+    css`
+      flex-direction: row-reverse;
+    `}
+`;
+const NoSpaceMoreInfolayout = css`
+  ${(props) =>
+    props.noSpace &&
+    props.moreInfo &&
+    css`
+      padding: 16px 10px 0;
+    `}
+`;
+
 const PostInfoBox = styled.div`
   position: absolute;
   inset: 0 0;
@@ -66,6 +82,8 @@ const PostInfoBox = styled.div`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.gray400};
   ${MoreInfolayout}
+  ${NoSpacelayout}
+  ${NoSpaceMoreInfolayout}
 `;
 
 const onPhotoStyle = css`

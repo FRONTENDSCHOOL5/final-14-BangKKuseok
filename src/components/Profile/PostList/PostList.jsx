@@ -6,10 +6,12 @@ import { PostCardList, PostListWrapper } from './PostListStyle';
 import { filterUserPosts } from '../../../utils/filterPosts';
 
 export default function PostList({ selectedTab, posts, moreInfo, onClick }) {
+  const filteredPosts = posts.filter((item) => item.image);
+
   const layout = {
     list: (
       <PostCardList>
-        {posts.map((item) => (
+        {filteredPosts.map((item) => (
           <li key={item.id}>
             <UserSimpleInfo profile={item.author} type={'more'} onClick={() => onClick(item)} />
             <PostCard data={item} commentCount={item.comments.length} moreInfo={moreInfo} />

@@ -29,7 +29,9 @@ export default function ProductDetailCard({ isMyProfile, productId, onClick }) {
   }
 
   const { itemName, price, link, itemImage } = productDetail;
-  const { name, keyword } = JSON.parse(itemName);
+  const { name, keyword } = itemName.includes('keyword')
+    ? JSON.parse(itemName)
+    : { name: undefined, keyword: undefined };
 
   const handleClickOpenSite = () => {
     window.open(`${link}`, '_blank', 'noopener, noreferrer');
@@ -41,9 +43,9 @@ export default function ProductDetailCard({ isMyProfile, productId, onClick }) {
         <img src={itemImage} alt={`${itemName} 이미지`} />
       </ProductImageWrapper>
       <ProductInfoWrapper>
-        <ProductName>{name}</ProductName>
+        <ProductName>{name ? name : itemName}</ProductName>
         <ProductPrice>{`${price.toLocaleString()}원`}</ProductPrice>
-        <ProductKeyword>{keyword}</ProductKeyword>
+        {keyword && <ProductKeyword>{keyword}</ProductKeyword>}
       </ProductInfoWrapper>
       <ProductActionWrapper>
         <Button size='lg' onClick={handleClickOpenSite}>
