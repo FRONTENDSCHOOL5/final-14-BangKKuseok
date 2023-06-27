@@ -16,6 +16,7 @@ export default function Header({
   onClickRightButton,
   value,
   onChange,
+  onClickTitle,
 }) {
   const HeaderLayout = {
     home: (
@@ -79,7 +80,7 @@ export default function Header({
         <button type='button' onClick={onClickLeftButton}>
           <BackIcon stroke='#000' />
         </button>
-        <HeaderH3>
+        <HeaderH3 onClick={onClickTitle}>
           {title}
           <HeaderSpan>{subtitle}</HeaderSpan>
         </HeaderH3>

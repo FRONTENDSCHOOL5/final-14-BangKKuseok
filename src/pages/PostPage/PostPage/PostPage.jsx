@@ -21,6 +21,11 @@ export default function PostPage() {
   const [scrollDown, setScrollDown] = useState(false);
   const [isUploadBefore, setIsUploadBefore] = useRecoilState(isUploadBeforeAtom);
   const [commentCount, setCommentCount] = useState();
+  const [isShow, setIsShow] = useState(false);
+  const [modalType, setModalType] = useState('userPost');
+  const [isShowConfirm, setIsShowConfirm] = useState(false);
+  const [confirmType, setConfirmType] = useState({ type: 'report', object: 'comment' });
+  const navigate = useNavigate();
 
   //게시글 상세 정보받기
   const { data: postData, isLoading: isPostLoading } = useQuery(
@@ -111,12 +116,6 @@ export default function PostPage() {
     },
   });
 
-  const [isShow, setIsShow] = useState(false);
-  const [modalType, setModalType] = useState('userPost');
-  const [isShowConfirm, setIsShowConfirm] = useState(false);
-  const [confirmType, setConfirmType] = useState({ type: 'report', object: 'comment' });
-  const navigate = useNavigate();
-
   const handleClickModalOpen = () => {
     setIsShow((prev) => !prev);
   };
@@ -189,6 +188,10 @@ export default function PostPage() {
     setIsShow(false);
   };
 
+  const handleClickTitle = () => {
+    navigate(`/profile/${postData.author.accountname}`);
+  };
+
   //로딩 이미지
   if (!commentsData || !postData || !myProfileData) {
     return <Spinner />;
@@ -203,6 +206,7 @@ export default function PostPage() {
           subtitle={`@${postData.author.accountname}`}
           onClickLeftButton={handleClickLeftButton}
           onClickRightButton={handleClickRightButton}
+          onClickTitle={handleClickTitle}
         >
           <PostPageWrapper>
             <PostCard data={postData} commentCount={commentCount} moreInfo />

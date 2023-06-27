@@ -60,8 +60,7 @@ const HeaderSpan = styled.span`
   font-size: ${({ theme }) => theme.fontSize.xs};
   letter-spacing: 0.02rem;
   font-weight: 400;
-  position: relative;
-  inset: -0.2rem 0 0 1rem;
+  margin-left: 8px;
 `;
 
 const SearchBtn = styled.button`
