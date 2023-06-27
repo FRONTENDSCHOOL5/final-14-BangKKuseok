@@ -24,7 +24,7 @@ export default function ModalProductList({ setIsShow, setTagStep, setIsBubbleSho
       ) : (
         <>
           <h2>회원님이 판매 중인 상품이 없습니다.</h2>
-          <Link to='/post/upload'>
+          <Link to='/product/upload'>
             <Button size='md'>상품 등록</Button>
           </Link>
         </>

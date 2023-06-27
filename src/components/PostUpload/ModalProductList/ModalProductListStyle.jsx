@@ -11,4 +11,7 @@ export const ModalProductListWrapper = styled.ul`
   & > button {
     font-weight: 500;
   }
+  & > a > button {
+    margin-bottom: 50px;
+  }
 `;
