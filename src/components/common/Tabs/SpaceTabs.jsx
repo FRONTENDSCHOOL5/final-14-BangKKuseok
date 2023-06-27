@@ -27,7 +27,7 @@ const StyledSpaceTab = styled.button`
 
 const StyledSpaceTabs = styled.nav`
   width: 100%;
-  padding: 20px 20px 20px 16px;
+  padding: 20px 16px;
   display: flex;
   gap: 1rem;
   overflow-x: scroll;
