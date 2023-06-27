@@ -7,11 +7,19 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteLike, postLike } from '../../../../api/likeApi';
 import { getMyProfile, getProfile } from '../../../../api/profileApi';
+import { URL } from '../../../../api/axiosInstance';
 
 export default function PostCard({ data, commentCount, moreInfo = false }) {
-  const { id, content, image, hearted, heartCount, createdAt } = data;
-  const { space, detail } = JSON.parse(content);
+  const { id, content, hearted, heartCount, createdAt } = data;
+  const { space, detail } = content.includes('space')
+    ? JSON.parse(content)
+    : { space: undefined, detail: undefined };
   const navigate = useNavigate();
+
+  // URL이 붙어있는 경우 그냥쓰기 없으면은 붙이기
+  //,이 있는 경우 - 첫번째 데이터만
+  const filteringImage = data.image.includes(',') ? data.image.split(',')[0] : data.image;
+  const image = filteringImage.includes(URL) ? filteringImage : URL.concat(filteringImage);
 
   const [isHearted, setIsHearted] = useState(hearted);
   const [nowHeartCount, setNowHeartCount] = useState(heartCount);
@@ -63,9 +71,11 @@ export default function PostCard({ data, commentCount, moreInfo = false }) {
 
   return (
     <PostCardWrapper moreInfo={moreInfo}>
-      <img src={image} alt={`${space} 이미지`} />
-      <PostInfoBox moreInfo={moreInfo}>
-        <Space moreInfo={moreInfo}> {space} </Space>
+      {data.image && (
+        <img src={image} alt={space ? `${space} 이미지` : `${accountnameByParams} 이미지`} />
+      )}
+      <PostInfoBox moreInfo={moreInfo} noSpace={!space}>
+        {space && <Space moreInfo={moreInfo}> {space} </Space>}
         <HeartCommentList moreInfo={moreInfo}>
           <li>
             <Heart isHearted={isHearted} onClick={handleClickHeartButton} />
@@ -77,8 +87,7 @@ export default function PostCard({ data, commentCount, moreInfo = false }) {
           </li>
         </HeartCommentList>
       </PostInfoBox>
-
-      <PostDetail moreInfo={moreInfo}>{detail}</PostDetail>
+      <PostDetail moreInfo={moreInfo}> {detail ? detail : content}</PostDetail>
       {moreInfo && <time dateTime={createdAt}>{convertDateFormat(createdAt)}</time>}
     </PostCardWrapper>
   );
