@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteLike, postLike } from '../../../../api/likeApi';
 import { getMyProfile, getProfile } from '../../../../api/profileApi';
 import { URL } from '../../../../api/axiosInstance';
+import basicImage from '../../../../assets/images/profile.png';
 
 export default function PostCard({ data, commentCount, moreInfo = false }) {
   const { id, content, hearted, heartCount, createdAt } = data;
@@ -20,6 +21,11 @@ export default function PostCard({ data, commentCount, moreInfo = false }) {
   //,이 있는 경우 - 첫번째 데이터만
   const filteringImage = data.image.includes(',') ? data.image.split(',')[0] : data.image;
   const image = filteringImage.includes(URL) ? filteringImage : URL.concat(filteringImage);
+
+  const [error, setError] = useState(false);
+  const handleImageError = () => {
+    setError(true);
+  };
 
   const [isHearted, setIsHearted] = useState(hearted);
   const [nowHeartCount, setNowHeartCount] = useState(heartCount);
@@ -71,8 +77,14 @@ export default function PostCard({ data, commentCount, moreInfo = false }) {
 
   return (
     <PostCardWrapper moreInfo={moreInfo}>
-      {data.image && (
-        <img src={image} alt={space ? `${space} 이미지` : `${accountnameByParams} 이미지`} />
+      {!error && data.image ? (
+        <img
+          src={image}
+          alt={space ? `${space} 이미지` : `${accountnameByParams} 이미지`}
+          onError={handleImageError}
+        />
+      ) : (
+        <img src={basicImage} alt='기본 이미지' />
       )}
       <PostInfoBox moreInfo={moreInfo} noSpace={!space}>
         {space && <Space moreInfo={moreInfo}> {space} </Space>}
