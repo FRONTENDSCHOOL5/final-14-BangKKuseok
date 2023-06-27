@@ -10,6 +10,7 @@ import {
   Indicator,
   PostDate,
 } from './CarouselStyle';
+import { Link } from 'react-router-dom';
 
 export default function Carousel({ data }) {
   const [current, setCurrent] = useState(0);
@@ -56,9 +57,9 @@ export default function Carousel({ data }) {
         {data.map((item) => (
           <ImageItem key={item.id} url={item.image}>
             <ContentBox>
-              <label>
+              <Link to={`/post/${item.id}`}>
                 {item.author.username}님의 {JSON.parse(item.content).space}
-              </label>
+              </Link>
               <PostDate>{item.createdAt.slice(0, 10)}</PostDate>
             </ContentBox>
           </ImageItem>

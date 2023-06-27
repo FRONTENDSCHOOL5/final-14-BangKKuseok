@@ -16,16 +16,9 @@ const ImageBox = styled.ul`
   transform: translate(${(p) => p.movePercentage});
   transition: all 0.3s ease-in-out;
 
-  li {
+  li img {
     width: 100%;
-    display: flex;
-    flex-shrink: 0;
-    cursor: pointer;
-
-    img {
-      width: 100%;
-      object-fit: cover;
-    }
+    object-fit: cover;
   }
 `;
 
@@ -33,7 +26,6 @@ const ImageItem = styled.li`
   width: 100%;
   display: flex;
   flex-shrink: 0;
-  cursor: pointer;
   background: url(${(p) => p.url}) no-repeat center / cover;
 `;
 
@@ -48,12 +40,20 @@ const ContentBox = styled.div`
   bottom: 0;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(41, 41, 41, 0.87) 89.06%);
 
-  label {
+  a {
+    display: inline;
+    width: fit-content;
     ${({ theme }) => css`
       color: ${theme.colors.white};
       font-size: ${theme.fontSize.lg};
     `}
     font-weight: 700;
+    cursor: pointer;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 5px;
   }
 `;
 
