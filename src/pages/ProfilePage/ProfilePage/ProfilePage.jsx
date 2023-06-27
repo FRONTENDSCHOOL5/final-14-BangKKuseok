@@ -182,7 +182,8 @@ export default function ProfilePage() {
         break;
       default:
         // object가 없는 경우 === 로그아웃
-        localStorage.setItem('token', null);
+        queryClient.removeQueries('myProfile');
+        localStorage.removeItem('token');
         navigate('/main');
         break;
     }

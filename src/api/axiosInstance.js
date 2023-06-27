@@ -19,6 +19,16 @@ export const accessInstance = axios.create({
   baseURL: URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
   },
+});
+
+accessInstance.interceptors.request.use((config) => {
+  if (!config.headers.Authorization) {
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
+  }
+
+  return config;
 });
