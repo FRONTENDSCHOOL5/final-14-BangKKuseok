@@ -113,7 +113,7 @@ export default function FeedPage() {
         <Spinner />
       </BasicLayout>
     );
-  } else if (!isLoading && !isFetching && feedPostData.pages.length === 0) {
+  } else if (!isLoading && !isFetching && feedPostData.pages.length === 0 && !isClickSearchButton) {
     return (
       <BasicLayout type='feed' onClickRightButton={handleClickRightButton}>
         <NoneFeedWrapper>
