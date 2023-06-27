@@ -12,7 +12,14 @@ const ProductListWrapper = styled.section`
 const ProductCardList = styled.ul`
   padding: 15px 0 26px 0;
   display: flex;
-  overflow: hidden;
+  overflow-x: scroll;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export { ProductListWrapper, ProductCardList };

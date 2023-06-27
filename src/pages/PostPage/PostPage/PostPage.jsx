@@ -190,12 +190,12 @@ export default function PostPage() {
   };
 
   //로딩 이미지
-  if (!commentsData || !postData || !myProfileData || !commentCount) {
+  if (!commentsData || !postData || !myProfileData) {
     return <Spinner />;
   }
   return (
     <>
-      {commentsData && postData && myProfileData && commentCount && (
+      {commentsData && postData && myProfileData && (
         <BasicLayout
           type='post'
           isNonNav

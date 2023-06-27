@@ -34,12 +34,22 @@ export const SplashPageWrapper = styled.div`
   }
 `;
 
+const pop = keyframes`
+  from {
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+  }
+`;
+
 export const StyledLogo = styled.img`
   width: clamp(187px, 20%, 374px);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  animation: ${pop} 0.5s 0.1s cubic-bezier(0.17, 0.67, 0.62, 1.27) forwards;
 `;
 
 const flow = keyframes`
