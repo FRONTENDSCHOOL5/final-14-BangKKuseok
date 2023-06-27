@@ -74,7 +74,7 @@ export const StyledChatIcon = styled(ChatIcon)`
 
 export const StyledUserIcon = styled(UserIcon)`
   ${(props) =>
-    props.pathname === '/profile'
+    props.pathname.includes('/profile')
       ? css`
           path {
             stroke: ${(props) => props.theme.colors.mainCoral};

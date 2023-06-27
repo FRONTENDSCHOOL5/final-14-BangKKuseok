@@ -49,6 +49,7 @@ export default function ProfilePage() {
   const { data: profileData, isLoading: isProfileLoading } = useQuery(
     ['profile', accountnameByParams],
     () => (accountnameByParams ? getProfile(accountnameByParams) : getMyProfile()),
+    { refetchOnWindowFocus: true },
   );
 
   const { data: myProfileData, isLoading: isMyProfileLoading } = useQuery(

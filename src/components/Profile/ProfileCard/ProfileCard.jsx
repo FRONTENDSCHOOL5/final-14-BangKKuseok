@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import basicProfileImage from '../../../assets/images/profile.png';
 import Button from '../../common/Button/Button/Button';
 import {
@@ -13,22 +13,50 @@ import {
   UserName,
 } from './ProfileCardStyle';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
+import { deleteUnFollow, postFollow } from '../../../api/followApi';
 
 export default function ProfileCard({ profile, isMyProfile }) {
   const { accountname: accountnameByParams } = useParams();
 
-  const [isFollow, setIsFollow] = useState(false);
-
   const navigate = useNavigate();
 
+  const queryClient = useQueryClient();
+
+  // 팔로우 API
+  const postFollowMutation = useMutation(postFollow, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('profile');
+    },
+    onError: () => {
+      console.error('팔로우 실패');
+    },
+  });
+
+  // 언팔로우 API
+  const deleteUnFollowMutation = useMutation(deleteUnFollow, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('profile');
+    },
+    onError: () => {
+      console.error('언팔로우 실패');
+    },
+  });
+
   const handleClickFollow = () => {
-    setIsFollow((prev) => !prev);
+    // 팔로우, 언팔로우 API 요청
+    profile.isfollow
+      ? deleteUnFollowMutation.mutate(accountnameByParams)
+      : postFollowMutation.mutate(accountnameByParams);
   };
 
   return (
     <ProfileCardWrapper>
       <FollowFollowingBox>
-        <Link to={`/profile/${accountnameByParams ?? profile.accountname}/followers`}>
+        <Link
+          to={`/profile/${accountnameByParams ?? profile.accountname}/followers`}
+          state={{ accountname: profile.accountname }}
+        >
           <TextBox>
             <strong>
               <span>{profile.followerCount}</span>
@@ -39,7 +67,10 @@ export default function ProfileCard({ profile, isMyProfile }) {
         <ProfileImgBox>
           <img src={profile.image || basicProfileImage} alt='유저 프로필 이미지' />
         </ProfileImgBox>
-        <Link to={`/profile/${accountnameByParams ?? profile.accountname}/followings`}>
+        <Link
+          to={`/profile/${accountnameByParams ?? profile.accountname}/followings`}
+          state={{ accountname: profile.accountname }}
+        >
           <TextBox>
             <strong>
               <span>{profile.followingCount}</span>
@@ -57,7 +88,7 @@ export default function ProfileCard({ profile, isMyProfile }) {
         {!isMyProfile ? (
           <>
             <Link to={`/chat/${accountnameByParams}`} title='상대방과 채팅하기'></Link>
-            {isFollow ? (
+            {profile.isfollow ? (
               <Button size='md' variant='white' onClick={handleClickFollow}>
                 언팔로우
               </Button>

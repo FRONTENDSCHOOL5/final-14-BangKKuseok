@@ -12,12 +12,17 @@ import Button from '../../Button/Button/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function UserSimpleInfo({ profile, isLink = false, type, onClick, inputValue }) {
-  const [isfollow, setIsFollow] = useState(false);
+export default function UserSimpleInfo({
+  profile,
+  isLink = false,
+  isMyProfile,
+  type,
+  onClick,
+  onClickFollow,
+  inputValue,
+}) {
   const [error, setError] = useState(false);
-  const handleClickFollow = () => {
-    setIsFollow(!isfollow);
-  };
+
   const handleImageError = () => {
     setError(true);
   };
@@ -53,7 +58,9 @@ export default function UserSimpleInfo({ profile, isLink = false, type, onClick,
                   profile.username
                 )}
               </UserName>
-              <AccountName>@ {profile.accountname}</AccountName>
+              <AccountName>
+                {type === 'follow' ? profile.intro : `@ ${profile.accountname}`}
+              </AccountName>
             </UserNameBox>
           </Link>
         ) : (
@@ -75,17 +82,19 @@ export default function UserSimpleInfo({ profile, isLink = false, type, onClick,
           <MoreIcon />
         </button>
       ) : type === 'follow' ? (
-        <>
-          {isfollow ? (
-            <Button size='xs' onClick={handleClickFollow}>
-              팔로우
-            </Button>
-          ) : (
-            <Button variant='white' size='xs' onClick={handleClickFollow}>
-              취소
-            </Button>
-          )}
-        </>
+        !isMyProfile && (
+          <>
+            {profile.isfollow ? (
+              <Button variant='white' size='xs' onClick={() => onClickFollow(profile.accountname)}>
+                언팔로우
+              </Button>
+            ) : (
+              <Button size='xs' onClick={() => onClickFollow(profile.accountname)}>
+                팔로우
+              </Button>
+            )}
+          </>
+        )
       ) : null}
     </UserSimpleInfoWrapper>
   );

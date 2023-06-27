@@ -40,19 +40,18 @@ const HeaderWrapper = styled.header`
 
 const HeaderText = css`
   display: inline-block;
-  position: absolute;
+  margin-right: auto;
+  margin-left: 1.6rem;
   font-weight: 500;
 `;
 
 const HeaderH2 = styled.h2`
   ${HeaderText}
-  margin-left: 5.4rem;
   font-size: ${({ theme }) => theme.fontSize.md};
 `;
 
 const HeaderH3 = styled.h3`
   ${HeaderText}
-  margin-left: 4.8rem;
   font-size: ${({ theme }) => theme.fontSize.base};
 `;
 

@@ -66,6 +66,14 @@ export default function Header({
         </Button>
       </HeaderWrapper>
     ),
+    follow: (
+      <HeaderWrapper type={type}>
+        <button type='button' onClick={onClickLeftButton}>
+          <BackIcon stroke='#000' />
+        </button>
+        <HeaderH2>{title}</HeaderH2>
+      </HeaderWrapper>
+    ),
     post: (
       <HeaderWrapper type={type}>
         <button type='button' onClick={onClickLeftButton}>
