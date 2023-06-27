@@ -29,6 +29,12 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
   const selectedItems = useRecoilValue(selectedProductsAtom);
   const userItems = useRecoilValue(userProductsAtom);
 
+  useEffect(() => {
+    if (selectedItems) {
+      setTagStep('태그와 버블');
+    }
+  }, []);
+
   //이미지 위 클릭하면
   const handleClickImg = (e) => {
     //1.'클릭 유도'일때

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import imageUploadBtn from '../../../assets/images/image-upload.png';
 import { PostImgUploadWrapper, UploadForm } from './PostImgUploadStyle';
 import { useLocation } from 'react-router-dom';
@@ -8,7 +8,13 @@ import { useQuery } from 'react-query';
 import { getMyProfile } from '../../../api/profileApi';
 import { getProducts } from '../../../api/productApi';
 
-export default function PostImgUpload({ type = 'post', defaultImg = '', setImg, setIsBtnActive }) {
+export default function PostImgUpload({
+  type = 'post',
+  defaultImg = '',
+  setImg,
+  setIsBtnActive,
+  postedImg,
+}) {
   const imgRef = useRef();
   const [previewImg, setPreviewImg] = useState(defaultImg ?? null);
 
@@ -57,6 +63,8 @@ export default function PostImgUpload({ type = 'post', defaultImg = '', setImg, 
     <PostImgUploadWrapper type={type}>
       {previewImg ? (
         <img src={previewImg} alt='게시글 이미지' />
+      ) : postedImg ? (
+        <img src={postedImg} alt='게시글 이미지' />
       ) : (
         <p onClick={handleMakeFormClick}>
           {type === 'post' ? '회원님의 공간을 공유해주세요' : '판매할 상품이미지를 등록해주세요'}
