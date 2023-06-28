@@ -35,7 +35,7 @@ const OtherName = styled.span`
   font-weight: 500;
   margin-bottom: 6px;
 `;
-const Wrapper = styled.div`
+const ChatSnippet = styled.div`
   display: flex;
   justify-content: space-between;
 `;
@@ -44,13 +44,12 @@ const ChatListSummary = styled.span`
   font-weight: 400;
   color: ${({ theme }) => theme.colors.gray300};
   width: 238px;
-  /* width: calc(100%-110px); */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-const ChatDate = styled.div`
+const ChatListDate = styled.div`
   color: ${({ theme }) => theme.colors.gray200};
   font-size: 1rem;
 `;
@@ -67,10 +66,10 @@ export default function OtherSimpleInfo({ profile, message }) {
           <img src={profile.image || basicProfileImage} alt='유저 프로필 이미지' />
           <OtherNameBox>
             <OtherName>{profile.username}</OtherName>
-            <Wrapper>
+            <ChatSnippet>
               <ChatListSummary>{message}</ChatListSummary>
-              <ChatDate>{`${year}.${month}.${day}`}</ChatDate>
-            </Wrapper>
+              <ChatListDate>{`${year}.${month}.${day}`}</ChatListDate>
+            </ChatSnippet>
           </OtherNameBox>
         </OtherInfoBox>
       </OtherSimpleInfoWrapper>
