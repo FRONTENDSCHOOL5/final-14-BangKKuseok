@@ -18,34 +18,41 @@ import FollowingsPage from './ProfilePage/FollowPage/FollowingsPage/FollowingsPa
 import ChatPage from './ChatPage/ChatRoomPage/ChatRoomPage';
 import ChatListPage from './ChatPage/ChatListPage/ChatListPage';
 import NotFoundPage from './404/NotFoundPage';
+import PrivateRoutePage from './AuthenticatedPage/PrivateRoutePage';
+import PublicRoutePage from './AuthenticatedPage/PublicRoutePage';
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/splash' element={<SplashPage />} />
-        <Route path='/main' element={<MainPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/signup' element={<SignupPage />} />
-        <Route path='/feed' element={<FeedPage />} />
-        <Route path='/search' element={<SearchPage />} />
-        <Route path='/post/upload' element={<PostUploadPage />} />
-        <Route path='/post/:postId' element={<PostPage />} />
-        <Route path='/post/:postId/edit' element={<PostEditPage />} />
-        <Route path='/product/upload' element={<ProductUploadPage />} />
-        <Route path='/product/:productId/edit' element={<ProductEditPage />} />
-        <Route path='/profile'>
-          <Route index element={<ProfilePage />} />
-          <Route path='edit' element={<ProfileEditPage />} />
-          <Route path=':accountname'>
-            <Route index element={<ProfilePage />} />
-            <Route path='followers' element={<FollowersPage />} />
-            <Route path='followings' element={<FollowingsPage />} />
-          </Route>
+        <Route element={<PublicRoutePage />}>
+          <Route path='/' element={<MainPage />} />
+          <Route path='/splash' element={<SplashPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/signup' element={<SignupPage />} />
         </Route>
-        <Route path='/chat' element={<ChatListPage />} />
-        <Route path='/chat/:accountname' element={<ChatPage />} />
+
+        <Route element={<PrivateRoutePage />}>
+          <Route path='/home' element={<HomePage />} />
+          <Route path='/feed' element={<FeedPage />} />
+          <Route path='/search' element={<SearchPage />} />
+          <Route path='/post/upload' element={<PostUploadPage />} />
+          <Route path='/post/:postId' element={<PostPage />} />
+          <Route path='/post/:postId/edit' element={<PostEditPage />} />
+          <Route path='/product/upload' element={<ProductUploadPage />} />
+          <Route path='/product/:productId/edit' element={<ProductEditPage />} />
+          <Route path='/profile'>
+            <Route index element={<ProfilePage />} />
+            <Route path='edit' element={<ProfileEditPage />} />
+            <Route path=':accountname'>
+              <Route index element={<ProfilePage />} />
+              <Route path='followers' element={<FollowersPage />} />
+              <Route path='followings' element={<FollowingsPage />} />
+            </Route>
+          </Route>
+          <Route path='/chat' element={<ChatListPage />} />
+          <Route path='/chat/:accountname' element={<ChatPage />} />
+        </Route>
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

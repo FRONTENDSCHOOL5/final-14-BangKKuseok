@@ -138,7 +138,7 @@ const SignUp = ({ setStep, setPreData, preData }) => {
           </Button>
           <SignUpGoBack>
             <Link to={'/login'}>로그인</Link>
-            <Link to={'/main'}>메인으로 돌아가기</Link>
+            <Link to={'/'}>메인으로 돌아가기</Link>
           </SignUpGoBack>
         </SignUpBottomBox>
       </SignUpHeader>

@@ -33,7 +33,7 @@ export const NavbarList = styled.ul`
 
 export const StyledHomeIcon = styled(HomeIcon)`
   ${(props) =>
-    props.pathname === '/'
+    props.pathname === '/home'
       ? css`
           path {
             stroke: ${(props) => props.theme.colors.mainCoral};

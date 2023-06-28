@@ -17,7 +17,7 @@ export default function Navbar() {
     <NavbarWrapper>
       <NavbarList>
         <li>
-          <Link to='/'>
+          <Link to='/home'>
             <StyledHomeIcon pathname={pathname} />
           </Link>
         </li>
