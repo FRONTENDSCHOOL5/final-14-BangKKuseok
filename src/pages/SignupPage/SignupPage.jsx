@@ -5,6 +5,7 @@ import SetUserProfile from '../../components/LoginSignUp/SetUserProfile/SetUserP
 import { useMutation } from 'react-query';
 import { checkIdExist, postSignUp } from '../../api/signupApi';
 import Welcome from '../../components/LoginSignUp/Welcome/Welcome';
+import DefaultProfileImg from '../../assets/images/profile.png';
 
 export default function SignupPage() {
   const [isAlreadyIdMsg, setIsAlreadyIdMsg] = useState('');
@@ -41,7 +42,7 @@ export default function SignupPage() {
             username: preData.username,
             accountname: preData.accountname,
             intro: preData.intro,
-            image: preData.image,
+            image: preData.image === '' ? DefaultProfileImg : preData.image,
           },
         });
       } else if (formData.message === '이미 가입된 계정ID 입니다.') {
