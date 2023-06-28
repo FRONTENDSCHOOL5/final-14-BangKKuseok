@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { selectedProductsAtom } from '../../../atoms/post';
 import ProductTag from '../ProductTag/ProductTag';
 import { ImgBox, TagBox } from '../PostProductTag/PostProductTagStyle';
-import { SPACES } from '../../../constants/spaces';
+import { SPACES } from '../../../constants/common';
 import { ModalSpaceList, PostTextWriteWrapper, SelectSpaceBtn } from './PostTextWriteStyle';
 import BasicModal from '../../common/BottomSheet/BasicModal';
 

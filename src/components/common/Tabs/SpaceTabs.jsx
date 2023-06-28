@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { SPACES } from '../../../constants/spaces';
+import { SPACES } from '../../../constants/common';
 
 const StyledSpaceTab = styled.button`
   font-weight: 500;

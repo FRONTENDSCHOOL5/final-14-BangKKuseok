@@ -3,7 +3,7 @@ import Carousel from '../../components/common/Carousel/Carousel';
 import SpaceTabs from '../../components/common/Tabs/SpaceTabs';
 import BasicLayout from '../../layout/BasicLayout';
 import { useState } from 'react';
-import { SPACES } from '../../constants/spaces';
+import { SPACES } from '../../constants/common';
 import Search from '../SearchPage/SearchPage';
 import { useInfiniteQuery } from 'react-query';
 import { getAllPost } from '../../api/homeApi';
