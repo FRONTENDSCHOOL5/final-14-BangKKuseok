@@ -5,7 +5,6 @@ import MainPage from './MainPage/MainPage';
 import LoginPage from './LoginPage/LoginPage';
 import SignupPage from './SignupPage/SignupPage';
 import FeedPage from './FeedPage/FeedPage';
-import SearchPage from './SearchPage/SearchPage';
 import PostPage from './PostPage/PostPage/PostPage';
 import PostUploadPage from './PostPage/PostUploadPage/PostUploadPage';
 import PostEditPage from './PostPage/PostEditPage/PostEditPage';
@@ -15,7 +14,7 @@ import ProfilePage from './ProfilePage/ProfilePage/ProfilePage';
 import ProfileEditPage from './ProfilePage/ProfileEditPage/ProfileEditPage';
 import FollowersPage from './ProfilePage/FollowPage/FollowersPage/FollowersPage';
 import FollowingsPage from './ProfilePage/FollowPage/FollowingsPage/FollowingsPage';
-import ChatPage from './ChatPage/ChatRoomPage/ChatRoomPage';
+import ChatRoomPage from './ChatPage/ChatRoomPage/ChatRoomPage';
 import ChatListPage from './ChatPage/ChatListPage/ChatListPage';
 import NotFoundPage from './404/NotFoundPage';
 import PrivateRoutePage from './AuthenticatedPage/PrivateRoutePage';
@@ -35,7 +34,6 @@ export default function AppRouter() {
         <Route element={<PrivateRoutePage />}>
           <Route path='/home' element={<HomePage />} />
           <Route path='/feed' element={<FeedPage />} />
-          <Route path='/search' element={<SearchPage />} />
           <Route path='/post/upload' element={<PostUploadPage />} />
           <Route path='/post/:postId' element={<PostPage />} />
           <Route path='/post/:postId/edit' element={<PostEditPage />} />
@@ -51,7 +49,7 @@ export default function AppRouter() {
             </Route>
           </Route>
           <Route path='/chat' element={<ChatListPage />} />
-          <Route path='/chat/:accountname' element={<ChatPage />} />
+          <Route path='/chat/:accountname' element={<ChatRoomPage />} />
         </Route>
         <Route path='*' element={<NotFoundPage />} />
       </Routes>

@@ -96,7 +96,13 @@ export default function ProfileCard({ profile, isMyProfile }) {
       <UserActionBox>
         {!isMyProfile ? (
           <>
-            <Link to={`/chat/${accountnameByParams}`} title='상대방과 채팅하기'></Link>
+            <Link
+              to={`/chat/${accountnameByParams ?? profile.accountname}`}
+              state={{
+                username: profile.username,
+              }}
+              title='상대방과 채팅하기'
+            ></Link>
             {profile.isfollow ? (
               <Button size='md' variant='white' onClick={handleClickFollow}>
                 언팔로우

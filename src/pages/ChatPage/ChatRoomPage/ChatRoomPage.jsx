@@ -14,6 +14,7 @@ import {
   ImgWrapper,
   ChatText,
   ChatTime,
+  Message,
 } from './ChatRoomPageStyle';
 
 export default function ChatRoomPage() {
@@ -149,19 +150,23 @@ export default function ChatRoomPage() {
       {/* 상대 채팅 */}
       <ChatRoomWrapper>
         <ChatRoomContainer ref={bottomRef}>
-          {location.state.otherChatArr.map((chat, index) => (
-            <ChatBox key={index}>
-              <ImgWrapper>
-                <img src={location.state.image} alt='상대 프로필 이미지' />
-              </ImgWrapper>
-              <ChatText>
-                <p>{chat}</p>
-              </ChatText>
-              <ChatTime>
-                <span>{`${hours}:${minutes}`}</span>
-              </ChatTime>
-            </ChatBox>
-          ))}
+          {location.state.otherChatArr ? (
+            location.state.otherChatArr.map((chat, index) => (
+              <ChatBox key={index}>
+                <ImgWrapper>
+                  <img src={location.state.image} alt='상대 프로필 이미지' />
+                </ImgWrapper>
+                <ChatText>
+                  <p>{chat}</p>
+                </ChatText>
+                <ChatTime>
+                  <span>{`${hours}:${minutes}`}</span>
+                </ChatTime>
+              </ChatBox>
+            ))
+          ) : (
+            <Message>{location.state.username}님과의 채팅을 시작해보세요!</Message>
+          )}
 
           {/* 내가 보낸 채팅 */}
           {isUser &&
