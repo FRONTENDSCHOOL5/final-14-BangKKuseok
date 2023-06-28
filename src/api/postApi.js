@@ -30,7 +30,7 @@ export const getPostDetail = async (postId) => {
 export const editPost = async ({ postId, post }) => {
   try {
     const response = await accessInstance.put(`/post/${postId}`, { post: { ...post } });
-    return response.data;
+    return response.data.post;
   } catch (error) {
     console.error(error);
   }
