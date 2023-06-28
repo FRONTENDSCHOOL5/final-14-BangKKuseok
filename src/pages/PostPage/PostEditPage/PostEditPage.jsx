@@ -36,11 +36,11 @@ export default function PostEditPage() {
     () => getPostDetail(postId),
     {
       onSuccess: (data) => {
-        const { space, detail } = JSON.parse(data.post.content);
-        setPostImg(data.post.image);
+        const { space, detail } = JSON.parse(data.content);
+        setPostImg(data.image);
         setContent({ space, detail });
-        setPrevData({ image: data.post.image, content: JSON.stringify({ space, detail }) });
-        setEditData({ image: data.post.image, content: JSON.stringify({ space, detail }) });
+        setPrevData({ image: data.image, content: JSON.stringify({ space, detail }) });
+        setEditData({ image: data.image, content: JSON.stringify({ space, detail }) });
       },
       onError: (error) => {
         console.log(error);
@@ -64,6 +64,8 @@ export default function PostEditPage() {
   //게시글 수정하기
   const EditPostMutation = useMutation(editPost, {
     onSuccess(data) {
+      queryClient.invalidateQueries('feedPostData');
+      queryClient.invalidateQueries('myPost');
       queryClient.setQueryData(['postData', postId], data);
       navigate(`/post/${postId}`);
     },

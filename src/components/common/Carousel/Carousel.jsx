@@ -57,7 +57,7 @@ export default function Carousel({ data }) {
         {data.map((item) => (
           <ImageItem key={item.id} url={item.image}>
             <ContentBox>
-              <Link to={`/post/${item.id}`}>
+              <Link to={item.author.id?.includes('[mock]') ? '' : `/post/${item.id}`}>
                 {item.author.username}님의 {JSON.parse(item.content).space}
               </Link>
               <PostDate>{item.createdAt.slice(0, 10)}</PostDate>

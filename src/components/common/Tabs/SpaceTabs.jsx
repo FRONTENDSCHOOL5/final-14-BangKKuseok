@@ -20,7 +20,7 @@ const StyledSpaceTab = styled.button`
   &.active {
     font-weight: 600;
     color: ${({ theme }) => theme.colors.white};
-    border: unset;
+    border: 1.4px solid ${({ theme }) => theme.colors.mainCoral};
     background-color: ${({ theme }) => theme.colors.mainCoral};
   }
 `;
