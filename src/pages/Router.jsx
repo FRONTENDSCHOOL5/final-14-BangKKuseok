@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SplashPage from './SplashPage/SplashPage';
 import HomePage from './HomePage/HomePage';
 import MainPage from './MainPage/MainPage';
 import LoginPage from './LoginPage/LoginPage';
@@ -26,7 +25,6 @@ export default function AppRouter() {
       <Routes>
         <Route element={<PublicRoutePage />}>
           <Route path='/' element={<MainPage />} />
-          <Route path='/splash' element={<SplashPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<SignupPage />} />
         </Route>
