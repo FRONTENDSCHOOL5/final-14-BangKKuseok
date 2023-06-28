@@ -122,7 +122,7 @@ export default function FeedPage() {
               onClick={handleClickMorePostButton}
             />
           </FeedPageWrapper>
-          <div ref={observerRef}></div>
+          <div ref={observerRef} style={{ minHeight: '1px' }}></div>
           {isShow && (
             <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
               <ListModal type='userPost' onClick={handleClickListItem} />
