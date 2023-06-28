@@ -45,12 +45,10 @@ export default function UserSimpleInfo({
                       index === 0 ? (
                         part
                       ) : (
-                        <>
-                          <span className='highlight' key={index}>
-                            {inputValue}
-                          </span>
+                        <React.Fragment key={index}>
+                          <span className='highlight'>{inputValue}</span>
                           {part}
-                        </>
+                        </React.Fragment>
                       ),
                     )}
                   </>

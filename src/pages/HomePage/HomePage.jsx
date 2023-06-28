@@ -69,14 +69,12 @@ export default function HomePage() {
           .sort((a, b) => b.heartCount - a.heartCount)
           .slice(0, 5);
       },
-      refetchOnWindowFocus: true,
     },
   );
 
   const {
     data: homePostData,
     isLoading: homeIsLoading,
-    isFetching: homeIsFetching,
     fetchNextPage: homeFetchNextPage,
   } = useInfiniteQuery(
     'homePostData',
@@ -97,6 +95,10 @@ export default function HomePage() {
       },
     },
   );
+
+  useEffect(() => {
+    setfilteredPosts(homePostData);
+  }, []);
 
   // 홈 피드 100개씩 불러오기
   useEffect(() => {
@@ -153,8 +155,8 @@ export default function HomePage() {
               scrollLeft={scrollLeft}
             />
           </TabWrapper>
-          {filteredAllPosts.length === 0 ? (
-            <Message>작성된 게시물이 없습니다.</Message>
+          {filteredPosts?.length === 0 ? (
+            <Message>아직 작성된 게시물이 없어요!</Message>
           ) : (
             <PostWrapper>
               <Gallery data={filterPosts(isTabClick ? filteredPosts : filteredAllPosts)} />
