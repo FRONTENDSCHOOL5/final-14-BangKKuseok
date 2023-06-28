@@ -99,7 +99,9 @@ export default function FollowersPage() {
             </FollowerList>
           </>
         )}
-        <div ref={observerRef}></div>
+        <div ref={observerRef} style={{ minHeight: '1px' }}>
+          {(isLoading || isFetching) && <Spinner />}
+        </div>
       </FollowerWrapper>
     </BasicLayout>
   );

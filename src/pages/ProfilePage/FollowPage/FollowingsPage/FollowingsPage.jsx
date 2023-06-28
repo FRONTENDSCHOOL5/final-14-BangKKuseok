@@ -74,10 +74,6 @@ export default function FollowingsPage() {
     deleteUnFollowMutation.mutate(accountname);
   };
 
-  if (isLoading || isFetching) {
-    return <Spinner />;
-  }
-
   return (
     <BasicLayout type='follow' title='팔로잉' onClickLeftButton={handleClickBackButton}>
       <FollowerWrapper>
@@ -96,7 +92,9 @@ export default function FollowingsPage() {
             ))}
           </FollowerList>
         </>
-        <div ref={observerRef}></div>
+        <div ref={observerRef} style={{ minHeight: '1px' }}>
+          {(isLoading || isFetching) && <Spinner />}
+        </div>
       </FollowerWrapper>
     </BasicLayout>
   );
