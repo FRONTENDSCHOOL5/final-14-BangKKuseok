@@ -1,7 +1,7 @@
 import React from 'react';
 import logoImg from '../../assets/images/logo-large.png';
 import furnituresImg from '../../assets/images/furnitures.png';
-import { RailImg, SplashPageWrapper, StyledLogo } from './SplashStyle';
+import { RailImg, SplashPageWrapper, StyledLogo, FadeoutBox } from './SplashStyle';
 
 export default function Splash() {
   return (
@@ -11,6 +11,7 @@ export default function Splash() {
         <RailImg furnituresImg={furnituresImg} />
         <RailImg furnituresImg={furnituresImg} />
       </ul>
+      <FadeoutBox />
     </SplashPageWrapper>
   );
 }

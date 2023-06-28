@@ -23,13 +23,15 @@ export const SplashPageWrapper = styled.div`
     align-items: center;
     gap: 50vh;
   }
+`;
 
+export const FadeoutBox = styled.div`
   div {
     top: 0;
     z-index: 30;
     position: absolute;
     width: 100%;
-    height: calc(100% - 362px);
+    height: calc(92% - 189px);
     animation: ${fadeOut} 0.4s 2.4s;
   }
 `;
