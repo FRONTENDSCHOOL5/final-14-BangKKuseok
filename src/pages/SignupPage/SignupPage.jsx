@@ -41,7 +41,6 @@ export default function SignupPage() {
             username: preData.username,
             accountname: preData.accountname,
             intro: preData.intro,
-            image: preData.image,
           },
         });
       } else if (formData.message === '이미 가입된 계정ID 입니다.') {
