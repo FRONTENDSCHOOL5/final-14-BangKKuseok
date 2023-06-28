@@ -53,6 +53,7 @@ const HeaderH2 = styled.h2`
 const HeaderH3 = styled.h3`
   ${HeaderText}
   font-size: ${({ theme }) => theme.fontSize.base};
+  cursor: pointer;
 `;
 
 const HeaderSpan = styled.span`
