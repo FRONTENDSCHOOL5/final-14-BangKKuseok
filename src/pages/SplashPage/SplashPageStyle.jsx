@@ -29,7 +29,7 @@ export const SplashPageWrapper = styled.div`
     z-index: 30;
     position: absolute;
     width: 100%;
-    height: calc(92% - 189px);
+    height: calc(100% - 362px);
     animation: ${fadeOut} 0.4s 2.4s;
   }
 `;
