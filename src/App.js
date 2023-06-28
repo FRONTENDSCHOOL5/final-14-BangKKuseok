@@ -4,7 +4,6 @@ import theme from './styles/theme';
 import AppRouter from './pages/Router';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 
 function App() {
   const queryClient = new QueryClient({
@@ -25,7 +24,6 @@ function App() {
           <ThemeProvider theme={theme}>
             <AppRouter />
           </ThemeProvider>
-          <ReactQueryDevtools />
         </QueryClientProvider>
       </RecoilRoot>
     </>
