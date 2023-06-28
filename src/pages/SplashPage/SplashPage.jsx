@@ -19,6 +19,7 @@ export default function SplashPage() {
         <RailImg furnituresImg={furnituresImg} />
         <RailImg furnituresImg={furnituresImg} />
       </ul>
+      <div></div>
     </SplashPageWrapper>
   );
 }
