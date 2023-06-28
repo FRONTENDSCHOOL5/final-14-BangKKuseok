@@ -6,6 +6,13 @@ import { useMutation } from 'react-query';
 import { checkIdExist, postSignUp } from '../../api/signupApi';
 import Welcome from '../../components/LoginSignUp/Welcome/Welcome';
 import DefaultProfileImg from '../../assets/images/profile.png';
+import styled from 'styled-components';
+
+const SignupPageWrapper = styled.section`
+  box-shadow: rgba(105, 80, 80, 0.08) 0px -3px 20px;
+  width: clamp(390px, 100%, 720px);
+  margin: 0 auto;
+`;
 
 export default function SignupPage() {
   const [isAlreadyIdMsg, setIsAlreadyIdMsg] = useState('');
@@ -74,7 +81,7 @@ export default function SignupPage() {
   }, [preData.accountname]);
 
   return (
-    <>
+    <SignupPageWrapper>
       {step === '회원가입' && (
         <SignUp setStep={setStep} setPreData={setPreData} preData={preData} />
       )}
@@ -90,6 +97,6 @@ export default function SignupPage() {
         />
       )}
       {step === '환영합니다' && <Welcome />}
-    </>
+    </SignupPageWrapper>
   );
 }

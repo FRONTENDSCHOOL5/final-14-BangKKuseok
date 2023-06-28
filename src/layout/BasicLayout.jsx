@@ -11,6 +11,7 @@ const LayoutWrapper = styled.div`
   margin: 0 auto;
   position: relative;
   background-color: #fff;
+  box-shadow: rgba(105, 80, 80, 0.08) 0px -3px 20px;
   overflow-y: hidden;
 `;
 

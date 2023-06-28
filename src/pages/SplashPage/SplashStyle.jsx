@@ -14,6 +14,7 @@ export const SplashPageWrapper = styled.div`
   height: 100vh;
   position: relative;
   margin: auto;
+  box-shadow: rgba(105, 80, 80, 0.08) 0px -3px 20px;
 
   ul {
     display: flex;
@@ -22,6 +23,7 @@ export const SplashPageWrapper = styled.div`
     justify-content: center;
     align-items: center;
     gap: 50vh;
+    background-color: #fff;
   }
 `;
 
