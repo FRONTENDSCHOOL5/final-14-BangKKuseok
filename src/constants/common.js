@@ -13,3 +13,14 @@ export const SPACES = [
   '현관',
   '외관&기타',
 ];
+
+export const TOAST = {
+  position: 'bottom-center',
+  autoClose: 2500,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: 'colored',
+};
