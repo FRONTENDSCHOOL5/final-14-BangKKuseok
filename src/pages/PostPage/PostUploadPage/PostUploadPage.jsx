@@ -34,6 +34,10 @@ export default function PostUploadPage() {
   //이미지 업로드 함수
   const uploadImgMutation = useMutation(uploadImg, {
     onSuccess(data) {
+      if (data.message) {
+        alert(data.message);
+        setStep('사진 선택');
+      }
       setPostedImg(URL + data.filename);
     },
     onError(error) {

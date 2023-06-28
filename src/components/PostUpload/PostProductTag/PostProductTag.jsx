@@ -30,7 +30,7 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
   const userItems = useRecoilValue(userProductsAtom);
 
   useEffect(() => {
-    if (selectedItems) {
+    if (selectedItems.length > 0) {
       setTagStep('태그와 버블');
     }
   }, []);
