@@ -23,7 +23,9 @@ export const SplashPageWrapper = styled.div`
     align-items: center;
     gap: 50vh;
   }
+`;
 
+export const FadeoutBox = styled.div`
   div {
     top: 0;
     z-index: 30;
