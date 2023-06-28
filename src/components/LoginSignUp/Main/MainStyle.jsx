@@ -26,12 +26,16 @@ export const WhiteLogoImg = styled.img`
 
 export const CanvasBox = styled.div`
   margin: 0 auto;
-  width: 50%;
+  width: 56%;
   min-width: 150px;
   aspect-ratio: 1;
   & > div {
     z-index: 1;
   }
+  @media screen and (min-width: 500px) {
+    width: 40%;
+  }
+
   canvas {
     filter: saturate(1.5);
     width: 100%;
@@ -44,13 +48,13 @@ export const BackgroundImg = styled.img`
   transform: translate(-50%, 0);
   width: 40%;
   min-width: 200px;
-  height: 490px;
+  height: 430px;
   min-height: 50vh;
   @media screen and (max-width: 500px) {
-    height: 60vh;
+    height: 62vh;
   }
   @media screen and (min-height: 812px) {
-    width: 50%;
+    width: 56%;
   }
 `;
 
