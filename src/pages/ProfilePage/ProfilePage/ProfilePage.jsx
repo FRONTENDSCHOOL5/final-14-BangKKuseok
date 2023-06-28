@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import BasicLayout from '../../../layout/BasicLayout';
 import ProfileCard from '../../../components/Profile/ProfileCard/ProfileCard';
@@ -16,6 +17,8 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getMyProfile, getProfile } from '../../../api/profileApi';
 import { deleteProduct, getProducts } from '../../../api/productApi';
 import { deletePost, getMyPost, reportPost } from '../../../api/postApi';
+import { TOAST } from '../../../constants/common';
+import Toast from '../../../components/common/Toast/Toast';
 
 const ProfilePageWrapper = styled.main``;
 
@@ -78,7 +81,7 @@ export default function ProfilePage() {
   // 상품 삭제하기
   const deleteProductMutation = useMutation(deleteProduct, {
     onSuccess() {
-      alert('상품이 삭제되었습니다.');
+      toast('✅ 상품이 삭제되었습니다.', TOAST);
       queryClient.invalidateQueries('myProduct');
     },
     onError(error) {
@@ -89,7 +92,7 @@ export default function ProfilePage() {
   // 게시글 삭제하기
   const deletePostMutation = useMutation(deletePost, {
     onSuccess() {
-      alert('게시물이 삭제되었습니다.');
+      toast('✅ 게시물이 삭제되었습니다.', TOAST);
       queryClient.invalidateQueries('myPost');
     },
     onError(error) {
@@ -100,7 +103,7 @@ export default function ProfilePage() {
   //게시글 신고하기
   const reportPostMutation = useMutation(reportPost, {
     onSuccess() {
-      alert(`해당 게시글을 신고했습니다.`);
+      toast('🚨 신고가 완료되었습니다. 신속하게 처리하겠습니다.', TOAST);
     },
     onError(error) {
       console.log(error);
@@ -234,6 +237,7 @@ export default function ProfilePage() {
             ) : (
               <Message>작성된 게시물이 없습니다.</Message>
             )}
+            <Toast />
           </>
 
           {/* -- BottomSheet */}
