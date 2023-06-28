@@ -4,6 +4,8 @@ import SetUserProfileForm from '../../../components/LoginSignUp/SetUserProfile/S
 import { useLocation, useNavigate } from 'react-router-dom';
 import { updateProfile } from '../../../api/profileApi';
 import { useMutation, useQueryClient } from 'react-query';
+import { toast } from 'react-toastify';
+import { TOAST } from '../../../constants/common';
 
 export default function ProfileEditPage() {
   const [isAlreadyIdMsg, setIsAlreadyIdMsg] = useState('');
@@ -36,6 +38,7 @@ export default function ProfileEditPage() {
 
   const handleClickSaveButton = () => {
     updateProfileMutation.mutate({ user: { ...newProfile } });
+    toast('✅ 수정이 완료되었습니다.', TOAST);
   };
 
   useEffect(() => {

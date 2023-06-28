@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { URL } from '../../../api/axiosInstance';
-import { SPACES } from '../../../constants/spaces';
+import { SPACES } from '../../../constants/common';
 import BottomSheet from '../../../components/common/BottomSheet/BottomSheet';
 import BasicModal from '../../../components/common/BottomSheet/BasicModal';
 import {

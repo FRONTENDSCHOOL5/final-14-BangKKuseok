@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import BasicLayout from '../../../layout/BasicLayout';
 import { useNavigate, useParams } from 'react-router-dom';
 import BottomSheet from '../../../components/common/BottomSheet/BottomSheet';
@@ -14,6 +15,7 @@ import { isUploadBeforeAtom } from '../../../atoms/post';
 import Spinner from '../../../components/common/Spinner/Spinner';
 import { deleteComment, getComments, reportComment } from '../../../api/commentApi';
 import CommentSection from '../../../components/PostDetail/CommentSection/CommentSection';
+import { TOAST } from '../../../constants/common';
 
 export default function PostPage() {
   const { postId } = useParams();
@@ -77,7 +79,7 @@ export default function PostPage() {
 
   //게시글 삭제하기
   const deletePostMutation = useMutation(deletePost, {
-    onSuccess(data) {
+    onSuccess() {
       navigate(-1);
     },
     onError(error) {
@@ -87,8 +89,8 @@ export default function PostPage() {
 
   //게시글 신고하기
   const reportPostMutation = useMutation(reportPost, {
-    onSuccess(data) {
-      alert(`해당 게시글을 신고했습니다.`);
+    onSuccess() {
+      toast('🚨 신고가 완료되었습니다. 신속하게 처리하겠습니다.', TOAST);
     },
     onError(error) {
       console.log(error);
@@ -98,7 +100,8 @@ export default function PostPage() {
   //댓글 삭제하기
   const queryClient = useQueryClient();
   const deleteCommentMutation = useMutation(deleteComment, {
-    onSuccess(data) {
+    onSuccess() {
+      toast('✅ 댓글이 삭제되었습니다.', TOAST);
       queryClient.invalidateQueries(['commentsData', postId]);
     },
     onError(error) {
@@ -109,7 +112,7 @@ export default function PostPage() {
   //댓글 신고하기
   const reportCommentMutation = useMutation(reportComment, {
     onSuccess() {
-      alert(`해당 댓글을 신고했습니다.`);
+      toast('🚨 신고가 완료되었습니다. 신속하게 처리하겠습니다.', TOAST);
     },
     onError(error) {
       console.log(error);
