@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const MainPageWrapper = styled.main`
   width: clamp(390px, 100%, 720px);
+  box-shadow: rgba(105, 80, 80, 0.08) 0px -3px 20px;
   height: 100vh;
   margin: 0 auto;
   background-color: ${({ theme }) => theme.colors.subCoral};
