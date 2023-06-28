@@ -23,7 +23,7 @@ export default function SignupPage() {
   const profileMutation = useMutation(postSignUp, {
     onSuccess: (formData) => {
       if (formData.message === '회원가입 성공') {
-        setStep('로그인');
+        setStep('환영합니다');
       }
     },
     onError: (formData) => {
@@ -65,7 +65,6 @@ export default function SignupPage() {
   const handleNextLink = () => {
     if (step === '프로필설정') {
       idMutation.mutate({ user: { accountname: preData.accountname } });
-      setStep('환영합니다');
     }
   };
 
