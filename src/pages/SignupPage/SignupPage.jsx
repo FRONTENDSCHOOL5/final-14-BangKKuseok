@@ -65,7 +65,7 @@ export default function SignupPage() {
 
   const handleNextLink = () => {
     if (step === '프로필설정') {
-      idMutation.mutate({ user: { accountname: preData.accountname } });
+      idMutation.mutate({ user: { accountname: preData.accountname.toLowerCase() } });
     }
   };
 
