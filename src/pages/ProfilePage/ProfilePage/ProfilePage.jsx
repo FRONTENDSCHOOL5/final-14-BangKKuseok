@@ -18,7 +18,6 @@ import { getMyProfile, getProfile } from '../../../api/profileApi';
 import { deleteProduct, getProducts } from '../../../api/productApi';
 import { deletePost, getMyPost, reportPost } from '../../../api/postApi';
 import { TOAST } from '../../../constants/common';
-import Toast from '../../../components/common/Toast/Toast';
 
 const ProfilePageWrapper = styled.main``;
 
@@ -237,7 +236,6 @@ export default function ProfilePage() {
             ) : (
               <Message>작성된 게시물이 없습니다.</Message>
             )}
-            <Toast />
           </>
 
           {/* -- BottomSheet */}

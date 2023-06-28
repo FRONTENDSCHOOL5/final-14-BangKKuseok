@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const StyledContainer = styled(ToastContainer)`
   .Toastify__toast {
     background: white;
-    width: 80%;
+    width: 84%;
     margin: 0 auto;
     bottom: 80px;
     border-radius: 10px;

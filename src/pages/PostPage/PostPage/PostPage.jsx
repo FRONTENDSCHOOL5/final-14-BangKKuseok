@@ -16,7 +16,6 @@ import Spinner from '../../../components/common/Spinner/Spinner';
 import { deleteComment, getComments, reportComment } from '../../../api/commentApi';
 import CommentSection from '../../../components/PostDetail/CommentSection/CommentSection';
 import { TOAST } from '../../../constants/common';
-import Toast from '../../../components/common/Toast/Toast';
 
 export default function PostPage() {
   const { postId } = useParams();
@@ -222,7 +221,6 @@ export default function PostPage() {
               postId={postId}
               setCommentId={setCommentId}
             />
-            <Toast />
           </PostPageWrapper>
           {isShow && (
             <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
