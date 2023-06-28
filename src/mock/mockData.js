@@ -427,8 +427,8 @@ const posts = [
 const topLikedPosts = [
   {
     id: 1,
-    content: '{"space": "원룸", "detail" :""}',
-    image: 'https://i.pinimg.com/474x/a4/99/e3/a499e36a2a1ba4625703d1efd4ac6ad6.jpg',
+    content: '{"space": "거실", "detail" :""}',
+    image: 'https://i.pinimg.com/originals/79/a9/b7/79a9b7abd1b96b4f7f3bab077ac2a252.jpg',
     heartCount: 30,
     author: {
       id: 'kimmutsa',
@@ -438,27 +438,49 @@ const topLikedPosts = [
   },
   {
     id: 2,
-    content: '{"space": "작업실", "detail" :""}',
-    image:
-      'https://plus.unsplash.com/premium_photo-1671569714765-5829db780ba3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80',
+    content: '{"space": "침실", "detail" :""}',
+    image: 'https://i.pinimg.com/originals/81/d7/e2/81d7e2ad625f15ad4d22bd77ffcc3d55.jpg',
     heartCount: 12,
     author: {
       id: 'leemutsa',
       username: '이멋사',
     },
-    createdAt: '2023-06-06T13:33:14.054Z',
+    createdAt: '2023-06-11T13:33:14.054Z',
   },
   {
     id: 3,
-    content: '{"space": "거실", "detail" :""}',
-    image:
-      'https://images.unsplash.com/photo-1589834390005-5d4fb9bf3d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
+    content: '{"space": "주방", "detail" :""}',
+    image: 'https://i.pinimg.com/originals/79/50/cb/7950cbb767cd21f987812a8af4e17122.jpg',
     heartCount: 10,
     author: {
       id: 'parkmutsa',
       username: '박멋사',
     },
-    createdAt: '2023-06-01T13:33:14.054Z',
+    createdAt: '2023-06-13T13:33:14.054Z',
+  },
+  {
+    id: 4,
+    content: '{"space": "서재&작업실", "detail" :""}',
+    image:
+      'https://www.home-designing.com/wp-content/uploads/2021/05/linear-suspension-light-5.jpg',
+    heartCount: 8,
+    author: {
+      id: 'choimutsa',
+      username: '최멋사',
+    },
+    createdAt: '2023-06-16T13:33:14.054Z',
+  },
+  {
+    id: 5,
+    content: '{"space": "욕실", "detail" :""}',
+    image:
+      'https://www.wallsandfloors.co.uk/wp-blog/wp-content/uploads/2021/05/stark-visual-c-1000-1.jpg',
+    heartCount: 6,
+    author: {
+      id: 'jeongmutsa',
+      username: '정멋사',
+    },
+    createdAt: '2023-06-14T13:33:14.054Z',
   },
 ];
 
