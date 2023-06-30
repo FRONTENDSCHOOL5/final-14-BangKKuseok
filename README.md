@@ -299,8 +299,8 @@ li내에 스타일할 요소가 3개이상이면 li를 Item으로 빼기
 
 ### 2) 채팅
 |채팅 목록, 채팅방 페이지|404페이지|
-|---|---|---|
-|![채팅 목록, 채팅방 페이지](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/1e2eddc2-fe82-42d0-99f7-5fc02e3527b6)||<img width="243" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/111286497/f6a887c4-6218-4e67-9b11-cd0aa51efd0a" />|
+|---|---|
+|![채팅 목록, 채팅방 페이지](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/1e2eddc2-fe82-42d0-99f7-5fc02e3527b6)|<img width="243" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/111286497/f6a887c4-6218-4e67-9b11-cd0aa51efd0a" />|
 
 ### 3) 게시글
 |게시글 상세 페이지|게시글 작성 페이지|게시글 수정 페이지|
@@ -545,7 +545,7 @@ useEffect(() => {
 </details>
 
 <details>
-	<summary><b>11-(2) STEP을 사용한 게시글 업로드 과정</summary>
+	<summary><b>11-(2) STEP을 사용한 게시글 업로드 과정</b></summary>
 
 `PostUploadPage` 컴포넌트는 `useState` 훅을 활용하여 ‘사진 선택’, ‘상품태그 추가’, ‘게시글 작성’과 같은 업로드 단계를 관리합니다. 현재 `step`에 따라 해당하는 레이아웃을 렌더링하여 사용자가 단계별로 한 페이지에 한 가지 행동만 하도록 유도하여 사용자 경험을 개선했습니다.
 
@@ -587,7 +587,7 @@ const StepLayout = {
 </details>
 
 <details>
-	<summary><b>11-(3) 이미지 위의 원하는 위치에 상품 태그하기</summary>
+	<summary><b>11-(3) 이미지 위의 원하는 위치에 상품 태그하기</b></summary>
 
 1. 태깅 단계: `tagStep` 상태 변수는 ‘클릭 유도’, ‘상품목록 확인’, ‘상품태그 추가’와 같은 태깅 프로세스의 다양한 단계를 관리합니다.
 
@@ -684,7 +684,7 @@ export const canSelectProductSelector = selector({
 </details>
 
 <details>
-	<summary><b>11-(4) 커스텀 훅</summary>
+	<summary><b>11-(4) 커스텀 훅</b></summary>
 	
 `useInputs.js`
 - input에 입력해야하는 값에 따라 입력 값을 저장하는 함수, 포커스를 잃었을 때 validate를 체크하여 에러 메시지를 설정하는 함수가 필요했습니다.
