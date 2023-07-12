@@ -18,15 +18,8 @@ import { MOUSEBENCHMARK } from '../../../constants/common';
 export default function PostProductTag({ postedImg, setIsBtnActive }) {
   //태그추가 단계 : 클릭 유도 / 상품목록 확인 / 태그와 버블 / 상품태그 추가
   const [tagStep, setTagStep] = useState('클릭 유도');
-
   const [isBubbleShow, setIsBubbleShow] = useState(true);
   const [isShow, setIsShow] = useState(false);
-
-  //마우스, 말풍선 위칫값
-  const [mouseLoc, setMouseLoc] = useRecoilState(mouseLocAtom);
-  const setBubbleLoc = useSetRecoilState(bubbleLocAtom);
-
-  //선택된 데이터
   const selectedItems = useRecoilValue(selectedProductsAtom);
   const userItems = useRecoilValue(userProductsAtom);
   const { xLeftBenchmark, xRightBenchmark, yLeftBenchmark, yRightBenchmark } = MOUSEBENCHMARK;
@@ -37,11 +30,9 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
     }
   }, []);
 
-  //이미지 위 클릭하면
   const handleClickImg = (e) => {
     //1.'클릭 유도'일때
     if ((tagStep === '클릭 유도' || tagStep === '상품태그 추가') && e.target === e.currentTarget) {
-      // 마우스 위치 지정
       const x = Math.floor((e.nativeEvent.offsetX / e.currentTarget.offsetWidth) * 100);
       const y = Math.floor((e.nativeEvent.offsetY / e.currentTarget.offsetWidth) * 100);
       setMouseLoc({
@@ -49,7 +40,6 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
         y: y < yLeftBenchmark ? yLeftBenchmark : y > yRightBenchmark ? yRightBenchmark : y,
       });
 
-      //바텀시트 열고 tagStep 바꾸기
       setIsShow(true);
       setTagStep('상품목록 확인');
 
@@ -81,14 +71,12 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
     });
   }, [mouseLoc, setBubbleLoc]);
 
-  //상품선택 안하고 모달 닫았을 때 돌아가기
   useEffect(() => {
     if (tagStep === '상품목록 확인' && selectedItems.length === 0 && !isShow) {
       setTagStep('클릭 유도');
     }
   }, [isShow, selectedItems, setIsBtnActive, tagStep]);
 
-  //선택상품이 있거나 아예 판매상품이 없을때 다음단계로 넘어갈 수 있다
   useEffect(() => {
     if (userItems.length === 0 || selectedItems.length >= 1) {
       setIsBtnActive(true);
@@ -97,7 +85,6 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
     }
   }, [selectedItems, setIsBtnActive, userItems]);
 
-  //바텀시트 여닫기
   const handleClickModalOpen = () => {
     setIsShow((prev) => !prev);
   };
