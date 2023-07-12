@@ -13,6 +13,7 @@ import {
   userProductsAtom,
 } from '../../../atoms/post';
 import ProductTag from '../ProductTag/ProductTag';
+import { MOUSEBENCHMARK } from '../../../constants/common';
 
 export default function PostProductTag({ postedImg, setIsBtnActive }) {
   //태그추가 단계 : 클릭 유도 / 상품목록 확인 / 태그와 버블 / 상품태그 추가
@@ -28,6 +29,7 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
   //선택된 데이터
   const selectedItems = useRecoilValue(selectedProductsAtom);
   const userItems = useRecoilValue(userProductsAtom);
+  const { xLeftBenchmark, xRightBenchmark, yLeftBenchmark, yRightBenchmark } = MOUSEBENCHMARK;
 
   useEffect(() => {
     if (selectedItems.length > 0) {
@@ -43,8 +45,8 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
       const x = Math.floor((e.nativeEvent.offsetX / e.currentTarget.offsetWidth) * 100);
       const y = Math.floor((e.nativeEvent.offsetY / e.currentTarget.offsetWidth) * 100);
       setMouseLoc({
-        x: x < 6 ? 6 : x > 94 ? 94 : x,
-        y: y < 5 ? 5 : y > 95 ? 95 : y,
+        x: x < xLeftBenchmark ? xLeftBenchmark : x > xRightBenchmark ? xRightBenchmark : x,
+        y: y < yLeftBenchmark ? yLeftBenchmark : y > yRightBenchmark ? yRightBenchmark : y,
       });
 
       //바텀시트 열고 tagStep 바꾸기
