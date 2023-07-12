@@ -7,12 +7,12 @@ import BasicModal from '../../common/BottomSheet/BasicModal';
 import ModalProductList from '../ModalProductList/ModalProductList';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
-  bubbleLocAtom,
   mouseLocAtom,
   selectedProductsAtom,
   userProductsAtom,
 } from '../../../atoms/post';
 import ProductTag from '../ProductTag/ProductTag';
+import useBubbleLocation from '../../../hooks/useBubbleLocation';
 import { MOUSEBENCHMARK } from '../../../constants/common';
 
 export default function PostProductTag({ postedImg, setIsBtnActive }) {
@@ -50,26 +50,7 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
     }
   };
 
-  //마우스 위치에 따른 말풍선 위치
-  useEffect(() => {
-    let eLeft = 50;
-    if (mouseLoc.x > 67) {
-      eLeft = 51.5 + (mouseLoc.x - 68) * 1.63;
-    } else if (mouseLoc.x < 33) {
-      eLeft = 6 + (mouseLoc.x - 6) * 1.59;
-    } else {
-      eLeft = 50;
-    }
-    if (mouseLoc.y < 28) {
-      eLeft = eLeft - 2.5;
-    }
-    setBubbleLoc({
-      x: mouseLoc.x < 33 ? 33 : mouseLoc.x > 67 ? 67 : mouseLoc.x,
-      y: mouseLoc.y > 28 ? mouseLoc.y - 7 : mouseLoc.y + 27,
-      bubbleUp: mouseLoc.y > 28,
-      edgeLeft: eLeft,
-    });
-  }, [mouseLoc, setBubbleLoc]);
+  useBubbleLocation();
 
   useEffect(() => {
     if (tagStep === '상품목록 확인' && selectedItems.length === 0 && !isShow) {
