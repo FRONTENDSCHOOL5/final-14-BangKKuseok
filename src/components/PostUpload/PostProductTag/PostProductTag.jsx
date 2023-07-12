@@ -5,8 +5,9 @@ import ProductBubble from '../ProductBubble/ProductBubble';
 import BottomSheet from '../../common/BottomSheet/BottomSheet';
 import BasicModal from '../../common/BottomSheet/BasicModal';
 import ModalProductList from '../ModalProductList/ModalProductList';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
+  canSelectProductSelector,
   mouseLocAtom,
   selectedProductsAtom,
   userProductsAtom,
@@ -22,6 +23,7 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
   const [isShow, setIsShow] = useState(false);
   const selectedItems = useRecoilValue(selectedProductsAtom);
   const userItems = useRecoilValue(userProductsAtom);
+  const canSeletedItems = useRecoilValue(canSelectProductSelector);
   const { xLeftBenchmark, xRightBenchmark, yLeftBenchmark, yRightBenchmark } = MOUSEBENCHMARK;
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
       setTagStep('상품목록 확인');
 
       //2.'태그와 버블'일때
-    } else if (tagStep === '태그와 버블') {
+    } else if (tagStep === '태그와 버블' && canSeletedItems.length > 0) {
       setIsBubbleShow(false);
       setTagStep('상품태그 추가');
     }
@@ -53,8 +55,12 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
   useBubbleLocation();
 
   useEffect(() => {
-    if (tagStep === '상품목록 확인' && selectedItems.length === 0 && !isShow) {
-      setTagStep('클릭 유도');
+    if (tagStep === '상품목록 확인' && !isShow) {
+      if (selectedItems.length === 0) {
+        setTagStep('클릭 유도');
+      } else {
+        setTagStep('태그와 버블');
+      }
     }
   }, [isShow, selectedItems, setIsBtnActive, tagStep]);
 
@@ -75,7 +81,9 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
       <PostProductTagWrapper>
         <ImgBox>
           <img src={postedImg} alt='게시글 이미지' />
-          <TagBox onClick={handleClickImg}>
+          <TagBox
+            isPointer={tagStep === '클릭 유도' || tagStep === '상품태그 추가'}
+          >
             {tagStep === '클릭 유도' && (
               <>
                 <img src={addTagBtn} alt='상품 태그 버튼' />
@@ -93,7 +101,9 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
         </ImgBox>
         <p>
           {tagStep === '태그와 버블'
-            ? '다른 상품들도 태그할 수 있어요'
+            ? canSeletedItems.length > 0
+              ? '다른 상품들도 태그할 수 있어요'
+              : ''
             : '원하는 위치에 회원님의 상품을 태그하세요'}
         </p>
       </PostProductTagWrapper>

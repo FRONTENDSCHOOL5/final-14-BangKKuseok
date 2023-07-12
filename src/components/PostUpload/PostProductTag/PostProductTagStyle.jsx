@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 const PostProductTagWrapper = styled.div`
   margin: 0 auto;
@@ -30,6 +30,12 @@ const TagBox = styled.ul`
   top: 0;
   width: 100%;
   height: 100%;
+  ${({ isPointer }) =>
+    isPointer &&
+    css`
+      cursor: pointer;
+    `}
+`;
 
   & > img {
     position: absolute;
