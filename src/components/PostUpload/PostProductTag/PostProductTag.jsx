@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import addTagBtn from '../../../assets/icons/icon-add-tag.svg';
-import { BouncingCircle, ImgBox, PostProductTagWrapper, TagBox } from './PostProductTagStyle';
+import {
+  GuideTagButton,
+  BouncingCircle,
+  ImgBox,
+  PostProductTagWrapper,
+  TagBox,
+} from './PostProductTagStyle';
 import ProductBubble from '../ProductBubble/ProductBubble';
 import BottomSheet from '../../common/BottomSheet/BottomSheet';
 import BasicModal from '../../common/BottomSheet/BasicModal';
@@ -21,6 +27,8 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
   const [tagStep, setTagStep] = useState('클릭 유도');
   const [isBubbleShow, setIsBubbleShow] = useState(true);
   const [isShow, setIsShow] = useState(false);
+  const [isMouseMove, setIsMouseMove] = useState(false);
+  const [mouseLoc, setMouseLoc] = useRecoilState(mouseLocAtom);
   const selectedItems = useRecoilValue(selectedProductsAtom);
   const userItems = useRecoilValue(userProductsAtom);
   const canSeletedItems = useRecoilValue(canSelectProductSelector);
@@ -32,16 +40,22 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
     }
   }, []);
 
-  const handleClickImg = (e) => {
-    //1.'클릭 유도'일때
-    if ((tagStep === '클릭 유도' || tagStep === '상품태그 추가') && e.target === e.currentTarget) {
+  const handleMouseMoveOnImg = (e) => {
+    if (!isMouseMove) return;
+    if ((isMouseMove && tagStep === '클릭 유도') || tagStep === '상품태그 추가') {
       const x = Math.floor((e.nativeEvent.offsetX / e.currentTarget.offsetWidth) * 100);
       const y = Math.floor((e.nativeEvent.offsetY / e.currentTarget.offsetWidth) * 100);
       setMouseLoc({
         x: x < xLeftBenchmark ? xLeftBenchmark : x > xRightBenchmark ? xRightBenchmark : x,
         y: y < yLeftBenchmark ? yLeftBenchmark : y > yRightBenchmark ? yRightBenchmark : y,
       });
+    }
+  };
 
+  const handleMouseUpImg = (e) => {
+    //1.태그 선택이 가능할 때
+    if (tagStep === '클릭 유도' || tagStep === '상품태그 추가') {
+      setIsMouseMove(false);
       setIsShow(true);
       setTagStep('상품목록 확인');
 
@@ -56,13 +70,15 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
 
   useEffect(() => {
     if (tagStep === '상품목록 확인' && !isShow) {
+      setMouseLoc({ x: 50, y: 50 });
+      setIsMouseMove(false);
       if (selectedItems.length === 0) {
         setTagStep('클릭 유도');
       } else {
         setTagStep('태그와 버블');
       }
     }
-  }, [isShow, selectedItems, setIsBtnActive, tagStep]);
+  }, [isMouseMove, isShow, selectedItems, setIsBtnActive, setMouseLoc, tagStep]);
 
   useEffect(() => {
     if (userItems.length === 0 || selectedItems.length >= 1) {
@@ -82,18 +98,26 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
         <ImgBox>
           <img src={postedImg} alt='게시글 이미지' />
           <TagBox
+            onMouseDown={() => setIsMouseMove(true)}
+            onMouseMove={handleMouseMoveOnImg}
+            onMouseUp={handleMouseUpImg}
             isPointer={tagStep === '클릭 유도' || tagStep === '상품태그 추가'}
           >
             {tagStep === '클릭 유도' && (
               <>
-                <img src={addTagBtn} alt='상품 태그 버튼' />
-                <BouncingCircle />
+                <GuideTagButton addTagBtn={addTagBtn} mouseLoc={mouseLoc} />
+                {!isMouseMove && <BouncingCircle mouseLoc={mouseLoc} />}
               </>
             )}
             {(tagStep === '태그와 버블' || tagStep === '상품태그 추가') &&
               selectedItems.map((item) => (
                 <li key={item.id}>
-                  <ProductBubble data={item} setTagStep={setTagStep} isBubbleShow={isBubbleShow} />
+                  <ProductBubble
+                    data={item}
+                    setTagStep={setTagStep}
+                    isBubbleShow={isBubbleShow}
+                    setIsMouseMove={setIsMouseMove}
+                  />
                   <ProductTag data={item} />
                 </li>
               ))}
