@@ -24,3 +24,20 @@ export const TOAST = {
   progress: undefined,
   theme: 'colored',
 };
+
+export const MOUSEBENCHMARK = {
+  xLeftBenchmark: 6,
+  xRightBenchmark: 94,
+  yLeftBenchmark: 5,
+  yRightBenchmark: 95,
+};
+
+export const BUBBLEBENCHMARK = {
+  leftBenchmark: 33,
+  rightBenchmark: 67,
+  leftDefaultValue: 6,
+  rightDefaultValue: 51.5,
+  leftWeighting: 1.59,
+  rightWeighting: 1.63,
+  yPositionBenchmark: 28,
+};

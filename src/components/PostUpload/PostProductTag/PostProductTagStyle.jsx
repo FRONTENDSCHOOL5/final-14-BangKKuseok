@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 const PostProductTagWrapper = styled.div`
   margin: 0 auto;
@@ -30,17 +30,19 @@ const TagBox = styled.ul`
   top: 0;
   width: 100%;
   height: 100%;
+  cursor: ${(p) => p.isPointer && 'pointer'};
+`;
 
-  & > img {
-    position: absolute;
-    width: 20px;
-    border-radius: 50%;
-    box-shadow: 0px 0px 3px rgba(62, 62, 62, 0.3);
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-    z-index: 1;
-  }
+const GuideTagButton = styled.div.attrs(({ addTagBtn, mouseLoc }) => ({
+  style: {
+    background: `url(${addTagBtn}) no-repeat ${mouseLoc.x}% ${mouseLoc.y}% / 20px`,
+  },
+}))`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 3px rgba(62, 62, 62, 0.3);
+  z-index: 1;
 `;
 
 const bouncing = keyframes`
@@ -57,18 +59,21 @@ const bouncing = keyframes`
 }
 100% {
   transform: translate(-50%, -50%) scale(2.3);
-  opacity: 0.4;
 }
 `;
 
-const BouncingCircle = styled.div`
+const BouncingCircle = styled.div.attrs(({ mouseLoc }) => ({
+  style: {
+    left: mouseLoc.x + '%',
+    top: mouseLoc.y + '%',
+  },
+}))`
   position: absolute;
   border-radius: 50%;
   width: 20px;
   height: 20px;
   background-color: white;
   animation: ${bouncing} 1s linear alternate infinite;
-  left: 50%;
-  top: 50%;
 `;
-export { PostProductTagWrapper, ImgBox, TagBox, BouncingCircle };
+
+export { PostProductTagWrapper, ImgBox, TagBox, BouncingCircle, GuideTagButton };
