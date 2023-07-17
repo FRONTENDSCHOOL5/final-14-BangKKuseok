@@ -426,58 +426,58 @@ const posts = [
 
 const topLikedPosts = [
   {
-    id: 1,
+    _id: 1,
     content: '{"space": "거실", "detail" :""}',
     image: 'https://i.pinimg.com/originals/79/a9/b7/79a9b7abd1b96b4f7f3bab077ac2a252.jpg',
     heartCount: 30,
     author: {
-      id: '[mock]kimmutsa',
+      _id: '[mock]kimmutsa',
       username: '김멋사',
     },
     createdAt: '2023-06-09T13:33:14.054Z',
   },
   {
-    id: 2,
+    _id: 2,
     content: '{"space": "침실", "detail" :""}',
     image: 'https://i.pinimg.com/originals/81/d7/e2/81d7e2ad625f15ad4d22bd77ffcc3d55.jpg',
     heartCount: 12,
     author: {
-      id: '[mock]leemutsa',
+      _id: '[mock]leemutsa',
       username: '이멋사',
     },
     createdAt: '2023-06-11T13:33:14.054Z',
   },
   {
-    id: 3,
+    _id: 3,
     content: '{"space": "주방", "detail" :""}',
     image: 'https://i.pinimg.com/originals/79/50/cb/7950cbb767cd21f987812a8af4e17122.jpg',
     heartCount: 10,
     author: {
-      id: '[mock]parkmutsa',
+      _id: '[mock]parkmutsa',
       username: '박멋사',
     },
     createdAt: '2023-06-13T13:33:14.054Z',
   },
   {
-    id: 4,
+    _id: 4,
     content: '{"space": "서재&작업실", "detail" :""}',
     image:
       'https://www.home-designing.com/wp-content/uploads/2021/05/linear-suspension-light-5.jpg',
     heartCount: 8,
     author: {
-      id: '[mock]choimutsa',
+      _id: '[mock]choimutsa',
       username: '최멋사',
     },
     createdAt: '2023-06-16T13:33:14.054Z',
   },
   {
-    id: 5,
+    _id: 5,
     content: '{"space": "욕실", "detail" :""}',
     image:
       'https://www.wallsandfloors.co.uk/wp-blog/wp-content/uploads/2021/05/stark-visual-c-1000-1.jpg',
     heartCount: 6,
     author: {
-      id: '[mock]jeongmutsa',
+      _id: '[mock]jeongmutsa',
       username: '정멋사',
     },
     createdAt: '2023-06-14T13:33:14.054Z',
