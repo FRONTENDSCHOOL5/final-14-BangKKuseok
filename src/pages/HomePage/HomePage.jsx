@@ -139,7 +139,12 @@ export default function HomePage() {
     setIsClickSearchButton(true);
   };
 
-  if (homeIsLoading || feedIsLoading || feedIsFetching) return <Spinner />;
+  if (homeIsLoading)
+    return (
+      <BasicLayout>
+        <Spinner />
+      </BasicLayout>
+    );
 
   return (
     <>
