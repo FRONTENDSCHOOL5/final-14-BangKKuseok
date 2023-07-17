@@ -143,7 +143,7 @@ export default function HomePage() {
           {isRecent ? (
             <Carousel data={filteredRecentPosts.length > 0 ? filteredRecentPosts : topLikedPosts} />
           ) : (
-            <Spinner />
+            <Spinner type='carousel' />
           )}
           <TabWrapper>
             <SpaceTabs
