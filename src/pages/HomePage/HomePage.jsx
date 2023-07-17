@@ -12,7 +12,6 @@ import Gallery from '../../components/common/Gallery/Gallery';
 import { filterPosts } from '../../utils/filterPosts';
 import Spinner from '../../components/common/Spinner/Spinner';
 import { topLikedPosts } from '../../mock/mockData';
-import { getFeedPost } from '../../api/feedApi';
 
 const Message = styled.p`
   font-weight: 500;
@@ -46,31 +45,11 @@ export default function HomePage() {
 
   const count = useRef(0);
   const [isLast, setIsLast] = useState(false);
+  const [isRecent, setIsRecent] = useState(false);
+  const [filteredRecentPosts, setFilteredRecentPosts] = useState([]);
 
-  // 캐러셀 팔로잉 게시글 목록 불러오기
-  const {
-    data: feedPostData,
-    fetchNextPage: feedFetchNextPage,
-    isLoading: feedIsLoading,
-    isFetching: feedIsFetching,
-    hasNextPage: feedHasNextPage,
-  } = useInfiniteQuery(
-    'feedPostData',
-    ({ pageParam = { skip: 0 } }) => getFeedPost({ skip: pageParam.skip }),
-    {
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length > 0 ? allPages.length * 10 : 0;
-        return lastPage.data.length < 10 ? undefined : { skip: nextPage };
-      },
-      select: (data) => {
-        return data.pages
-          .flatMap((page) => page.data)
-          .filter((post) => post.content?.includes('"space"'))
-          .sort((a, b) => b.heartCount - a.heartCount)
-          .slice(0, 5);
-      },
-    },
-  );
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
   const {
     data: homePostData,
@@ -110,10 +89,19 @@ export default function HomePage() {
 
   // 캐러셀 필터링
   useEffect(() => {
-    if (feedHasNextPage) {
-      feedFetchNextPage();
-    }
-  }, [feedHasNextPage]);
+    setFilteredRecentPosts(filteredAllPosts);
+    allPosts.filter((item) => {
+      const createdAt = new Date(item.createdAt);
+      if (filteredAllPosts.length && createdAt <= oneWeekAgo) {
+        setIsRecent(true);
+        if (isRecent) {
+          setFilteredRecentPosts(
+            filteredRecentPosts?.sort((a, b) => b.heartCount - a.heartCount).slice(0, 5),
+          );
+        }
+      }
+    });
+  }, [filteredAllPosts]);
 
   const handleClickTabButton = (e) => {
     const index = ['전체', ...SPACES].indexOf(e.target.innerText);
@@ -152,7 +140,11 @@ export default function HomePage() {
         <Search onClickLeftButton={handleClickLeftButton} />
       ) : (
         <BasicLayout type='home' onClickRightButton={handleClickRightButton}>
-          <Carousel data={feedPostData?.length > 0 ? feedPostData : topLikedPosts} />
+          {isRecent ? (
+            <Carousel data={filteredRecentPosts.length > 0 ? filteredRecentPosts : topLikedPosts} />
+          ) : (
+            <Spinner />
+          )}
           <TabWrapper>
             <SpaceTabs
               currentTab={currentTab}
