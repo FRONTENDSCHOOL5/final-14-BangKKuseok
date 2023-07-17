@@ -48,8 +48,11 @@ export default function HomePage() {
   const [isRecent, setIsRecent] = useState(false);
   const [filteredRecentPosts, setFilteredRecentPosts] = useState([]);
 
-  const oneWeekAgo = new Date();
-  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  const TOP_LIKED_POSTS_DAYS = 7;
+
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+  currentDate.setDate(currentDate.getDate() - TOP_LIKED_POSTS_DAYS);
 
   const {
     data: homePostData,
@@ -92,7 +95,7 @@ export default function HomePage() {
     setFilteredRecentPosts(filteredAllPosts);
     allPosts.filter((item) => {
       const createdAt = new Date(item.createdAt);
-      if (filteredAllPosts.length && createdAt <= oneWeekAgo) {
+      if (filteredAllPosts.length && createdAt <= currentDate) {
         setIsRecent(true);
         if (isRecent) {
           setFilteredRecentPosts(
