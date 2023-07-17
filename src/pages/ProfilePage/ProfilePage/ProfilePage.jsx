@@ -12,12 +12,14 @@ import BasicModal from '../../../components/common/BottomSheet/BasicModal';
 import ProductDetailCard from '../../../components/Profile/ProductDetailCard/ProductDetailCard';
 import Confirm from '../../../components/common/Confirm/Confirm';
 import Spinner from '../../../components/common/Spinner/Spinner';
+import useObserver from '../../../hooks/useObserver';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
 import { getMyProfile, getProfile } from '../../../api/profileApi';
 import { deleteProduct, getProducts } from '../../../api/productApi';
 import { deletePost, getMyPost, reportPost } from '../../../api/postApi';
 import { TOAST } from '../../../constants/common';
+import { MYPOSTLIMIT } from '../../../constants/pagenation';
 
 const ProfilePageWrapper = styled.main``;
 
@@ -60,13 +62,28 @@ export default function ProfilePage() {
   );
 
   // 게시글 정보 가져오기
-  const { data: myPostData, isLoading: isMyPostLoading } = useQuery(
+  const {
+    data: myPostData,
+    fetchNextPage: fetchPostNextPage,
+    isLoading: isMyPostLoading,
+    hasNextPage: hasPostNextPage,
+  } = useInfiniteQuery(
     ['myPost', profileData],
-    () => getMyPost(profileData.accountname),
+    ({ pageParam = { skip: 0 } }) =>
+      getMyPost({ accountname: profileData.accountname, skip: pageParam.skip }),
     {
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = allPages.length > 0 ? allPages.length * MYPOSTLIMIT : 0;
+        return lastPage.data.length < MYPOSTLIMIT ? undefined : { skip: nextPage };
+      },
+      select: (data) => {
+        return data.pages.flatMap((page) => page.data);
+      },
       enabled: !!profileData && !!myProfileData,
     },
   );
+
+  const observerRef = useObserver(hasPostNextPage, fetchPostNextPage, isMyPostLoading);
 
   // 상품 정보 가져오기
   const { data: myProductData, isLoading: isProductLoading } = useQuery(
@@ -232,6 +249,7 @@ export default function ProfilePage() {
                   moreInfo={false}
                   onClick={handleClickMorePostButton}
                 />
+                <div ref={observerRef} style={{ minHeight: '1px' }}></div>
               </>
             ) : (
               <Message>작성된 게시물이 없습니다.</Message>
