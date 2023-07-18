@@ -24,7 +24,6 @@ export default function PostImgUpload({
   //이미지 업로드 mutation
   const uploadImgMutation = useMutation(uploadImg, {
     onSuccess(data) {
-      console.log(data);
       setImg(URL + data.filename);
       if (locationPath.includes('/post')) {
         if (locationPath.includes('/edit'))
