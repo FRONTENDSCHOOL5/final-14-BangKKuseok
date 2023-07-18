@@ -22,7 +22,7 @@ import ProductTag from '../ProductTag/ProductTag';
 import useBubbleLocation from '../../../hooks/useBubbleLocation';
 import { MOUSEBENCHMARK } from '../../../constants/common';
 
-export default function PostProductTag({ postedImg, setIsBtnActive }) {
+export default function PostProductTag({ postImg, setIsBtnActive }) {
   //태그추가 단계 : 클릭 유도 / 상품목록 확인 / 태그와 버블 / 상품태그 추가
   const [tagStep, setTagStep] = useState('클릭 유도');
   const [isBubbleShow, setIsBubbleShow] = useState(true);
@@ -96,7 +96,7 @@ export default function PostProductTag({ postedImg, setIsBtnActive }) {
     <>
       <PostProductTagWrapper>
         <ImgBox>
-          <img src={postedImg} alt='게시글 이미지' />
+          <img src={postImg} alt='게시글 이미지' />
           <TagBox
             onMouseDown={() => setIsMouseMove(true)}
             onMouseMove={handleMouseMoveOnImg}

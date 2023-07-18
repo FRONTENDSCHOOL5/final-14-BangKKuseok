@@ -9,7 +9,7 @@ import { SPACES } from '../../../constants/common';
 import { ModalSpaceList, PostTextWriteWrapper, SelectSpaceBtn } from './PostTextWriteStyle';
 import BasicModal from '../../common/BottomSheet/BasicModal';
 
-export default function PostTextWrite({ postedImg, setIsBtnActive, setContent }) {
+export default function PostTextWrite({ postImg, setIsBtnActive, setContent }) {
   //바텀시트 열기 변수
   const [isShow, setIsShow] = useState(false);
   //선택된 데이터
@@ -57,7 +57,7 @@ export default function PostTextWrite({ postedImg, setIsBtnActive, setContent })
     <>
       <PostTextWriteWrapper>
         <ImgBox>
-          <img src={postedImg} alt='게시글 이미지' />
+          <img src={postImg} alt='게시글 이미지' />
           <TagBox>
             {selectedItems.map((item) => (
               <li key={item.id}>
