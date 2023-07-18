@@ -10,12 +10,15 @@ import PostTextEdit from '../../../components/PostEdit/PostTextEdit/PostTextEdit
 import { editPost, getPostDetail } from '../../../api/postApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import PostImgUpload from '../../../components/PostUpload/PostImgUpload/PostImgUpload';
+import { useSetRecoilState } from 'recoil';
+import { isUploadorEditBeforeAtom } from '../../../atoms/post';
 
 export default function PostEditPage() {
   const { postId } = useParams();
   const navigate = useNavigate();
   const [isBtnActive, setIsBtnActive] = useState(false);
   const [isShow, setIsShow] = useState(false);
+  const setIsUploadorEditBefore = useSetRecoilState(isUploadorEditBeforeAtom);
 
   const [editData, setEditData] = useState({});
   const [postImg, setPostImg] = useState();
@@ -45,6 +48,7 @@ export default function PostEditPage() {
       queryClient.invalidateQueries('feedPostData');
       queryClient.invalidateQueries('myPost');
       queryClient.setQueryData(['postData', postId], data);
+      setIsUploadorEditBefore(true);
       navigate(`/post/${postId}`);
     },
     onError(error) {

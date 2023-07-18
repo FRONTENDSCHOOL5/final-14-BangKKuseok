@@ -29,7 +29,7 @@ export const bubbleLocAtom = atom({
   default: { x: 50, y: 50, bubleUp: true, edgeLeft: 50 },
 });
 
-export const isUploadBeforeAtom = atom({
-  key: 'isUploadBeforeAtom',
+export const isUploadorEditBeforeAtom = atom({
+  key: 'isUploadorEditBeforeAtom',
   default: false,
 });

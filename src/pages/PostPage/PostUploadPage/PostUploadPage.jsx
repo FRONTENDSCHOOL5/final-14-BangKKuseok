@@ -9,7 +9,7 @@ import { uploadPost } from '../../../api/postApi';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import {
   bubbleLocAtom,
-  isUploadBeforeAtom,
+  isUploadorEditBeforeAtom,
   mouseLocAtom,
   selectedProductsAtom,
 } from '../../../atoms/post';
@@ -19,7 +19,7 @@ export default function PostUploadPage() {
   const [btnText, setBtnText] = useState('다음');
   const [isBtnActive, setIsBtnActive] = useState(false);
   const navigate = useNavigate();
-  const setIsUploadBefore = useSetRecoilState(isUploadBeforeAtom);
+  const setIsUploadorEditBefore = useSetRecoilState(isUploadorEditBeforeAtom);
 
   const [content, setContent] = useState({});
   const [postImg, setPostImg] = useState(null);
@@ -71,7 +71,7 @@ export default function PostUploadPage() {
       resetSelectedItems();
       resetMouseLoc();
       resetBubbleLoc();
-      setIsUploadBefore(true);
+      setIsUploadorEditBefore(true);
       uploadPostMutation.mutate({
         post: { content: JSON.stringify(content), image: postImg },
       });
