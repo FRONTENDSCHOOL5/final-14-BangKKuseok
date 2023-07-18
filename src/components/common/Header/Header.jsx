@@ -16,6 +16,7 @@ export default function Header({
   onClickRightButton,
   value,
   onChange,
+  onKeyDown,
   onClickTitle,
 }) {
   const HeaderLayout = {
@@ -43,6 +44,7 @@ export default function Header({
           placeholder='계정을 검색하세요'
           value={value}
           onChange={onChange}
+          onKeyDown={onKeyDown}
         />
       </HeaderWrapper>
     ),
