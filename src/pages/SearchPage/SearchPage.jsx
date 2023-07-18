@@ -93,7 +93,7 @@ export default function Search({ onClickLeftButton }) {
         {!inputValue && initialSearchResult ? (
           initialSearchResult.map((user) => (
             <li key={user._id} onClick={() => handleSaveSearchResult(user)}>
-              <UserSimpleInfo profile={user} isLink={true} />
+              <UserSimpleInfo type='history' profile={user} isLink={true} />
             </li>
           ))
         ) : isFetching ? (
