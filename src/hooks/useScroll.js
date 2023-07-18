@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { scrollMemoryAtom } from '../atoms/scroll';
 import debounce from '../utils/debounce';
 const regex = new RegExp(/profile\//);
 
-export default function UseScroll({ reference }) {
+export default function useScroll() {
+  const reference = useRef();
   const { pathname } = useLocation();
   const [scrollMemory, setScrollMemory] = useRecoilState(scrollMemoryAtom);
 
@@ -13,7 +14,6 @@ export default function UseScroll({ reference }) {
     if (pathname === '/feed' || pathname === '/profile' || regex.test(pathname)) {
       setScrollMemory({ ...scrollMemory, [pathname]: reference.current.scrollTop });
     }
-    console.log(scrollMemory);
   }, 500);
 
   useEffect(() => {
@@ -31,5 +31,5 @@ export default function UseScroll({ reference }) {
     }
   }, []);
 
-  return null;
+  return reference;
 }

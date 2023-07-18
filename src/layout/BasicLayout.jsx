@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import Header from '../components/common/Header/Header';
 import Navbar from '../components/common/Navbar/Navbar';
 
 import styled from 'styled-components';
 import Toast from '../components/common/Toast/Toast';
-import UseScroll from '../hooks/useScroll';
+import useScroll from '../hooks/useScroll';
 
 const LayoutWrapper = styled.div`
   width: clamp(390px, 100%, 720px);
@@ -28,10 +28,9 @@ const LayoutMain = styled.div`
 `;
 
 export default function BasicLayout({ children, isNonNav = false, ...props }) {
-  const wrapperRef = useRef();
+  const wrapperRef = useScroll();
   return (
     <>
-      <UseScroll reference={wrapperRef} />
       <LayoutWrapper>
         <LayoutMain isNonNav={isNonNav} ref={wrapperRef}>
           <Header {...props} />
