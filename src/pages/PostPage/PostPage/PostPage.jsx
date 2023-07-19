@@ -11,7 +11,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deletePost, getPostDetail, reportPost } from '../../../api/postApi';
 import { getMyProfile } from '../../../api/profileApi';
 import { useRecoilState } from 'recoil';
-import { isUploadBeforeAtom } from '../../../atoms/post';
+import { isUploadorEditBeforeAtom } from '../../../atoms/post';
 import Spinner from '../../../components/common/Spinner/Spinner';
 import { deleteComment, getComments, reportComment } from '../../../api/commentApi';
 import CommentSection from '../../../components/PostDetail/CommentSection/CommentSection';
@@ -21,7 +21,7 @@ export default function PostPage() {
   const { postId } = useParams();
   const [commentId, setCommentId] = useState();
   const [scrollDown, setScrollDown] = useState(false);
-  const [isUploadBefore, setIsUploadBefore] = useRecoilState(isUploadBeforeAtom);
+  const [isUploadorEditBefore, setIsUploadorEditBefore] = useRecoilState(isUploadorEditBeforeAtom);
   const [commentCount, setCommentCount] = useState();
   const [isShow, setIsShow] = useState(false);
   const [modalType, setModalType] = useState('userPost');
@@ -125,9 +125,9 @@ export default function PostPage() {
 
   //뒤로 가기 (이전페이지가 upload일 경우 전전페이지로 이동)
   const handleClickLeftButton = () => {
-    if (isUploadBefore) {
+    if (isUploadorEditBefore) {
       navigate(-2);
-      setIsUploadBefore(false);
+      setIsUploadorEditBefore(false);
     } else {
       navigate(-1);
     }
