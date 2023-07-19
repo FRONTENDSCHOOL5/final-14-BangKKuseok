@@ -6,8 +6,6 @@ import PostProductTag from '../../../components/PostUpload/PostProductTag/PostPr
 import PostTextWrite from '../../../components/PostUpload/PostTextWrite/PostTextWrite';
 import { useMutation } from 'react-query';
 import { uploadPost } from '../../../api/postApi';
-import { uploadImg } from '../../../api/imgApi';
-import { URL } from '../../../api/axiosInstance';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import {
   bubbleLocAtom,
@@ -25,25 +23,10 @@ export default function PostUploadPage() {
 
   const [content, setContent] = useState({});
   const [postImg, setPostImg] = useState(null);
-  const [postedImg, setPostedImg] = useState(null);
   const [postId, setPostId] = useState(null);
   const resetSelectedItems = useResetRecoilState(selectedProductsAtom);
   const resetMouseLoc = useResetRecoilState(mouseLocAtom);
   const resetBubbleLoc = useResetRecoilState(bubbleLocAtom);
-
-  //이미지 업로드 함수
-  const uploadImgMutation = useMutation(uploadImg, {
-    onSuccess(data) {
-      if (data.message) {
-        alert(data.message);
-        setStep('사진 선택');
-      }
-      setPostedImg(URL + data.filename);
-    },
-    onError(error) {
-      console.log(error);
-    },
-  });
 
   //포스트 업로드 함수
   const uploadPostMutation = useMutation(uploadPost, {
@@ -78,10 +61,6 @@ export default function PostUploadPage() {
   //다음 step으로 넘어가는 함수
   const handleClickRightButton = () => {
     if (step === '사진 선택') {
-      const imgData = new FormData();
-      imgData.append('image', postImg);
-      uploadImgMutation.mutate(imgData);
-
       setStep('상품태그 추가');
       setIsBtnActive(false);
     } else if (step === '상품태그 추가') {
@@ -94,22 +73,18 @@ export default function PostUploadPage() {
       resetBubbleLoc();
       setIsUploadBefore(true);
       uploadPostMutation.mutate({
-        post: { content: JSON.stringify(content), image: postedImg },
+        post: { content: JSON.stringify(content), image: postImg },
       });
     }
   };
 
   const StepLayout = {
     '사진 선택': (
-      <PostImgUpload setImg={setPostImg} setIsBtnActive={setIsBtnActive} postedImg={postedImg} />
+      <PostImgUpload setImg={setPostImg} setIsBtnActive={setIsBtnActive} uploadedImg={postImg} />
     ),
-    '상품태그 추가': <PostProductTag postedImg={postedImg} setIsBtnActive={setIsBtnActive} />,
+    '상품태그 추가': <PostProductTag postImg={postImg} setIsBtnActive={setIsBtnActive} />,
     '게시글 작성': (
-      <PostTextWrite
-        postedImg={postedImg}
-        setIsBtnActive={setIsBtnActive}
-        setContent={setContent}
-      />
+      <PostTextWrite postImg={postImg} setIsBtnActive={setIsBtnActive} setContent={setContent} />
     ),
   };
 
@@ -125,8 +100,8 @@ export default function PostUploadPage() {
     >
       <>
         {step === '사진 선택' && StepLayout[step]}
-        {step === '상품태그 추가' && postedImg && StepLayout[step]}
-        {step === '게시글 작성' && postedImg && StepLayout[step]}
+        {step === '상품태그 추가' && StepLayout[step]}
+        {step === '게시글 작성' && StepLayout[step]}
       </>
     </BasicLayout>
   );
