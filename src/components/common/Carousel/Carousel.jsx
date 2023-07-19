@@ -55,9 +55,9 @@ export default function Carousel({ data }) {
     <CarouselWrapper onMouseOver={handleMouseOverCarousel} onMouseOut={handleMouseOutCarousel}>
       <ImageBox movePercentage={movePercentage}>
         {data.map((item) => (
-          <ImageItem key={item.id} url={item.image}>
+          <ImageItem key={item._id} url={item.image}>
             <ContentBox>
-              <Link to={item.author.id?.includes('[mock]') ? '' : `/post/${item.id}`}>
+              <Link to={item.author._id?.includes('[mock]') ? '' : `/post/${item._id}`}>
                 {item.author.username}님의 {JSON.parse(item.content).space}
               </Link>
               <PostDate>{item.createdAt.slice(0, 10)}</PostDate>

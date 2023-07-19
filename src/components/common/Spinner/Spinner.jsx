@@ -20,7 +20,8 @@ const rotator = keyframes`
 
 `;
 const StyledSpinner = styled.div`
-  height: 100vh;
+  height: ${(p) => (p.type === 'carousel' ? '404px' : '100vh')};
+  margin-top: ${(p) => (p.type === 'carousel' ? '-60px' : '0')};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,9 +38,9 @@ const StyledSpinner = styled.div`
     animation: ${dash} 1s ease-in-out infinite;
   }
 `;
-export default function Spinner() {
+export default function Spinner({ type }) {
   return (
-    <StyledSpinner>
+    <StyledSpinner type={type}>
       <SpinnerIcon />
     </StyledSpinner>
   );
