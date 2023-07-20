@@ -11,6 +11,10 @@ const BasicModalWrapper = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+
+  @media (min-width: 500px) {
+    padding-bottom: 20px;
+  }
 `;
 
 export default function BasicModal({ children }) {

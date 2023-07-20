@@ -1,32 +1,26 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { URL } from '../../../api/axiosInstance';
+import React, { useEffect, useState } from 'react';
 import { SPACES } from '../../../constants/common';
 import BottomSheet from '../../../components/common/BottomSheet/BottomSheet';
 import BasicModal from '../../../components/common/BottomSheet/BasicModal';
-import {
-  ModalSpaceList,
-  SelectSpaceBtn,
-} from '../../../components/PostUpload/PostTextWrite/PostTextWriteStyle';
+import { ModalSpaceList } from '../../../components/PostUpload/PostTextWrite/PostTextWriteStyle';
 import { PostEditPageWrapper } from './PostEditPageStyle';
 import BasicLayout from '../../../layout/BasicLayout';
 import { useNavigate, useParams } from 'react-router-dom';
-import PostImgEdit from '../../../components/PostEdit/PostImgEdit/PostImgEdit';
 import PostTextEdit from '../../../components/PostEdit/PostTextEdit/PostTextEdit';
 import { editPost, getPostDetail } from '../../../api/postApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { uploadImg } from '../../../api/imgApi';
+import PostImgUpload from '../../../components/PostUpload/PostImgUpload/PostImgUpload';
+import { useSetRecoilState } from 'recoil';
+import { isUploadorEditBeforeAtom } from '../../../atoms/post';
 
 export default function PostEditPage() {
   const { postId } = useParams();
   const navigate = useNavigate();
   const [isBtnActive, setIsBtnActive] = useState(false);
   const [isShow, setIsShow] = useState(false);
+  const setIsUploadorEditBefore = useSetRecoilState(isUploadorEditBeforeAtom);
 
-  const [prevData, setPrevData] = useState();
-  const [editData, setEditData] = useState({
-    content: '',
-    image: '',
-  });
+  const [editData, setEditData] = useState({});
   const [postImg, setPostImg] = useState();
   const [content, setContent] = useState({ space: '', detail: '' });
 
@@ -39,26 +33,13 @@ export default function PostEditPage() {
         const { space, detail } = JSON.parse(data.content);
         setPostImg(data.image);
         setContent({ space, detail });
-        setPrevData({ image: data.image, content: JSON.stringify({ space, detail }) });
-        setEditData({ image: data.image, content: JSON.stringify({ space, detail }) });
+        setEditData({ image: data.image, content: data.content });
       },
       onError: (error) => {
         console.log(error);
       },
     },
   );
-
-  //이미지 업로드하기
-  const uploadImgMutation = useMutation(uploadImg, {
-    onSuccess(data) {
-      const imgUrl = URL + data.filename;
-      setPostImg(imgUrl);
-      setEditData({ ...editData, image: imgUrl });
-    },
-    onError(error) {
-      console.log(error);
-    },
-  });
 
   const queryClient = useQueryClient();
   //게시글 수정하기
@@ -67,20 +48,13 @@ export default function PostEditPage() {
       queryClient.invalidateQueries('feedPostData');
       queryClient.invalidateQueries('myPost');
       queryClient.setQueryData(['postData', postId], data);
+      setIsUploadorEditBefore(true);
       navigate(`/post/${postId}`);
     },
     onError(error) {
       console.log(error);
     },
   });
-
-  //이미지 바꿨을 때 이미지 업로드 및 수정
-  const handleEditPostImg = (e) => {
-    const imgData = new FormData();
-    imgData.append('image', e.target.files[0]);
-    uploadImgMutation.mutate(imgData);
-    setIsBtnActive(true);
-  };
 
   //공간목록 바텀시트 여닫기
   const handleClickModalOpen = () => {
@@ -97,11 +71,6 @@ export default function PostEditPage() {
     setIsShow(false);
   };
 
-  //뒤로가기 버튼 누르기
-  const handleClickLeftButton = () => {
-    navigate(-1);
-  };
-
   //게시글 수정 버튼 누르기
   const handleClickRightButton = () => {
     EditPostMutation.mutate({
@@ -110,36 +79,37 @@ export default function PostEditPage() {
     });
   };
 
-  //editData 동기적 작업
-  useEffect(() => {
-    setEditData((data) => data);
-  }, [editData]);
-
   //data에 변동이 있을 때 버튼 활성화
   useEffect(() => {
-    if (editData && prevData) {
-      if (editData !== prevData) {
-        setIsBtnActive(true);
-      } else {
+    if (editData && postData) {
+      if (editData.content === postData.content && editData.image === postData.image) {
         setIsBtnActive(false);
+      } else {
+        setIsBtnActive(true);
       }
     }
-  }, [setIsBtnActive, prevData, editData, content]);
+  }, [setIsBtnActive, postData, editData]);
 
   return (
     <>
-      {!isPostLoading && prevData && (
+      {!isPostLoading && (
         <BasicLayout
           type='imageSelect'
           isNonNav
           title='게시글 수정'
           btnText='수정'
           isBtnActive={isBtnActive}
-          onClickLeftButton={handleClickLeftButton}
+          onClickLeftButton={() => navigate(-1)}
           onClickRightButton={handleClickRightButton}
         >
           <PostEditPageWrapper>
-            <PostImgEdit postImg={postImg} onChange={handleEditPostImg} />
+            <PostImgUpload
+              setImg={setPostImg}
+              uploadedImg={postImg}
+              setIsBtnActive={setIsBtnActive}
+              setEditData={setEditData}
+              editData={editData}
+            />
             <PostTextEdit
               onClick={handleClickModalOpen}
               setContent={setContent}
