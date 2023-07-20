@@ -1,12 +1,14 @@
 import React from 'react';
 import basicProfileImage from '../../../../assets/images/profile.png';
 import { ReactComponent as MoreIcon } from '../../../../assets/icons/icon-more-small.svg';
+import deleteIcon from '../../../../assets/icons/icon-delete2.svg';
 import {
   UserSimpleInfoWrapper,
   UserInfoBox,
   UserNameBox,
   UserName,
   AccountName,
+  DeleteButton,
 } from './UserSimpleStyle';
 import Button from '../../Button/Button/Button';
 import { useState } from 'react';
@@ -93,6 +95,10 @@ export default function UserSimpleInfo({
             )}
           </>
         )
+      ) : type === 'history' ? (
+        <button type='button' onClick={onClick}>
+          <img src={deleteIcon} alt='검색기록 삭제 버튼' />
+        </button>
       ) : null}
     </UserSimpleInfoWrapper>
   );

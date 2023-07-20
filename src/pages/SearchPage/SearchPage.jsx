@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BasicLayout from '../../layout/BasicLayout';
 import UserSimpleInfo from '../../components/common/UserSimpleInfo/UserSimpleInfo/UserSimpleInfo';
 import styled from 'styled-components';
@@ -38,12 +38,13 @@ export default function Search({ onClickLeftButton }) {
   const { debouncedValue: debouncedSearchUser, cancel } = useDebounce(inputValue, 500);
   const [initialSearchResult, setInitialSearchResult] = useState(null);
 
+  const savedSearchResult = localStorage.getItem('searchResult');
+
   useEffect(() => {
-    const savedSearchResult = localStorage.getItem('searchResult');
     if (savedSearchResult) {
       setInitialSearchResult(JSON.parse(savedSearchResult));
     }
-  }, []);
+  }, [savedSearchResult]);
 
   const { data: searchResult, isFetching } = useQuery(
     ['searchUser', debouncedSearchUser],
@@ -71,16 +72,25 @@ export default function Search({ onClickLeftButton }) {
     setView(view + 1);
   };
 
-  const handleSaveSearchResult = useCallback((user) => {
-    const savedSearchResult = localStorage.getItem('searchResult');
+  const handleSaveSearchResult = (user) => {
     let searchResults = savedSearchResult ? JSON.parse(savedSearchResult) : [];
 
     const existingUser = searchResults.find((savedUser) => savedUser._id === user._id);
     if (!existingUser) {
       searchResults = [...searchResults, user];
       localStorage.setItem('searchResult', JSON.stringify(searchResults));
+      setInitialSearchResult(searchResults);
     }
-  }, []);
+  };
+
+  const handleDeleteSearchResult = (user) => {
+    let searchResults = JSON.parse(savedSearchResult);
+    const existingUser = searchResults.find((savedUser) => savedUser._id === user._id);
+    let resultIndex = searchResults.indexOf(existingUser);
+    searchResults.splice(resultIndex, 1);
+
+    localStorage.setItem('searchResult', JSON.stringify(searchResults));
+  };
 
   return (
     <BasicLayout
@@ -93,7 +103,12 @@ export default function Search({ onClickLeftButton }) {
         {!inputValue && initialSearchResult ? (
           initialSearchResult.map((user) => (
             <li key={user._id} onClick={() => handleSaveSearchResult(user)}>
-              <UserSimpleInfo profile={user} isLink={true} />
+              <UserSimpleInfo
+                profile={user}
+                isLink={true}
+                type='history'
+                onClick={() => handleDeleteSearchResult(user)}
+              />
             </li>
           ))
         ) : isFetching ? (
