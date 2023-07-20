@@ -66,7 +66,7 @@ export default function ProductForm({ setIsBtnActive, setProductData, selectedPr
         type='product'
         setImg={setImage}
         setIsBtnActive={setIsBtnActive}
-        defaultImg={itemImage}
+        uploadedImg={itemImage}
       />
       <Input
         type='text'

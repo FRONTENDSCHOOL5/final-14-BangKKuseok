@@ -5,6 +5,11 @@ export const ProductDetailCardWrapper = styled.article`
   flex-direction: column;
   justify-content: center;
   gap: 18px;
+
+  @media (min-width: 500px) {
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+  }
 `;
 
 export const ProductImageWrapper = styled.div`
@@ -18,12 +23,26 @@ export const ProductImageWrapper = styled.div`
     aspect-ratio: 358 / 293;
     object-fit: cover;
   }
+
+  @media (min-width: 500px) {
+    grid-row: 1 / 3;
+    height: auto;
+
+    img {
+      aspect-ratio: 1 / 1;
+    }
+  }
 `;
 
 export const ProductInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  @media (min-width: 500px) {
+    padding-top: 14px;
+    max-width: calc(100% - 55px);
+  }
 `;
 
 export const ProductName = styled.span`
@@ -59,5 +78,13 @@ export const ProductActionWrapper = styled.div`
 
   button:nth-child(2) {
     margin-right: 8px;
+  }
+
+  @media (min-width: 500px) {
+    align-self: end;
+
+    button:nth-child(1) {
+      min-width: 100%;
+    }
   }
 `;

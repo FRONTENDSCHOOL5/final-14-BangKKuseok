@@ -4,6 +4,7 @@ import Navbar from '../components/common/Navbar/Navbar';
 
 import styled from 'styled-components';
 import Toast from '../components/common/Toast/Toast';
+import useScroll from '../hooks/useScroll';
 
 const LayoutWrapper = styled.div`
   width: clamp(390px, 100%, 720px);
@@ -27,14 +28,17 @@ const LayoutMain = styled.div`
 `;
 
 export default function BasicLayout({ children, isNonNav = false, ...props }) {
+  const wrapperRef = useScroll();
   return (
-    <LayoutWrapper>
-      <LayoutMain isNonNav={isNonNav}>
-        <Header {...props} />
-        {children}
-        <Toast />
-      </LayoutMain>
-      {isNonNav ? null : <Navbar />}
-    </LayoutWrapper>
+    <>
+      <LayoutWrapper>
+        <LayoutMain isNonNav={isNonNav} ref={wrapperRef}>
+          <Header {...props} />
+          {children}
+          <Toast />
+        </LayoutMain>
+        {isNonNav ? null : <Navbar />}
+      </LayoutWrapper>
+    </>
   );
 }

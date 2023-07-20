@@ -1,9 +1,17 @@
+import { MYPOSTLIMIT } from '../constants/pagenation';
 import { accessInstance } from './axiosInstance';
 
-export const getMyPost = async (accountname) => {
+export const getMyPost = async ({ accountname, skip }) => {
   try {
-    const response = await accessInstance.get(`/post/${accountname}/userpost`);
-    return response.data.post;
+    const response = await accessInstance.get(
+      `/post/${accountname}/userpost/?limit=${MYPOSTLIMIT}&skip=${skip}`,
+    );
+    const { post } = response.data;
+
+    return {
+      data: post,
+      nextPage: skip,
+    };
   } catch (error) {
     console.error(error);
   }
