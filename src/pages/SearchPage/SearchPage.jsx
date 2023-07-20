@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BasicLayout from '../../layout/BasicLayout';
 import UserSimpleInfo from '../../components/common/UserSimpleInfo/UserSimpleInfo/UserSimpleInfo';
 import styled from 'styled-components';
@@ -68,12 +68,6 @@ export default function Search({ onClickLeftButton }) {
     setView(1);
   };
 
-  const handlePreventEnter = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
-  };
-
   const handleClickMore = () => {
     setView(view + 1);
   };
@@ -104,7 +98,6 @@ export default function Search({ onClickLeftButton }) {
       onClickLeftButton={onClickLeftButton}
       value={inputValue}
       onChange={handleChangeInput}
-      onKeyDown={handlePreventEnter}
     >
       <UserInfoList>
         {!inputValue && initialSearchResult ? (

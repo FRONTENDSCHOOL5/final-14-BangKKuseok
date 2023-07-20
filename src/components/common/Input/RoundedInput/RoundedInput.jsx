@@ -3,7 +3,13 @@ import { RoundedInputWrapper } from './RoundedInputStyle';
 
 // id: input의 아이디
 // placeHoldler : input에 적용할 placeholder
-export default function RoundedInput({ id, placeholder, value, onChange, onKeyDown }) {
+export default function RoundedInput({ id, placeholder, value, onChange }) {
+  const handleSubmit = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
   return (
     <RoundedInputWrapper>
       <label htmlFor={id} className='a11y'>
@@ -13,9 +19,9 @@ export default function RoundedInput({ id, placeholder, value, onChange, onKeyDo
         type='text'
         id={id}
         value={value}
+        onSubmit={handleSubmit}
         onChange={onChange}
-        onKeyDown={onKeyDown}
-        // autocomplete='off'
+        autoComplete='off'
         placeholder={placeholder}
       />
     </RoundedInputWrapper>
