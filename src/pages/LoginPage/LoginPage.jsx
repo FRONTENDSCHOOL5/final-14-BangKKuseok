@@ -6,8 +6,8 @@ import LoginSignUp from '../../components/LoginSignUp/LoginSignUp/LoginSignUp';
 
 export default function LoginPage() {
   const [preData, setPreData] = useState({
-    email: '',
-    password: '',
+    email: 'ohlee_official@bk.com',
+    password: '123123',
   });
   const [message, setMessage] = useState('');
 
