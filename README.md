@@ -42,6 +42,25 @@ PW: 123123
 
 <br />
 
+## 👀 **0. 목차**
+
+1. [서비스 소개](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#-1-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%86%8C%EA%B0%9C)
+2. [방꾸석 팀원 소개](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#-2-%EB%B0%A9%EA%BE%B8%EC%84%9D-%ED%8C%80%EC%9B%90-%EC%86%8C%EA%B0%9C)
+3. [역할 분담](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#%EF%B8%8F-3-%EC%97%AD%ED%95%A0-%EB%B6%84%EB%8B%B4)
+4. [개발 일정](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#-4-%EA%B0%9C%EB%B0%9C-%EC%9D%BC%EC%A0%95)
+5. [개발 환경 및 기술 스택](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#%EF%B8%8F-5-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD-%EB%B0%8F-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D)
+6. [프로젝트 폴더 구조](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#-6-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%8F%B4%EB%8D%94-%EA%B5%AC%EC%A1%B0)
+7. [Git Branch 전략 - Github Flow](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#%EF%B8%8F-7-git-branch-%EC%A0%84%EB%9E%B5---github-flow)
+8. [방꾸석에서는 이렇게 협업해요](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#-8-%EB%B0%A9%EA%BE%B8%EC%84%9D%EC%97%90%EC%84%9C%EB%8A%94-%EC%9D%B4%EB%A0%87%EA%B2%8C-%ED%98%91%EC%97%85%ED%95%B4%EC%9A%94)
+9. [주요 기능 이미지로 확인하기](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#%EF%B8%8F-9-%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C)
+10. [상세 담당 업무](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#%EF%B8%8F-10-%EC%83%81%EC%84%B8-%EB%8B%B4%EB%8B%B9-%EC%97%85%EB%AC%B4)
+11. [핵심 코드](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#%EF%B8%8F-11-%ED%95%B5%EC%8B%AC-%EC%BD%94%EB%93%9C)
+12. [트러블 슈팅](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#%EF%B8%8F-12-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85)
+13. [리팩토링할 부분](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#%EF%B8%8F-13-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81%ED%95%A0-%EB%B6%80%EB%B6%84)
+14. [느낀점](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/tree/develop#%EF%B8%8F-14-%EB%8A%90%EB%82%80%EC%A0%90)
+
+<br><br>
+
 ## 📢 **1. 서비스 소개**
 
 인테리어를 사랑하는 모든 이들을 위한 온라인 인테리어 플랫폼, **방꾸석**을 소개합니다!
@@ -75,18 +94,22 @@ PW: 123123
 <p style='background: black; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto;'><a href="#top" style='color: white; '>▲</a></p>
 
 <br />
+<br />
 
 ## ✴️ **3. 역할 분담**
 
 <img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/6ce46585-7ba0-4c14-9bf1-3b1ecfd150b3" />
 
 <br />
+<br />
 
 ## 📅 **4. 개발 일정**
 
 🐥 2023.06.01 - 2023.06.30
 
-- 개발 일정은 노션의 [간트 차트](https://www.notion.so/14-OH-LEE-f89c38cec5a1439abf2b02d0c76e5376?pvs=4#285a18d7c0ff4ce58aacd87bf1be8366)와 [총괄 보드](https://www.notion.so/14-OH-LEE-f89c38cec5a1439abf2b02d0c76e5376?pvs=4#481e623f274a473e99504597add863e1)를 만들어 관리
+- 개발 일정은 노션의 [간트 차트](https://www.notion.so/14-OH-LEE-f89c38cec5a1439abf2b02d0c76e5376?pvs=4#285a18d7c0ff4ce58aacd87bf1be8366)와 [총괄 보드](https://www.notion.so/14-OH-LEE-f89c38cec5a1439abf2b02d0c76e5376?pvs=4#481e623f274a473e99504597add863e1)를 만들어 관리하였습니다.
+
+<br />
 
 <img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/fcc9054b-aa0a-4daf-ab99-27e6888befa4" />
 
@@ -96,10 +119,11 @@ PW: 123123
 <p style='background: black; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto;'><a href="#top" style='color: white; '>▲</a></p>
 
 <br />
+<br />
 
 ## ⚙️ **5. 개발 환경 및 기술 스택**
 
-<img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/69050872-f171-4b22-937a-e45913fe13ed" />
+<img width="780px" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/69050872-f171-4b22-937a-e45913fe13ed" /><br>
 
 👉 [API 명세 바로가기](https://toothsome-debt-b2b.notion.site/API-1c9f20ecba054f5ebfbaff4b65243976?pvs=4)
 
@@ -107,21 +131,21 @@ PW: 123123
 
 ### **왜 라이브러리를 사용했을까?**
 
-<img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/10332c51-2a29-40d1-90d6-5f279de734e9" />
-<img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/04ea5351-d709-44c4-a563-9956768b30cc" />
+<img width="780px" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/10332c51-2a29-40d1-90d6-5f279de734e9" />
+<img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/e3fb1f40-2bd0-49f5-a804-164e48c3878e" />
 
 <br />
 
 ### **컨벤션**
 
-#### **eslint**
+#### **🔶 eslint**
 
-```json
+```javascript
 {
   "extends": ["react-app", "prettier"],
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1 }], // 들여쓰기 2칸만 허용
-    "no-var": "error", // // var 키워드 사용 금지
+    "no-var": "error", // var 키워드 사용 금지
     "require-await": "error", // async 함수 내부에 await 키워드가 없으면 오류 발생
     "eqeqeq": "warn", // ==, != 대신에 ===, !== 사용
     "react/prop-types": 0, // 프롭스 타입 무시
@@ -130,9 +154,9 @@ PW: 123123
 }
 ```
 
-#### **prettier**
+#### **🔶 prettier**
 
-```json
+```javascript
 {
   "bracketSpacing": true, // 객체 리터럴에서 괄호에 공백 삽입
   "jsxBracketSameLine": false, // JSX의 마지막 `>`를 다음 줄로 내릴지 여부
@@ -149,19 +173,19 @@ PW: 123123
 }
 ```
 
-#### **Github Issue Template**
+#### **🔶 Github Issue Template**
 
 <img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/6680ffae-877f-42f9-bfbe-deff07aa8f98" />
 
 <br/>
 
-#### **Github PR template**
+#### **🔶 Github PR template**
 
 <img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/b186491a-726f-4c2c-9a85-de7b576aa3f0" />
 
 <br/>
 
-#### **커밋 컨벤션**
+#### **🔶 커밋 컨벤션**
 
 ```
 ✨ feat: 기능 추가, 삭제, 변경
@@ -179,7 +203,7 @@ PW: 123123
 
 <br/>
 
-#### **Styled Components 컨벤션**
+#### **🔶 Styled Components 컨벤션**
 
 ```
 wrapper: ~Wrapper
@@ -259,83 +283,93 @@ li내에 스타일할 요소가 3개이상이면 li를 Item으로 빼기
      └─ getTime.js
 ```
 
+<br><br>
+
 ## ✴️ **7. Git Branch 전략 - Github Flow**
 
-<img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/fbb69b5c-3c9b-4a53-877f-24fefa60a8b3" />
+- 비교적 작고 복잡하지 않은 프로젝트로, 팀원들에게 쉽고 빠르게 도입할 수 있는 **Github Flow** 전략을 사용하였습니다.
+  <br><br>
+  <img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/fbb69b5c-3c9b-4a53-877f-24fefa60a8b3" />
 
-<br />
+<br><br>
 
 ## 🤗 **8. 방꾸석에서는 이렇게 협업해요**
 
 ### **코드리뷰**
 
-- VS code 라이브 쉐어
-  - 실시간으로 팀원들과 원격으로 코드를 수정하고 편리한 트러블 슈팅을 경험했다.
-  - 다양한 OS에서 사용이 가능하여 팀원들의 서로 다른 OS 차이에 구애받지 않았다.
-- PR 병합 규칙에 승인을 1회 이상으로 설정하여 PR을 무조건 확인할 수 있게 했다. 충돌을 방지하는 것과 더불어 팀원들의 코드에 리뷰를 달아주기 편리했다.
+- [VS code 라이브 쉐어](https://code.visualstudio.com/learn/collaboration/live-share)를 통한 페어 코딩
+  - 실시간 원격으로 팀원들과 코드를 수정할 수 있기 때문에 오류가 나는 부분을 온라인만으로도 즉각적으로 해결해 나가는 과정을 경험할 수 있었습니다. 따라서 온라인 프로젝트 진행의 단점을 보완하여 효율적으로 트러블 슈팅을 진행하였습니다.
+  - 다양한 OS에서 사용이 가능하여 팀원들의 OS가 다르더라도 큰 영향을 받지 않았던 점이 좋았습니다.
+- PR 병합 규칙에 승인을 1회 이상으로 설정하여 팀원 중 한 명이라도 PR을 무조건 확인해볼 수 있게 하였습니다. 충돌을 방지하는 것과 더불어 팀원들의 코드에 리뷰를 달아주면서 전체적인 코드의 흐름을 팀원 모두가 빠르게 인지할 수 있었습니다.
 
 <img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/4df379bb-93f2-4bcf-9da7-0a29c9c6e76f" />
 
 ### **협업툴**
 
-- 노션 : 정보 공유, 회의록, 요구 사항 정리 및 컨벤션 정리
-  - 다양한 형식과 템플릿이 공유되어 있고, 디자인적으로 깔끔하고 시각적인 정보를 제공하여 작업 상태를 한 눈에 파악할 수 있었다.
-  - 실시간 공동 작업을 할 수 있었다.
-- 피그마 : 디자인 공동 작업을 할 수 있었다.
-- 커밋 컨벤션 : 협업을 하다 보면 복합적인 커밋 내용이 많아지기 때문에 커밋 컨벤션을 지정하여 커밋 목적을 쉽게 볼 수 있게 했다. 지정 작업자가 아니더라도 코드 변경에 대한 문맥을 파악하기 쉽고 이력 추적을 효과적으로 할 수 있었다.
+- `노션` : 정보 공유, 회의록, 요구 사항 정리 및 컨벤션 정리
+  - 다양한 형식과 템플릿이 공유되어 있어 자유롭게 커스텀하여 디자인적으로 깔끔하고 시각적인 정보를 제공하면서 작업 상태를 한 눈에 파악할 수 있었습니다.
+  - 실시간 공동 작업을 할 수 있기 때문에 회의에 대한 의견이나 역할을 분담하여 문서를 작성하는 등의 작업이 수월했습니다.
+- `피그마` : 디자인 공동 작업을 할 수 있고, CSS 코드를 보기 쉽기 때문에 개발 생산성을 높일 수 있었습니다.
+- `커밋 컨벤션` : 협업을 하다 보면 복합적인 커밋 내용이 많아지기 때문에 커밋 컨벤션을 지정하여 작업 사항을 쉽게 볼 수 있게 했습니다. 지정 작업자가 아니더라도 코드 변경에 대한 문맥을 파악하기 쉽고 이력 추적을 효과적으로 할 수 있었습니다.
 
 ### **소통**
 
-- 디스코드로 주 5~6회 회의를 진행하여 한 달간 22회의 회의를 진행했다. 오류 발생시 즉각적인 피드백과 문제해결이 가능했다.
+- 디스코드로 주 5~6회 회의를 진행하여 한 달간 총 22회의 회의를 진행하였습니다. 오류 발생시 회의 시간에 팀원들이 같이 나누면서 즉각적인 피드백을 통해 발생한 문제에 대해 최대한 빠르게 해결할 수 있었습니다.
 
 <!-- Top Button -->
 <p style='background: black; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto;'><a href="#top" style='color: white; '>▲</a></p>
 
-<br />
+<br><br>
 
-## ✴️ **9. 주요 기능 소개**
+## ✴️ **9. 주요 기능 이미지로 확인하기**
+
 ### 1) 홈
-|시작 화면|회원가입 페이지|프로필 설정 페이지|
-|---|---|---|
-|![splash](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/3a28142f-cfa4-459b-8a6a-f7dafe4676d9)|![회원가입](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/0596e112-fba7-415a-9be6-90f50f5cfb8b)|![프로필](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/bed27d45-d7a6-4e8b-9265-d7acd9b07842)|
 
-|로그인 페이지|피드 페이지|검색 페이지|
-|:---:|:---:|:---:|
-|![로그인](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/dd7f1b16-9cc5-4fef-9916-67e5f5b911df)|![피드](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/003c44c1-622b-45f2-962c-24ae6a43eaaa)|![검색](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/bc32ad5a-e1c8-4ff4-90a0-7472fb6ada15)|
+| 시작 화면                                                                                                               | 회원가입 페이지                                                                                                           | 프로필 설정 페이지                                                                                                      |
+| ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| ![splash](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/3a28142f-cfa4-459b-8a6a-f7dafe4676d9) | ![회원가입](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/0596e112-fba7-415a-9be6-90f50f5cfb8b) | ![프로필](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/bed27d45-d7a6-4e8b-9265-d7acd9b07842) |
+
+|                                                      로그인 페이지                                                      |                                                      피드 페이지                                                      |                                                      검색 페이지                                                      |
+| :---------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
+| ![로그인](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/dd7f1b16-9cc5-4fef-9916-67e5f5b911df) | ![피드](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/003c44c1-622b-45f2-962c-24ae6a43eaaa) | ![검색](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/bc32ad5a-e1c8-4ff4-90a0-7472fb6ada15) |
 
 ### 2) 채팅
-|채팅 목록, 채팅방 페이지|404페이지|
-|---|---|
-|![채팅 목록, 채팅방 페이지](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/1e2eddc2-fe82-42d0-99f7-5fc02e3527b6)|<img width="243" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/111286497/f6a887c4-6218-4e67-9b11-cd0aa51efd0a" />|
+
+| 채팅 목록, 채팅방 페이지                                                                                                                  | 404페이지                                                                                                                               |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| ![채팅 목록, 채팅방 페이지](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/1e2eddc2-fe82-42d0-99f7-5fc02e3527b6) | <img width="243" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/111286497/f6a887c4-6218-4e67-9b11-cd0aa51efd0a" /> |
 
 ### 3) 게시글
-|게시글 상세 페이지|게시글 작성 페이지|게시글 수정 페이지|
-|---|---|---|
-|<img width="243" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/111286497/68bd83cb-5a97-4e89-ae0f-fdfbb7e6ed04" />|<img width="243" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/b3f937b7-7367-42eb-98e2-dce07f13c9c3"/>|![게시물수정](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/a205ccbb-0050-4ee2-a70a-f42c01783625)|
 
-|게시글 삭제|게시글 신고|좋아요, 댓글 기능|
-|:---:|:---:|:---:|
-|![최종_게시글삭제_AdobeExpress](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/b885415b-a204-4f33-86f9-c46218ac2646)|<img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/111286497/fe2dc016-8d6f-464c-b0df-f4f62a4cf9fd" width="243"/>|<img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/111286497/3abbd185-26db-480f-8c7e-8b677eb8c83c" width="243" />|
+| 게시글 상세 페이지                                                                                                                      | 게시글 작성 페이지                                                                                                                    | 게시글 수정 페이지                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| <img width="243" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/111286497/68bd83cb-5a97-4e89-ae0f-fdfbb7e6ed04" /> | <img width="243" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/b3f937b7-7367-42eb-98e2-dce07f13c9c3"/> | ![게시물수정](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/a205ccbb-0050-4ee2-a70a-f42c01783625) |
+
+|                                                                       게시글 삭제                                                                       |                                                              게시글 신고                                                               |                                                            좋아요, 댓글 기능                                                            |
+| :-----------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: |
+| ![최종_게시글삭제_AdobeExpress](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/b885415b-a204-4f33-86f9-c46218ac2646) | <img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/111286497/fe2dc016-8d6f-464c-b0df-f4f62a4cf9fd" width="243"/> | <img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/111286497/3abbd185-26db-480f-8c7e-8b677eb8c83c" width="243" /> |
 
 ### 4) 프로필
-|프로필 페이지|프로필 수정 페이지|
-|---|---|
-|![ᄆ프로필](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/205e27b1-fde8-4e4d-b263-dbd2dc711643)|![프로필 수정](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/a3ab6dbf-7404-41fb-a6e8-9e28271ce2c7)|
 
-|팔로워/팔로잉 페이지|로그아웃 기능|
-|:---:|:---:|
-|![팔로우페이지](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/4809b56a-f84d-4893-bbf7-01ab448fcc89)|![로그아웃](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/a3e3f93c-ec16-4170-a750-1dde2f647ecc)|
+| 프로필 페이지                                                                                                                 | 프로필 수정 페이지                                                                                                           |
+| ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| ![ᄆ프로필](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/205e27b1-fde8-4e4d-b263-dbd2dc711643) | ![프로필 수정](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/a3ab6dbf-7404-41fb-a6e8-9e28271ce2c7) |
 
+|                                                         팔로워/팔로잉 페이지                                                         |                                                         로그아웃 기능                                                          |
+| :----------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: |
+| ![팔로우페이지](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/4809b56a-f84d-4893-bbf7-01ab448fcc89) | ![로그아웃](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/a3e3f93c-ec16-4170-a750-1dde2f647ecc) |
 
 ### 5) 판매 상품
-|상품 등록 페이지|상품 수정 페이지|상품 삭제 페이지|
-|---|---|---|
-|![상품 등록 및 판매 사이트 이동](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/4ac18b0c-2c37-4e2e-93ee-38408ec09d56)|![상품 수정](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/bcedf8f1-4df9-419f-aefd-fcc723cd9a93)|![상품 삭제](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/5c4bb01c-1907-4d81-8f09-2b9e9cb2b964)|
 
+| 상품 등록 페이지                                                                                                                               | 상품 수정 페이지                                                                                                           | 상품 삭제 페이지                                                                                                           |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| ![상품 등록 및 판매 사이트 이동](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/4ac18b0c-2c37-4e2e-93ee-38408ec09d56) | ![상품 수정](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/bcedf8f1-4df9-419f-aefd-fcc723cd9a93) | ![상품 삭제](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/64193469/5c4bb01c-1907-4d81-8f09-2b9e9cb2b964) |
+
+<br><br>
 
 ## ✴️ **10. 상세 담당 업무**
 
-### 🖤 공통
+### **🖤 공통**
 
 - 컨벤션 지정
   - 커밋 메시지 컨벤션, 코드 컨벤션, 네이밍 컨벤션, 디렉토리 구조, Styled-Components 컨벤션
@@ -344,6 +378,8 @@ li내에 스타일할 요소가 3개이상이면 li를 Item으로 빼기
   - 이슈 진행 상황 관리
   - 버그 관리
   - 요구사항 문서 작성
+
+<br>
 
 ### **🖤 나영**
 
@@ -384,6 +420,8 @@ li내에 스타일할 요소가 3개이상이면 li를 Item으로 빼기
 - 로딩 페이지
   - 회원가입 후 로그인 페이지로 이동하는 로딩페이지
 
+<br>
+
 ### **🖤 지원**
 
 **🖥️ 화면 개발**
@@ -410,6 +448,8 @@ li내에 스타일할 요소가 3개이상이면 li를 Item으로 빼기
   - 검색이 끝난 후 검색 리스트를 보여주기 위해 useDebounce Hooks를 만들어 사용자 경험 개선
   - 최근 검색 기록을 LocalStorage에 저장하여 최근 검색 표시
   - 검색 결과 더보기 기능 구현
+
+<br>
 
 ### **🖤 미현**
 
@@ -466,6 +506,8 @@ li내에 스타일할 요소가 3개이상이면 li를 Item으로 빼기
   - BottomSheet 컴포넌트의 재사용성을 위해 [컴포넌트 리팩토링](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/pull/60#issue-1762148761)
   - 무한 스크롤링을 위한 Observer API 적용 코드를 [useObserver Hooks](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/commit/f20184e1ca6d45d64c22d3759b3ddc4a8e030bf3#diff-da3b68ddf380656f1e921fab250e05fef03fd5e46c30c4cddb7d74bcd804a483)로 만들어 사용
 
+<br>
+
 ### **🖤 보은**
 
 **🖥️ 화면 개발**
@@ -503,17 +545,18 @@ li내에 스타일할 요소가 3개이상이면 li를 Item으로 빼기
 <details>
     <summary><b>11-(1) 주어진 API에서 데이터 필터링하기</b></summary>
 
-- 주어진 api를 그대로 사용해서는 모든 데이터 중 방꾸석의 데이터만 불러올 수 없었습니다. 따라서 content의 “space”, “keyword”를 추가하여 이들이 포함된 데이터만 필터링하여 모든 데이터를 보여주었습니다.
+- 게시물의 공간 정보와 상품의 키워드 정보를 저장하기 위해 방꾸석에서는 주어진 기존 api 명세의 데이터 형식과는 다른 데이터 형식을 생각했습니다. 게시글의 content에는 "space", "detail"의 키를 가진 객체를 문자열로 저장하고, 상품의 itemName에는 "name", "keyword"의 키를 가진 객체를 문자열로 저장하여 아래와 같은 형태로 사용되고 있습니다.
 
-```json
-content: '{"space":"침실","detail":"쉬폰 패브릭으로 침실의 분위기를 바꿀 수도 있답니다!"}’
-itemName: '{"name":"노란색 스탠드","keyword”:"조명"}’
+```javascript
+content: '{"space":"침실","detail":"쉬폰 패브릭으로 침실의 분위기를 바꿀 수도 있답니다!"}',
+itemName: '{"name":"노란색 스탠드","keyword":"조명"}'
 ```
 
 <br/>
 
-- 또한 약 6000개의 모든 데이터를 불러온 후 필터링하면 화면을 보여주기까지의 속도가 매우 느려지기 때문에 useInfiniteQuery를 사용하여 limit를 100으로 설정하여 데이터를 100개씩 불러와 필터링하는 방식으로 구현하여 로딩 속도를 개선했습니다. <br>
-  [✨ feat: 홈페이지 전체 목록 로딩 속도 줄이기](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/commit/15e880b003785dd84e3aaf7cbb6e407c44be34c5)
+- 주어진 api에서 불러온 전체 데이터 중 공간 정보를 가지고 있는 게시물들만을 홈 페이지에서 보여주기 위해서는 별도로 필터링을 해주어야만 했습니다.
+- 약 6000개의 모든 데이터를 불러온 후 필터링하면 화면을 보여주기까지의 속도가 매우 느려지기 때문에 useInfiniteQuery를 사용하여 limit를 100으로 설정하여 데이터를 100개씩 불러와 필터링하는 방식으로 구현하여 약 5-7초의 로딩 속도에서 0.9초-1.85초로 로딩 속도를 최소 30%, 최대 61% 만큼 개선했습니다. <br>
+  [작업 커밋 - ✨ feat: 홈페이지 전체 목록 로딩 속도 줄이기](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/commit/15e880b003785dd84e3aaf7cbb6e407c44be34c5)
 
 ```jsx
 const {
@@ -553,7 +596,9 @@ useEffect(() => {
 <details>
 	<summary><b>11-(2) STEP을 사용한 게시글 업로드 과정</b></summary>
 
-`PostUploadPage` 컴포넌트는 `useState` 훅을 활용하여 ‘사진 선택’, ‘상품태그 추가’, ‘게시글 작성’과 같은 업로드 단계를 관리합니다. 현재 `step`에 따라 해당하는 레이아웃을 렌더링하여 사용자가 단계별로 한 페이지에 한 가지 행동만 하도록 유도하여 사용자 경험을 개선했습니다.
+`PostUploadPage` 컴포넌트는 `useState` 훅을 활용하여 ‘사진 선택’, ‘상품태그 추가’, ‘게시글 작성’과 같은 업로드 단계를 관리합니다. [토스 라이브러리의 useFunnel](https://slash.page/ko/libraries/react/use-funnel/readme.i18n/)에서 사용되는 퍼널 패턴에서 기반하여 현재 `step`에 따라 해당하는 레이아웃을 렌더링하고 사용자가 단계별로 한 페이지에 한 가지 행동만 하도록 유도하여 사용자 경험을 개선했습니다.
+
+또한 이러한 패턴으로 인해 한 페이지의 흐름을 한 눈에 알아볼 수 있었고, 각 단계의 상태를 한 곳에서 관리하기 쉬웠습니다.
 
 ```jsx
 export default function PostUploadPage() {
@@ -693,6 +738,7 @@ export const canSelectProductSelector = selector({
 	<summary><b>11-(4) 커스텀 훅</b></summary>
 	
 `useInputs.js`
+
 - input에 입력해야하는 값에 따라 입력 값을 저장하는 함수, 포커스를 잃었을 때 validate를 체크하여 에러 메시지를 설정하는 함수가 필요했습니다.
 - 따라서 useInputs 커스텀 훅을 만들어 중복으로 작성될 코드를 방지하였습니다.
 
@@ -719,17 +765,18 @@ export const canSelectProductSelector = selector({
 
 [♻️ refactor: 다른 서비스 사용자 경우 게시글 및 상품 예외 처리](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/pull/144)
 
-주어진 서비스 api를 다른 서비스와 공유하고 있어, 다른 이용자도 검색되고 팔로우되는 문제가 발생하여, 해당 유저의 프로필에 들어가게될 경우 해당 게시글에는 에러가 발생했습니다. 이를 해결해주기 위해 게시글에 space값이 없을 경우, 상품에 keyword가 없는 경우에 대한 예외처리를 진행했습니다. 또한 서비스마다 이미지를 받는 형식에 차이가 있어 대부분의 경우를 고려한 예외처리를 하고, 이미지에 오류가 있을 경우 기본이미지로 대체하였습니다.
+주어진 서비스 api를 다른 서비스와 공유하고 있어, 다른 이용자도 검색되고 팔로우되는 문제가 있었습니다. 해당 유저의 프로필에 들어가게될 경우 방꾸석 서비스와는 다른 데이터 형태를 가지고 있기 때문에 유저가 작성한 게시글 목록과 판매중인 상품 목록에 에러가 발생했습니다.
 
-<img src="https://file.notion.so/f/s/6d849dbb-5306-4dfd-9709-27e6865ff1c2/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-29_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_12.31.37.png?id=6065e777-323c-4bc1-83e8-1827916f3e8c&table=block&spaceId=e572bfe6-27d2-436e-a2b9-a4a55043fe00&expirationTimestamp=1688083200000&signature=nYsWbUyqMzWDiDK4swUVtEQen2t0aJyENcvsouqP3RI&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2023-06-29+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+12.31.37.png" />
-<img src="https://file.notion.so/f/s/ff8a70a5-68fb-41b2-9fd3-dabce4eef55d/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-29_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_12.32.26.png?id=0b37e1a5-a106-46da-b4f9-c5aab1d7be33&table=block&spaceId=e572bfe6-27d2-436e-a2b9-a4a55043fe00&expirationTimestamp=1688083200000&signature=BTUEXYOklIseC_nimU6KxRLHpJJdytQkknKIl7lbb3A&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2023-06-29+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+12.32.26.png" />
+이를 해결해주기 위해 게시글이 space키 값을 가지고 있지 않을 경우, 상품이 keyword 키 값을 가지고 있지 않은 경우에 대한 예외처리를 진행했습니다. 또한 서비스마다 이미지를 받는 형식에 차이가 있어 대부분의 경우를 고려한 예외처리를 하고, 이미지에 오류가 있어 깨진 이미지가 보일 경우를 대비하여 기본 이미지로 대체하였습니다.
+
+<img width="720px" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/599da020-d81b-469c-884a-cf82c9e64dfe" />
 
 </details>
 
 <details>
 	<summary><b>11-(2) QueryClient Invalide Query 적용하기.</b></summary>
 
-- 기존에 팔로우 요청을 보내면, 팔로우 요청은 성공하지만 기존 데이터가 그대로 캐시되어있어 새로고침을 해야만 팔로우 리스트를 다시 불러와 반영되는 문제가 발생했습니다
+- 기존에 팔로우 요청을 보내면, 팔로우 요청은 성공하지만 기존 데이터가 그대로 캐시되어있어 새로고침을 해야만 팔로우 리스트를 다시 불러와 반영되는 문제가 발생했습니다.
 
 ```jsx
 // 기존 코드
@@ -744,7 +791,9 @@ const postFollowMutation = useMutation(postFollow, {
 });
 ```
 
-  <img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/db688f75-6a3a-48b2-964f-04ac457059a2" />
+  <img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/1d6e0bdd-eb47-42a2-be4c-bf6e17c22a29" />
+
+<br><br>
 
 - 🪄 해결 방법: react query의 Query Client에서 invalidateQueries()를 사용하여 기존에 조회했던 쿼리를 무효화시키고 데이터를 새로 조회해올 수 있다.
 
@@ -760,7 +809,7 @@ const postFollowMutation = useMutation(postFollow, {
 });
 ```
 
-<img width="250" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/f696c189-eabe-4cb5-9e9e-2969bd9d4360" />
+<img width="250" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/1880f925-0618-40b6-851b-aa5aae17c62c" />
 
 </details>
 
@@ -791,6 +840,7 @@ const postFollowMutation = useMutation(postFollow, {
 노션에 처음 자기소개를 작성하고, 회고조와 만나 서먹서먹했던 때가 아직도 엊그제 같은데 벌써 4개월이라는 시간이 지나 멋사 팀 프로젝트 발표날이 왔다는게 아직도 믿겨지지 않습니다ㅎㅎ 제대로 팀 프로젝트를 해본 건 이번이 처음이라 깃을 다루면서 땀도 많이 흘리고 오류도 물론 많이 마주치게 됐습니다..ㅎㅎ 부족한 저였음에도 항상 좋은 반응을 해주고, 도움도 마다하지 않고 따라와주신 오리분들께 감사하단 말씀을 드리고 싶습니다! 덕분에 우리가 처음 목표했던 다양한 라이브러리의 사용, 협업 경험, 그리고 잘 마무리하는 방법까지 차곡차곡 쌓아서 또 하나의 기억 조각을 만들 수 있었습니다. 목표했던 것을 달성한 이번 경험을 토대로 앞으로의 목표들도 자신감 있게 '할 수 있다'는 마음을 가지고 나아갈 수 있길 바래요! 팀 외에도 도움을 준 멘토님, 강사님, 매니저님, 멋사 5기 어려분들도 너무 감사하고, 수고많으셨습니다. 추후 있을 리팩토링에서 다시 만나요 var var🖐️🖐️
 
 ### 🍙 오지원
+
 처음 접해본 리액트로 진행하는 팀프로젝트라 처음엔 걱정이 되기도 했지만 좋은 팀원분들을 만나 이렇게 잘 마무리할 수 있었던 것 같습니다. 컨벤션을 정하고, 깃, 깃이슈, pr을 사용하여 조금 더 체계적으로 프로젝트를 진행하는 경험을 해본 것이 좋았고 무엇보다 선릉과 광화문을 팀원분들이랑 다니면서 만나서 함께 프로젝트를 진행했던 점이 좋았습니다. 맨날 모르는 것 투성이라 팀원분들을 많이 괴롭혔지만 옆에서 항상 많이 도와주시고 응원해주신 팀원분들 너무 감사하고 수고 많으셨습니다!
 
 ### 🥰 이보은
