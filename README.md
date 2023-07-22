@@ -27,12 +27,12 @@
 
 > 🗝️ **방꾸석 배포 링크 및 테스트 계정**
 
-👉 [방꾸석 시작하기](https://main--bangkkuseok.netlify.app/)
-
 ```md
 ID: ohlee_official@bk.com
 PW: 123123
 ```
+
+👉 [방꾸석 데모 링크](https://main--bangkkuseok.netlify.app/)
 
 <br />
 
