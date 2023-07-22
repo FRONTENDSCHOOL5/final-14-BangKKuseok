@@ -5,6 +5,7 @@ import Navbar from '../components/common/Navbar/Navbar';
 import styled from 'styled-components';
 import Toast from '../components/common/Toast/Toast';
 import useScroll from '../hooks/useScroll';
+import TopButton from '../components/common/Button/TopButton/TopButton';
 
 const LayoutWrapper = styled.div`
   width: clamp(390px, 100%, 720px);
@@ -36,6 +37,7 @@ export default function BasicLayout({ children, isNonNav = false, ...props }) {
           <Header {...props} />
           {children}
           <Toast />
+          <TopButton reference={wrapperRef} />
         </LayoutMain>
         {isNonNav ? null : <Navbar />}
       </LayoutWrapper>
