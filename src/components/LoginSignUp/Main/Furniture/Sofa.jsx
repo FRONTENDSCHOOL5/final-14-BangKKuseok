@@ -12,10 +12,10 @@ import yellow from '../../../../assets/matcaps/yellow.png';
 import pink from '../../../../assets/matcaps/pink.png';
 import Spinner from '../../../common/Spinner/Spinner';
 
-export default function Sofa() {
   const group = useRef();
   const { nodes, materials } = useGLTF(sofaModel);
 
+export default function Sofa({ setIsRotate }) {
   function toRadian(deg) {
     return (deg * Math.PI) / 180;
   }
@@ -48,6 +48,7 @@ export default function Sofa() {
         return () => clearInterval(loop);
       }, 2000);
       return () => clearTimeout(timeout);
+      setIsRotate(false);
     }, 2000);
   }, []);
 

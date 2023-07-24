@@ -22,6 +22,13 @@ export const WhiteLogoImg = styled.img`
   margin: 15vh auto 0;
 `;
 
+const rustle = keyframes`
+from{
+  transform: translate(-50%, -50%) rotate(-35deg);
+}
+to{
+  transform: translate(-50%, -50%) rotate(35deg);
+}
 `;
 
 export const CanvasBox = styled.div`
@@ -48,6 +55,18 @@ export const CanvasBox = styled.div`
     aspect-ratio: 1;
     z-index: 1;
 
+    &::after {
+      content: '';
+      display: ${({ isRotate }) => !isRotate && 'none'};
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 18%;
+      aspect-ratio: 1;
+      background: url(${({ rotateImg }) => rotateImg}) no-repeat center / contain;
+      animation: ${rustle} 0.55s infinite alternate linear;
+    }
   }
 
   canvas {
