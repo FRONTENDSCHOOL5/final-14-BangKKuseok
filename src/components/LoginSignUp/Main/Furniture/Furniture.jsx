@@ -9,7 +9,7 @@ export default function Furniture({ setIsRotate }) {
       <Canvas>
         <Suspense fallback={null}>
           <ambientLight intensity={0.7} />
-          <spotLight intensity={2} angle={0.1} penumbra={1} position={[10, -15, -5]} castShadow />
+          <spotLight intensity={0.2} angle={0.1} penumbra={1} position={[15, 20, 0]} castShadow />
           <directionalLight />
           <Sofa setIsRotate={setIsRotate} />
           <OrbitControls enableZoom={false} autoRotate />
