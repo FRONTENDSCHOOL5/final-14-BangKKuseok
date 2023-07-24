@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Furniture from './Furniture/Furniture';
 import WhiteLogo from '../../../assets/images/logo-white.png';
 import SocialButton from '../../common/Button/SocialButton/SocialButton';
 import spotLightImg from '../../../assets/images/spotlight.png';
@@ -10,9 +11,7 @@ import {
   AccountSignUpBox,
   CanvasBox,
   BottomSection,
-  BackgroundImg,
 } from './MainStyle';
-import Furniture from './Furniture/Furniture';
 
 export default function Main({ onClickLoginLink }) {
   const handleGotoLogin = () => {
@@ -25,7 +24,6 @@ export default function Main({ onClickLoginLink }) {
       <CanvasBox>
         <Furniture />
       </CanvasBox>
-      <BackgroundImg src={spotLightImg} alt='배경 조명 이미지' />
       <BottomSection>
         <BtnBox>
           <SocialButton social='mail' onClick={handleGotoLogin}>
