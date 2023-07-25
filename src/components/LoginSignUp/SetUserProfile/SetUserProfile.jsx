@@ -13,7 +13,6 @@ import SetUserProfileForm from './SetUserProfileForm';
 const SetUserProfile = ({
   onClickBackLink,
   onClickNextLink,
-  setStep,
   setData,
   preEmail,
   prePassword,
@@ -40,7 +39,6 @@ const SetUserProfile = ({
 
       <SetUserProfileForm
         setIsButtonActive={setIsButtonActive}
-        setStep={setStep}
         setData={setData}
         preEmail={preEmail}
         prePassword={prePassword}
