@@ -1,9 +1,8 @@
 import { useState, useEffect, React } from 'react';
+import { Link } from 'react-router-dom';
 import { LoginSignUpWrapper, LoginSignUpLogo, BottomBox, LinkWrapper } from './LoginSignUpStyle';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button/Button';
-import SignUpLink from './SignUpLink';
-import LoginLink from './LoginLink';
 
 export default function LoginSignUp({ logo, type, setPreData, preData, message, onClickNextLink }) {
   // 이메일, 비밀번호 값을 받아옴
@@ -149,7 +148,14 @@ export default function LoginSignUp({ logo, type, setPreData, preData, message, 
         <Button type='submit' size='lg' onClick={handleSubmit} disabled={btnDisabled}>
           다음
         </Button>
-        <LinkWrapper>{type === 'signup' ? <SignUpLink /> : <LoginLink />}</LinkWrapper>
+        <LinkWrapper>
+          {type === 'signup' ? (
+            <Link to={'/login'}>로그인</Link>
+          ) : (
+            <Link to={'/signup'}>회원가입</Link>
+          )}
+          <Link to={'/'}>메인으로 돌아가기</Link>
+        </LinkWrapper>
       </BottomBox>
     </LoginSignUpWrapper>
   );
