@@ -12,6 +12,7 @@ import {
 import Button from '../../Button/Button/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import FollowButton from '../../../Follow/FollowButton/FollowButton';
 
 export default function UserSimpleInfo({
   profile,
@@ -81,17 +82,7 @@ export default function UserSimpleInfo({
         </button>
       ) : type === 'follow' ? (
         !isMyProfile && (
-          <>
-            {profile.isfollow ? (
-              <Button variant='white' size='xs' onClick={() => onClick(profile.accountname)}>
-                언팔로우
-              </Button>
-            ) : (
-              <Button size='xs' onClick={() => onClick(profile.accountname)}>
-                팔로우
-              </Button>
-            )}
-          </>
+          <FollowButton isfollow={profile.isfollow} accountname={profile.accountname} />
         )
       ) : type === 'history' ? (
         <button type='button' onClick={onClick}>

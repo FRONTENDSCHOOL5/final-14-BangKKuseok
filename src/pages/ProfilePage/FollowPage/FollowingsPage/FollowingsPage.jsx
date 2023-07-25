@@ -2,10 +2,9 @@ import React from 'react';
 import BasicLayout from '../../../../layout/BasicLayout';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FollowerWrapper, FollowerList, FollowItem } from '../FollowersPage/FollowersPageStyle';
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
-import { deleteUnFollow, getFollowings, postFollow } from '../../../../api/followApi';
+import { useInfiniteQuery, useQuery } from 'react-query';
+import { getFollowings } from '../../../../api/followApi';
 import UserSimpleInfo from '../../../../components/common/UserSimpleInfo/UserSimpleInfo/UserSimpleInfo';
-import Spinner from '../../../../components/common/Spinner/Spinner';
 import useObserver from '../../../../hooks/useObserver';
 import { getMyProfile } from '../../../../api/profileApi';
 
@@ -17,7 +16,6 @@ export default function FollowingsPage() {
     data: followings,
     fetchNextPage,
     isLoading,
-    isFetching,
     hasNextPage,
   } = useInfiniteQuery(
     'followings',
@@ -36,42 +34,10 @@ export default function FollowingsPage() {
   );
   const observerRef = useObserver(hasNextPage, fetchNextPage, isLoading);
 
-  const queryClient = useQueryClient();
-
   const { data: myProfileData } = useQuery('myProfile', getMyProfile);
-
-  // 팔로우 API
-  const postFollowMutation = useMutation(postFollow, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('followings');
-    },
-    onError: () => {
-      console.error('팔로우 실패');
-    },
-  });
-
-  // 언팔로우 API
-  const deleteUnFollowMutation = useMutation(deleteUnFollow, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('followings');
-    },
-    onError: () => {
-      console.error('언팔로우 실패');
-    },
-  });
 
   const handleClickBackButton = () => {
     navigate(-1);
-  };
-
-  const handleClickFollow = (accountname) => {
-    // 팔로우 API 요청
-    postFollowMutation.mutate(accountname);
-  };
-
-  const handleClickUnFollow = (accountname) => {
-    // 언팔로우 API 요청
-    deleteUnFollowMutation.mutate(accountname);
   };
 
   return (
@@ -86,15 +52,12 @@ export default function FollowingsPage() {
                   type='follow'
                   isLink={true}
                   isMyProfile={myProfileData?.accountname === following.accountname}
-                  onClick={following.isfollow ? handleClickUnFollow : handleClickFollow}
                 />
               </FollowItem>
             ))}
           </FollowerList>
         </>
-        <div ref={observerRef} style={{ minHeight: '1px' }}>
-          {(isLoading || isFetching) && <Spinner />}
-        </div>
+        <div ref={observerRef} style={{ minHeight: '1px' }}></div>
       </FollowerWrapper>
     </BasicLayout>
   );
