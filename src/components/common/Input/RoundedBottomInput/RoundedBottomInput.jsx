@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import arrowImg from '../../../../assets/icons/icon-arrow-top.svg';
 import {
   BottomInputWrapper,
@@ -10,14 +10,25 @@ import BtnImg from '../../../../assets/images/img-btn.png';
 
 // 사용 예 : <RoundedBottomInput id='comment' placeholder='댓글을 남겨보세요'/>
 export default function RoundedBottomInput({
+  type,
   id,
   placeholder,
-  onChange,
-  onSubmit,
   value,
   onClick,
+  onChange,
+  onSubmit,
   isChat = false,
 }) {
+  const [inputType, setInputType] = useState('text');
+
+  useEffect(() => {
+    if (type === 'file') {
+      setInputType('file');
+    } else {
+      setInputType('text');
+    }
+  }, [type]);
+
   return (
     <BottomInputWrapper>
       {isChat && (
@@ -30,7 +41,7 @@ export default function RoundedBottomInput({
           {id}
         </label>
         <input
-          type='text'
+          type={inputType}
           id={id}
           onChange={onChange}
           placeholder={placeholder}
