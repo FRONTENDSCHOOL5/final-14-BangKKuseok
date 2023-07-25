@@ -8,7 +8,6 @@ import {
   UserNameBox,
   UserName,
   AccountName,
-  DeleteButton,
 } from './UserSimpleStyle';
 import Button from '../../Button/Button/Button';
 import { useState } from 'react';
@@ -20,7 +19,6 @@ export default function UserSimpleInfo({
   isMyProfile,
   type,
   onClick,
-  onClickFollow,
   inputValue,
 }) {
   const [error, setError] = useState(false);
@@ -85,11 +83,11 @@ export default function UserSimpleInfo({
         !isMyProfile && (
           <>
             {profile.isfollow ? (
-              <Button variant='white' size='xs' onClick={() => onClickFollow(profile.accountname)}>
+              <Button variant='white' size='xs' onClick={() => onClick(profile.accountname)}>
                 언팔로우
               </Button>
             ) : (
-              <Button size='xs' onClick={() => onClickFollow(profile.accountname)}>
+              <Button size='xs' onClick={() => onClick(profile.accountname)}>
                 팔로우
               </Button>
             )}

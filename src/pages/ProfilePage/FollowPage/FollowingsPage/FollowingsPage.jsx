@@ -86,7 +86,7 @@ export default function FollowingsPage() {
                   type='follow'
                   isLink={true}
                   isMyProfile={myProfileData?.accountname === following.accountname}
-                  onClickFollow={following.isfollow ? handleClickUnFollow : handleClickFollow}
+                  onClick={following.isfollow ? handleClickUnFollow : handleClickFollow}
                 />
               </FollowItem>
             ))}
