@@ -1,6 +1,6 @@
 import React from 'react';
 import BasicLayout from '../../../../layout/BasicLayout';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { FollowerWrapper, FollowerList, FollowItem } from '../FollowersPage/FollowersPageStyle';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteUnFollow, getFollowings, postFollow } from '../../../../api/followApi';
@@ -10,7 +10,6 @@ import useObserver from '../../../../hooks/useObserver';
 import { getMyProfile } from '../../../../api/profileApi';
 
 export default function FollowingsPage() {
-  const navigate = useNavigate();
   const accountname = useLocation().state.accountname;
 
   const {
@@ -42,8 +41,9 @@ export default function FollowingsPage() {
 
   // 팔로우 API
   const postFollowMutation = useMutation(postFollow, {
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries('followings');
+      queryClient.setQueriesData('followings', data);
     },
     onError: () => {
       console.error('팔로우 실패');
@@ -52,17 +52,14 @@ export default function FollowingsPage() {
 
   // 언팔로우 API
   const deleteUnFollowMutation = useMutation(deleteUnFollow, {
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries('followings');
+      queryClient.setQueriesData('followings', data);
     },
     onError: () => {
       console.error('언팔로우 실패');
     },
   });
-
-  const handleClickBackButton = () => {
-    navigate(-1);
-  };
 
   const handleClickFollow = (accountname) => {
     // 팔로우 API 요청
@@ -75,7 +72,7 @@ export default function FollowingsPage() {
   };
 
   return (
-    <BasicLayout type='follow' title='팔로잉' onClickLeftButton={handleClickBackButton}>
+    <BasicLayout type='follow' title='팔로잉'>
       <FollowerWrapper>
         <>
           <FollowerList>

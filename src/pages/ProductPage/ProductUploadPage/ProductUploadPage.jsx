@@ -38,7 +38,6 @@ export default function ProductUploadPage() {
       title={'상품 등록'}
       isBtnActive={isBtnActive}
       isNonNav={true}
-      onClickLeftButton={() => navigate(-1)}
       onClickRightButton={handleClickSave}
     >
       <ProductForm setIsBtnActive={setIsBtnActive} setProductData={setProductData} />

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import BasicLayout from '../../../layout/BasicLayout';
 import BottomSheet from '../../../components/common/BottomSheet/BottomSheet';
@@ -41,8 +40,6 @@ export default function ChatListPage() {
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [confirmType, setConfirmType] = useState({ type: '', object: '' });
 
-  const navigate = useNavigate();
-
   // 모달 열기
   const handleClickRightButton = () => {
     setModalType('myComment');
@@ -61,11 +58,7 @@ export default function ChatListPage() {
 
   return (
     <>
-      <BasicLayout
-        type={'post'}
-        onClickLeftButton={() => navigate(-1)}
-        onClickRightButton={handleClickRightButton}
-      >
+      <BasicLayout type='post' title='채팅' onClickRightButton={handleClickRightButton}>
         {/* mockData의 profile 리스트를 불러온다. */}
         <ChatListWrapper>
           <ChatList>

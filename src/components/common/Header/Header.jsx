@@ -5,6 +5,7 @@ import { ReactComponent as MoreIcon } from '../../../assets/icons/icon-more.svg'
 import { ReactComponent as SearchIcon } from '../../../assets/icons/icon-search.svg';
 import Button from '../Button/Button/Button';
 import RoundedInput from '../Input/RoundedInput/RoundedInput';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header({
   type,
@@ -18,6 +19,8 @@ export default function Header({
   onChange,
   onClickTitle,
 }) {
+  const navigate = useNavigate();
+
   const HeaderLayout = {
     home: (
       <HeaderWrapper type={type}>
@@ -28,6 +31,10 @@ export default function Header({
     ),
     feed: (
       <HeaderWrapper type={type}>
+        <button onClick={() => navigate(-1)}>
+          <BackIcon stroke='#000' />
+        </button>
+        <HeaderH2>{title}</HeaderH2>
         <SearchBtn type='button' onClick={onClickRightButton}>
           <SearchIcon stroke='#000' />
         </SearchBtn>
@@ -48,7 +55,7 @@ export default function Header({
     ),
     profile: (
       <HeaderWrapper type={type}>
-        <button type='button' onClick={onClickLeftButton}>
+        <button type='button' onClick={() => navigate(-1)}>
           <BackIcon stroke='#fff' />
         </button>
         <button type='button' onClick={onClickRightButton}>
@@ -58,7 +65,7 @@ export default function Header({
     ),
     profileEdit: (
       <HeaderWrapper type={type}>
-        <button type='button' onClick={onClickLeftButton}>
+        <button type='button' onClick={() => navigate(-1)}>
           <BackIcon stroke='#000' />
         </button>
         <HeaderH2>{title}</HeaderH2>
@@ -69,7 +76,7 @@ export default function Header({
     ),
     follow: (
       <HeaderWrapper type={type}>
-        <button type='button' onClick={onClickLeftButton}>
+        <button type='button' onClick={() => navigate(-1)}>
           <BackIcon stroke='#000' />
         </button>
         <HeaderH2>{title}</HeaderH2>
@@ -77,13 +84,13 @@ export default function Header({
     ),
     post: (
       <HeaderWrapper type={type}>
-        <button type='button' onClick={onClickLeftButton}>
+        <button type='button' onClick={() => navigate(-1)}>
           <BackIcon stroke='#000' />
         </button>
-        <HeaderH3 onClick={onClickTitle}>
+        <HeaderH2 onClick={onClickTitle}>
           {title}
           <HeaderSpan>{subtitle}</HeaderSpan>
-        </HeaderH3>
+        </HeaderH2>
         <button type='button' onClick={onClickRightButton}>
           <MoreIcon fill='#000' stroke='#000' />
         </button>
@@ -91,7 +98,7 @@ export default function Header({
     ),
     imageSelect: (
       <HeaderWrapper type={type}>
-        <button type='button' onClick={onClickLeftButton}>
+        <button type='button' onClick={() => navigate(-1)}>
           <BackIcon stroke='#000' />
         </button>
         <HeaderH2>{title}</HeaderH2>

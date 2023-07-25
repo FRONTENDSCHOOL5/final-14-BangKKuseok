@@ -1,6 +1,6 @@
 import React from 'react';
 import BasicLayout from '../../../../layout/BasicLayout';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { FollowerWrapper, FollowerList, FollowItem } from './FollowersPageStyle';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteUnFollow, getFollowers, postFollow } from '../../../../api/followApi';
@@ -10,7 +10,6 @@ import useObserver from '../../../../hooks/useObserver';
 import { getMyProfile } from '../../../../api/profileApi';
 
 export default function FollowersPage() {
-  const navigate = useNavigate();
   const accountname = useLocation().state.accountname;
 
   const {
@@ -61,10 +60,6 @@ export default function FollowersPage() {
     },
   });
 
-  const handleClickBackButton = () => {
-    navigate(-1);
-  };
-
   const handleClickFollow = (accountname) => {
     // 팔로우 API 요청
     postFollowMutation.mutate(accountname);
@@ -80,7 +75,7 @@ export default function FollowersPage() {
   }
 
   return (
-    <BasicLayout type='follow' title='팔로워' onClickLeftButton={handleClickBackButton}>
+    <BasicLayout type='follow' title='팔로워'>
       <FollowerWrapper>
         {!isLoading && (
           <>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import BasicLayout from '../../layout/BasicLayout';
 import PostList from '../../components/Profile/PostList/PostList';
 import { useInfiniteQuery, useMutation } from 'react-query';
@@ -96,7 +96,7 @@ export default function FeedPage() {
     );
   } else if (!isLoading && !isFetching && feedPostData.pages.length === 0 && !isClickSearchButton) {
     return (
-      <BasicLayout type='feed' onClickRightButton={handleClickRightButton}>
+      <BasicLayout type='feed' title='게시글' onClickRightButton={handleClickRightButton}>
         <NoneFeedWrapper>
           <img src={logoGrayImg} alt='로고 이미지' />
           <p>사용자를 검색해 팔로우 해보세요!</p>
@@ -113,7 +113,7 @@ export default function FeedPage() {
       {isClickSearchButton ? (
         <Search onClickLeftButton={handleClickLeftButton} />
       ) : (
-        <BasicLayout type='feed' onClickRightButton={handleClickRightButton}>
+        <BasicLayout type='feed' title='게시글' onClickRightButton={handleClickRightButton}>
           <FeedPageWrapper>
             <PostList
               selectedTab='list'

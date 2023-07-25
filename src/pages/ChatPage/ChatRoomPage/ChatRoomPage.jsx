@@ -144,7 +144,6 @@ export default function ChatRoomPage() {
       type={'post'}
       title={location.state.username}
       isNonNav={true}
-      onClickLeftButton={() => navigate(-1)}
       onClickRightButton={handleClickRightButton}
     >
       {/* 상대 채팅 */}
