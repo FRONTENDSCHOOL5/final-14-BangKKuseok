@@ -48,12 +48,11 @@ const HeaderText = css`
 const HeaderH2 = styled.h2`
   ${HeaderText}
   font-size: ${({ theme }) => theme.fontSize.md};
-`;
-
-const HeaderH3 = styled.h3`
-  ${HeaderText}
-  font-size: ${({ theme }) => theme.fontSize.base};
-  cursor: pointer;
+  ${({ onClick }) =>
+    onClick &&
+    css`
+      cursor: pointer;
+    `}
 `;
 
 const HeaderSpan = styled.span`
@@ -70,4 +69,4 @@ const SearchBtn = styled.button`
   right: 1.6rem;
 `;
 
-export { HeaderWrapper, HeaderH2, HeaderH3, HeaderSpan, SearchBtn };
+export { HeaderWrapper, HeaderH2, HeaderSpan, SearchBtn };
