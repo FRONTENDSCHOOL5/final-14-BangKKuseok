@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import Gallery from '../../components/common/Gallery/Gallery';
 import { filterPosts } from '../../utils/filterPosts';
 import Spinner from '../../components/common/Spinner/Spinner';
-import { topLikedPosts } from '../../mock/mockData';
+import { topLikedPosts as topLikedMockPosts } from '../../mock/mockData';
 
 const Message = styled.p`
   font-weight: 500;
@@ -46,7 +46,7 @@ export default function HomePage() {
   const count = useRef(0);
   const [isLast, setIsLast] = useState(false);
   const [isRecent, setIsRecent] = useState(false);
-  const [filteredRecentPosts, setFilteredRecentPosts] = useState([]);
+  const [topLikedPosts, setTopLikedPosts] = useState([]);
 
   const TOP_LIKED_POSTS_DAYS = 7;
 
@@ -92,18 +92,19 @@ export default function HomePage() {
 
   // 캐러셀 필터링
   useEffect(() => {
-    setFilteredRecentPosts(filteredAllPosts);
-    allPosts.filter((item) => {
+    const filteredRecentPosts = filteredAllPosts.filter((item) => {
       const createdAt = new Date(item.createdAt);
-      if (filteredAllPosts.length && createdAt <= currentDate) {
+      if (createdAt <= currentDate) {
         setIsRecent(true);
-        if (isRecent) {
-          setFilteredRecentPosts(
-            filteredRecentPosts?.sort((a, b) => b.heartCount - a.heartCount).slice(0, 5),
-          );
-        }
+        return false;
       }
+      return true;
     });
+    if (filteredRecentPosts.length) {
+      setTopLikedPosts(filteredRecentPosts.sort((a, b) => b.heartCount - a.heartCount).slice(0, 5));
+    } else {
+      setTopLikedPosts([]);
+    }
   }, [filteredAllPosts]);
 
   const handleClickTabButton = (e) => {
@@ -144,7 +145,7 @@ export default function HomePage() {
       ) : (
         <BasicLayout type='home' onClickRightButton={handleClickRightButton}>
           {isRecent ? (
-            <Carousel data={filteredRecentPosts.length > 0 ? filteredRecentPosts : topLikedPosts} />
+            <Carousel data={topLikedPosts.length > 0 ? topLikedPosts : topLikedMockPosts} />
           ) : (
             <Spinner type='carousel' />
           )}
