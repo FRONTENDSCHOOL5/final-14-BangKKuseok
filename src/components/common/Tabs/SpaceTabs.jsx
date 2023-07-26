@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useRef } from 'react';
+import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { SPACES } from '../../../constants/common';
+import useSwipe from '../../../hooks/useSwipe';
 
 const StyledSpaceTab = styled.button`
   font-weight: 500;
@@ -37,40 +37,9 @@ const StyledSpaceTabs = styled.nav`
   }
 `;
 
-  const scrollRef = useRef(null);
-  const [isStart, setIsStart] = useState(false);
-  const [isDrag, setIsDrag] = useState(false);
-  const [startX, setStartX] = useState(0);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollLeft = scrollLeft;
-    }
-  }, [scrollLeft]);
-
-  const handleDragStart = (e) => {
-    e.preventDefault();
-    setIsDrag(false);
-    setIsStart(true);
-    setStartX(e.pageX + scrollRef.current.scrollLeft);
-  };
-
-  const handleDragEnd = (e) => {
-    setIsStart(false);
-  };
-
-  const handleDragMove = (e) => {
-    if (isStart) {
-      setIsDrag(true);
-      scrollRef.current.scrollLeft = startX - e.pageX;
-    }
-  };
-
-  const handleClickTab = (e) => {
-    if (!isDrag) onClick(e);
-  };
 export default function SpaceTabs({ onClick }) {
   const [currentTab, setCurrentTab] = useState('전체');
+  const [isDrag, scrollRef, handleDragStart, handleDragMove, handleDragEnd] = useSwipe();
   const spaces = ['전체', ...SPACES];
 
   return (
