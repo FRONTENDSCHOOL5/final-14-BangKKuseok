@@ -6,6 +6,9 @@ export const ModalProductItemWrapper = styled.li`
   justify-content: space-between;
   margin-bottom: 12px;
   text-align: left;
+  &:nth-last-of-type(1) {
+    margin-bottom: 34px;
+  }
 
   img {
     width: 70px;
