@@ -3,7 +3,6 @@ import Carousel from '../../components/common/Carousel/Carousel';
 import SpaceTabs from '../../components/common/Tabs/SpaceTabs';
 import BasicLayout from '../../layout/BasicLayout';
 import { useState } from 'react';
-import { SPACES } from '../../constants/common';
 import Search from '../SearchPage/SearchPage';
 import { useInfiniteQuery } from 'react-query';
 import { getAllPost } from '../../api/homeApi';
@@ -35,8 +34,6 @@ const PostWrapper = styled.section`
 `;
 
 export default function HomePage() {
-  const [currentTab, setCurrentTab] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
   const [isClickSearchButton, setIsClickSearchButton] = useState(false);
   const [filteredAllPosts, setFilteredAllPosts] = useState([]);
   const [filteredPosts, setfilteredPosts] = useState([]);
@@ -107,18 +104,13 @@ export default function HomePage() {
     }
   }, [filteredAllPosts]);
 
-  const handleClickTabButton = (e) => {
-    const index = ['전체', ...SPACES].indexOf(e.target.innerText);
-    if (e.target.tagName === 'BUTTON') {
-      setScrollLeft(e.currentTarget.scrollLeft); // 버튼 클릭했을 때 scrollLeft 위치 유지
-      setCurrentTab(index);
+  const handleClickTabButton = (selectedSpaceName) => {
+    if (selectedSpaceName) {
       setIsTabClick(true);
-
       const filter = filteredAllPosts.filter((post) => {
         const { space } = JSON.parse(post.content);
-        return e.target.innerText === '전체' ? space : space === e.target.innerText;
+        return selectedSpaceName === '전체' ? space : space === selectedSpaceName;
       });
-
       setfilteredPosts(filter);
     }
   };
@@ -150,11 +142,7 @@ export default function HomePage() {
             <Spinner type='carousel' />
           )}
           <TabWrapper>
-            <SpaceTabs
-              currentTab={currentTab}
-              onClick={handleClickTabButton}
-              scrollLeft={scrollLeft}
-            />
+            <SpaceTabs onClick={handleClickTabButton} />
           </TabWrapper>
           {filteredPosts?.length === 0 ? (
             <Message>아직 작성된 게시물이 없어요!</Message>
