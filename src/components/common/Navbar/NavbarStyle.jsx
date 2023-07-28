@@ -18,16 +18,21 @@ export const NavbarList = styled.ul`
   li {
     flex-grow: 1;
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+  }
+
+  li:nth-child(3) {
+    margin-top: -26px;
   }
 
   li a {
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 7px 0;
+    padding: 10px 0;
   }
 `;
 
@@ -89,4 +94,16 @@ export const StyledUserIcon = styled(UserIcon)`
           }
         `
       : UserIcon}
+`;
+
+export const NavbarLabel = styled.span`
+  font-size: 1rem;
+  margin-top: 6px;
+  color: ${({ theme }) => theme.colors.gray300};
+
+  ${(props) =>
+    props.active &&
+    css`
+      color: ${({ theme }) => theme.colors.mainCoral};
+    `}
 `;
