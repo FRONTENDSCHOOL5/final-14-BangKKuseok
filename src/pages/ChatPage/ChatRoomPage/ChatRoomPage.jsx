@@ -34,10 +34,18 @@ export default function ChatRoomPage() {
 
   const navigate = useNavigate();
 
+  // 오전, 오후 시간 반환 함수
+  const handleHours = (num) =>
+    num < 12 ? '오전 ' + num : num === 12 ? '오후 ' + num : '오후 ' + (num - 12);
+  // 숫자가 한 자리일 때 두 자리로 변환하는 함수
+  const padZero = (num) => (num < 10 ? '0' + num : num);
+
   // 시간, 분 정보 추출
   const date = new Date();
   const hours = date.getHours();
   const minutes = date.getMinutes();
+  const formattedHours = handleHours(hours);
+  const formattedMinutes = padZero(minutes);
 
   ////// header //////
   // 모달창 열기
@@ -153,6 +161,7 @@ export default function ChatRoomPage() {
                   <p>{chat}</p>
                 </ChatText>
                 <ChatTime>
+                  <span>{`${formattedHours}:${formattedMinutes}`}</span>
                 </ChatTime>
               </ChatBox>
             ))
@@ -178,6 +187,9 @@ export default function ChatRoomPage() {
                   </>
                 )}
                 <ChatTime isUser={isUser}>
+                  <span>{`${handleHours(message.timestamp.getHours())}:${padZero(
+                    message.timestamp.getMinutes(),
+                  )}`}</span>
                 </ChatTime>
               </ChatBox>
             ))}
