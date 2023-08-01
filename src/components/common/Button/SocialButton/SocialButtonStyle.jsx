@@ -7,20 +7,33 @@ const SOCIALS = {
   mail: css`
     --border: 1px solid ${({ theme }) => theme.colors.mainCoral};
     --background: url(${mailIcon}) no-repeat left 1em center / 1.7em;
+    &:hover {
+      opacity: 0.2;
+      background-color: ${({ theme }) => theme.colors.mainCoral};
+    }
   `,
   kakao: css`
     --border: 1px solid ${({ theme }) => theme.colors.yellow};
     --background: url(${kakaoIcon}) no-repeat left 1em center / 1.7em;
+    &:hover {
+      opacity: 0.2;
+      background-color: ${({ theme }) => theme.colors.yellow};
+    }
   `,
   google: css`
     --border: 1px solid ${({ theme }) => theme.colors.gray300};
     --background: url(${googleIcon}) no-repeat left 1em center / 1.7em;
+    &:hover {
+      opacity: 0.2;
+      background-color: ${({ theme }) => theme.colors.gray300};
+    }
   `,
 };
 
 const StyledButton = styled.button`
   ${(p) => p.social}
 
+  z-index: 10;
   min-width: 322px;
   padding: 15px 14px;
   border-radius: 14px;
