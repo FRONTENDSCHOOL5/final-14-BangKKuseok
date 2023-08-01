@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useRef } from 'react';
+import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { SPACES } from '../../../constants/common';
+import useSwipe from '../../../hooks/useSwipe';
 
 const StyledSpaceTab = styled.button`
   font-weight: 500;
@@ -37,39 +37,10 @@ const StyledSpaceTabs = styled.nav`
   }
 `;
 
-export default function SpaceTabs({ currentTab, onClick, scrollLeft }) {
-  const scrollRef = useRef(null);
-  const [isStart, setIsStart] = useState(false);
-  const [isDrag, setIsDrag] = useState(false);
-  const [startX, setStartX] = useState(0);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollLeft = scrollLeft;
-    }
-  }, [scrollLeft]);
-
-  const handleDragStart = (e) => {
-    e.preventDefault();
-    setIsDrag(false);
-    setIsStart(true);
-    setStartX(e.pageX + scrollRef.current.scrollLeft);
-  };
-
-  const handleDragEnd = (e) => {
-    setIsStart(false);
-  };
-
-  const handleDragMove = (e) => {
-    if (isStart) {
-      setIsDrag(true);
-      scrollRef.current.scrollLeft = startX - e.pageX;
-    }
-  };
-
-  const handleClickTab = (e) => {
-    if (!isDrag) onClick(e);
-  };
+export default function SpaceTabs({ onClick }) {
+  const [currentTab, setCurrentTab] = useState('전체');
+  const [isDrag, scrollRef, handleDragStart, handleDragMove, handleDragEnd] = useSwipe();
+  const spaces = ['전체', ...SPACES];
 
   return (
     <StyledSpaceTabs
@@ -78,19 +49,21 @@ export default function SpaceTabs({ currentTab, onClick, scrollLeft }) {
       onMouseMove={handleDragMove}
       onMouseUp={handleDragEnd}
       onMouseLeave={handleDragEnd}
-      onClick={handleClickTab}
     >
-      {['전체', ...SPACES].map((space, index) => (
-        <StyledSpaceTab key={index} className={index === currentTab ? 'active' : null}>
+      {spaces.map((space, index) => (
+        <StyledSpaceTab
+          key={index}
+          onClick={() => {
+            if (!isDrag) {
+              onClick(space);
+              setCurrentTab(space);
+            }
+          }}
+          className={space === currentTab ? 'active' : null}
+        >
           {space}
         </StyledSpaceTab>
       ))}
     </StyledSpaceTabs>
   );
 }
-
-// 기능 구현법
-/*
-- 사용하는 페이지에서 useState로 currentTab변수에 선택된 index번호를 넣기
-- tab을 클릭하면 currentTab 값이 해당 인덱스로 변경되고 해당 게시글 들이 보이도록 한다
-*/
