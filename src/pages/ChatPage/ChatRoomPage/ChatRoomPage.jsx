@@ -5,7 +5,6 @@ import BasicLayout from '../../../layout/BasicLayout';
 import RoundedBottomInput from '../../../components/common/Input/RoundedBottomInput/RoundedBottomInput';
 import BottomSheet from '../../../components/common/BottomSheet/BottomSheet';
 import ListModal from '../../../components/common/BottomSheet/ListModal';
-import Confirm from '../../../components/common/Confirm/Confirm';
 import {
   ChatRoomWrapper,
   ChatRoomContainer,
@@ -21,7 +20,6 @@ export default function ChatRoomPage() {
 
   const [isShow, setIsShow] = useState(false);
   const [modalType, setModalType] = useState('');
-  const [isShowConfirm, setIsShowConfirm] = useState(false);
 
   const [type, setType] = useState('text');
   const [message, setMessage] = useState('');
@@ -31,6 +29,8 @@ export default function ChatRoomPage() {
 
   const bottomRef = useRef(null);
   const [scrollDown, setScrollDown] = useState(false);
+
+  const fileInputRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -56,30 +56,21 @@ export default function ChatRoomPage() {
   ////// bottom input //////
   // input 클릭하면 실행
   const handleInputClick = (e) => {
-    if (e.target.tagName.toLowerCase() === 'img') {
-      // 이미지 버튼을 클릭하면 confirm창이 뜨도록
-      setIsShowConfirm(true);
-    } else {
-      setIsShowConfirm(false);
-    }
-  };
-
-  // 파일 업로드 버튼을 눌렀을 때
-  const handleClickConfirm = (e) => {
     setType('file');
-    // confirm창 닫기
-    setIsShowConfirm(false);
+    fileInputRef.current.click();
   };
 
-  const handleMsgChange = (e) => {
+  const handleInputChange = (e) => {
     if (type === 'text') {
       const value = e.target.value;
       setMessage(value);
     } else if (type === 'file') {
-      const file = e.target.files[0];
+      const file = fileInputRef.current.files[0];
       if (file) {
         setIsUser(true);
         const reader = new FileReader();
+        // 파일을 읽어서 이미지 URL을 생성
+        reader.readAsDataURL(file);
         reader.onloadend = () => {
           // 파일의 이미지 URL
           const fileUrl = reader.result;
@@ -95,12 +86,10 @@ export default function ChatRoomPage() {
           if (arrMessages.length < newMsgArray.length) {
             setScrollDown(true);
           }
-          setarrMessages(newMsgArray);
+          setarrMessages((prev) => [...prev, newImageMsg]);
         };
-
-        // 파일을 읽어서 이미지 URL을 생성
-        reader.readAsDataURL(file);
         setType('text');
+        fileInputRef.current.value = '';
       }
     }
   };
@@ -125,10 +114,10 @@ export default function ChatRoomPage() {
         setScrollDown(true);
       }
       setarrMessages(newMsgArray);
-    }
 
-    // input value값 초기화
-    setMessage('');
+      // input value값 초기화
+      setMessage('');
+    }
   };
 
   //scroll아래로 이동하기
@@ -164,7 +153,6 @@ export default function ChatRoomPage() {
                   <p>{chat}</p>
                 </ChatText>
                 <ChatTime>
-                  <span>{`${hours}:${minutes}`}</span>
                 </ChatTime>
               </ChatBox>
             ))
@@ -190,29 +178,20 @@ export default function ChatRoomPage() {
                   </>
                 )}
                 <ChatTime isUser={isUser}>
-                  <span>{`${message.timestamp.getHours()}:${message.timestamp.getMinutes()}`}</span>
                 </ChatTime>
               </ChatBox>
             ))}
-
-          {isShowConfirm && (
-            <Confirm
-              type='upload'
-              object='file'
-              setIsShowConfirm={setIsShowConfirm}
-              onClick={handleClickConfirm}
-            />
-          )}
         </ChatRoomContainer>
       </ChatRoomWrapper>
       <RoundedBottomInput
+        ref={fileInputRef}
         type={type}
         placeholder={'메시지를 보내세요'}
-        value={message}
         onClick={handleInputClick}
-        onChange={handleMsgChange}
+        onChange={handleInputChange}
         onSubmit={handleShowMsg}
         isChat={true}
+        value={message}
       />
       {/* 모달 열기 */}
       {isShow && (
