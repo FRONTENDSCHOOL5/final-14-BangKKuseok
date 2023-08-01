@@ -2,15 +2,18 @@ import React from 'react';
 import BasicLayout from '../../../../layout/BasicLayout';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FollowerWrapper, FollowerList, FollowItem } from './FollowersPageStyle';
-import { useInfiniteQuery, useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import { getFollowers } from '../../../../api/followApi';
 import UserSimpleInfo from '../../../../components/common/UserSimpleInfo/UserSimpleInfo/UserSimpleInfo';
 import useObserver from '../../../../hooks/useObserver';
-import { getMyProfile } from '../../../../api/profileApi';
+import { useRecoilValue } from 'recoil';
+import { myProfileDataAtom } from '../../../../atoms/myProfile';
 
 export default function FollowersPage() {
   const navigate = useNavigate();
   const accountname = useLocation().state.accountname;
+
+  const myProfileData = useRecoilValue(myProfileDataAtom);
 
   const {
     data: followers,
@@ -34,8 +37,6 @@ export default function FollowersPage() {
   );
 
   const observerRef = useObserver(hasNextPage, fetchNextPage, isLoading);
-
-  const { data: myProfileData } = useQuery('myProfile', getMyProfile);
 
   const handleClickBackButton = () => {
     navigate(-1);
