@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import BasicLayout from '../../../layout/BasicLayout';
 import RoundedBottomInput from '../../../components/common/Input/RoundedBottomInput/RoundedBottomInput';
 import BottomSheet from '../../../components/common/BottomSheet/BottomSheet';
 import ListModal from '../../../components/common/BottomSheet/ListModal';
-import Confirm from '../../../components/common/Confirm/Confirm';
-import Img from '../../../assets/images/profile.png';
 import {
   ChatRoomWrapper,
   ChatRoomContainer,
@@ -22,21 +20,34 @@ export default function ChatRoomPage() {
 
   const [isShow, setIsShow] = useState(false);
   const [modalType, setModalType] = useState('');
-  const [isShowConfirm, setIsShowConfirm] = useState(false);
 
   const [type, setType] = useState('text');
   const [message, setMessage] = useState('');
-  const [chatMessages, setChatMessages] = useState([]);
   const [arrMessages, setarrMessages] = useState([]);
 
-  const [imgUpload, setImgUpload] = useState(true);
   const [isUser, setIsUser] = useState(false);
 
   const bottomRef = useRef(null);
   const [scrollDown, setScrollDown] = useState(false);
 
+  const fileInputRef = useRef(null);
+
   const navigate = useNavigate();
 
+  // 오전, 오후 시간 반환 함수
+  const handleHours = (num) =>
+    num < 12 ? '오전 ' + num : num === 12 ? '오후 ' + num : '오후 ' + (num - 12);
+  // 숫자가 한 자리일 때 두 자리로 변환하는 함수
+  const padZero = (num) => (num < 10 ? '0' + num : num);
+
+  // 시간, 분 정보 추출
+  const date = new Date();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const formattedHours = handleHours(hours);
+  const formattedMinutes = padZero(minutes);
+
+  ////// header //////
   // 모달창 열기
   const handleClickRightButton = () => {
     setModalType('chat');
@@ -50,53 +61,44 @@ export default function ChatRoomPage() {
     navigate('/chat');
   };
 
-  // 시간, 분 정보 추출
-  const date = new Date();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-
-  // 버튼 클릭하면 실행
-  const handleBtnClick = (e) => {
-    setType('text');
-    if (e.target.tagName.toLowerCase() === 'img') {
-      setIsShowConfirm(true);
-    } else {
-      setIsShowConfirm(false);
-    }
-  };
-
-  // 업로드 버튼을 눌렀을 때
-  const handleClickConfirm = (e) => {
+  ////// bottom input //////
+  // input 클릭하면 실행
+  const handleInputClick = (e) => {
     setType('file');
-    // 이미지를 저장
-    const newMessage = {
-      content: Img,
-      isUser: true,
-      timestamp: new Date(),
-      type: 'file',
-    };
-
-    setChatMessages((prevMessages) => [...prevMessages, newMessage]);
-    const newMsgArray = [...arrMessages, newMessage];
-    if (arrMessages.length < newMsgArray.length) {
-      setScrollDown(true);
-    }
-    setarrMessages(newMsgArray);
-
-    // confirm창 닫기
-    setIsShowConfirm(false);
+    fileInputRef.current.click();
   };
 
-  // 메시지 입력
-  useEffect(() => {
-    setChatMessages((prevMessages) => [...prevMessages, message]);
-    // setImgUpload(true);
-  }, [message]);
-
-  const handleMsgChange = (e) => {
+  const handleInputChange = (e) => {
     if (type === 'text') {
       const value = e.target.value;
       setMessage(value);
+    } else if (type === 'file') {
+      const file = fileInputRef.current.files[0];
+      if (file) {
+        setIsUser(true);
+        const reader = new FileReader();
+        // 파일을 읽어서 이미지 URL을 생성
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          // 파일의 이미지 URL
+          const fileUrl = reader.result;
+          const newImageMsg = {
+            content: fileUrl,
+            isUser: true,
+            timestamp: new Date(),
+            type: 'image',
+          };
+
+          const newMsgArray = [...arrMessages, newImageMsg];
+
+          if (arrMessages.length < newMsgArray.length) {
+            setScrollDown(true);
+          }
+          setarrMessages((prev) => [...prev, newImageMsg]);
+        };
+        setType('text');
+        fileInputRef.current.value = '';
+      }
     }
   };
 
@@ -114,16 +116,15 @@ export default function ChatRoomPage() {
         type: 'text',
       };
 
-      setChatMessages((prevMessages) => [...prevMessages, newMessage]);
-
       const newMsgArray = [...arrMessages, newMessage];
+
       if (arrMessages.length < newMsgArray.length) {
         setScrollDown(true);
       }
       setarrMessages(newMsgArray);
 
+      // input value값 초기화
       setMessage('');
-      setImgUpload(true);
     }
   };
 
@@ -160,7 +161,7 @@ export default function ChatRoomPage() {
                   <p>{chat}</p>
                 </ChatText>
                 <ChatTime>
-                  <span>{`${hours}:${minutes}`}</span>
+                  <span>{`${formattedHours}:${formattedMinutes}`}</span>
                 </ChatTime>
               </ChatBox>
             ))
@@ -186,29 +187,25 @@ export default function ChatRoomPage() {
                   </>
                 )}
                 <ChatTime isUser={isUser}>
-                  <span>{`${message.timestamp.getHours()}:${message.timestamp.getMinutes()}`}</span>
+                  <span>{`${handleHours(message.timestamp.getHours())}:${padZero(
+                    message.timestamp.getMinutes(),
+                  )}`}</span>
                 </ChatTime>
               </ChatBox>
             ))}
-
-          {isShowConfirm && (
-            <Confirm
-              type='upload'
-              object='file'
-              setIsShowConfirm={setIsShowConfirm}
-              onClick={handleClickConfirm}
-            />
-          )}
         </ChatRoomContainer>
       </ChatRoomWrapper>
       <RoundedBottomInput
-        isChat={true}
+        ref={fileInputRef}
+        type={type}
         placeholder={'메시지를 보내세요'}
-        value={message}
-        onClick={handleBtnClick}
-        onChange={handleMsgChange}
+        onClick={handleInputClick}
+        onChange={handleInputChange}
         onSubmit={handleShowMsg}
+        isChat={true}
+        value={message}
       />
+      {/* 모달 열기 */}
       {isShow && (
         <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
           <ListModal type={modalType} onClick={handleClickListItem}></ListModal>
