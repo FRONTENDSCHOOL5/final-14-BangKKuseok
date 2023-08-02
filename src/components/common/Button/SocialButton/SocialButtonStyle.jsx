@@ -30,7 +30,6 @@ const SOCIALS = {
 const StyledButton = styled.button`
   ${(p) => p.social}
 
-  z-index: 10;
   min-width: 322px;
   padding: 15px 14px;
   border-radius: 14px;
