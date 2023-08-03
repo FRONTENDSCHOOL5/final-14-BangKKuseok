@@ -21,6 +21,9 @@ import {
 import ProductTag from '../ProductTag/ProductTag';
 import useBubbleLocation from '../../../hooks/useBubbleLocation';
 import { MOUSEBENCHMARK } from '../../../constants/common';
+import { useQuery } from 'react-query';
+import { getMyProfile } from '../../../api/profileApi';
+import { getProducts } from '../../../api/productApi';
 
 export default function PostProductTag({ postImg, setIsBtnActive }) {
   //태그추가 단계 : 클릭 유도 / 상품목록 확인 / 태그와 버블 / 상품태그 추가
@@ -30,9 +33,22 @@ export default function PostProductTag({ postImg, setIsBtnActive }) {
   const [isMouseMove, setIsMouseMove] = useState(false);
   const [mouseLoc, setMouseLoc] = useRecoilState(mouseLocAtom);
   const selectedItems = useRecoilValue(selectedProductsAtom);
-  const userItems = useRecoilValue(userProductsAtom);
+  const [userItems, setUserItems] = useRecoilState(userProductsAtom);
   const canSeletedItems = useRecoilValue(canSelectProductSelector);
   const { xLeftBenchmark, xRightBenchmark, yLeftBenchmark, yRightBenchmark } = MOUSEBENCHMARK;
+
+  const { data: myProfileData } = useQuery('myProfile', getMyProfile);
+  // 상품 목록 정보 가져오기
+  const { data: myProductData } = useQuery(
+    ['myProduct', myProfileData],
+    () => getProducts(myProfileData.accountname),
+    {
+      enabled: !!myProfileData,
+      onSuccess(data) {
+        setUserItems(data);
+      },
+    },
+  );
 
   useEffect(() => {
     if (selectedItems.length > 0) {

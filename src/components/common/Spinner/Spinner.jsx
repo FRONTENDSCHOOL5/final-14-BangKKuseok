@@ -20,7 +20,7 @@ const rotator = keyframes`
 
 `;
 const StyledSpinner = styled.div`
-  height: ${(p) => (p.type === 'carousel' ? '404px' : '100vh')};
+  height: ${(p) => (p.type === 'carousel' ? '404px' : p.type === 'follow' ? '16px' : '100vh')};
   margin-top: ${(p) => (p.type === 'carousel' ? '-60px' : '0')};
   display: flex;
   align-items: center;
@@ -28,6 +28,7 @@ const StyledSpinner = styled.div`
 
   svg {
     animation: ${rotator} 1s linear infinite;
+    height: ${(p) => (p.type === 'follow' ? '15px' : '45px')};
   }
 
   circle {

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Furniture from './Furniture/Furniture';
 import WhiteLogo from '../../../assets/images/logo-white.png';
 import SocialButton from '../../common/Button/SocialButton/SocialButton';
 import spotLightImg from '../../../assets/images/spotlight.png';
+import rotateImg from '../../../assets/images/rotate-icon.png';
 import {
   MainPageWrapper,
   WhiteLogoImg,
@@ -10,11 +12,11 @@ import {
   AccountSignUpBox,
   CanvasBox,
   BottomSection,
-  BackgroundImg,
 } from './MainStyle';
-import Furniture from './Furniture/Furniture';
 
 export default function Main({ onClickLoginLink }) {
+  const [isRotate, setIsRotate] = useState(true);
+
   const handleGotoLogin = () => {
     onClickLoginLink();
   };
@@ -22,10 +24,11 @@ export default function Main({ onClickLoginLink }) {
   return (
     <MainPageWrapper>
       <WhiteLogoImg src={WhiteLogo} />
-      <CanvasBox>
-        <Furniture />
+      <CanvasBox spotLightImg={spotLightImg} rotateImg={rotateImg} isRotate={isRotate}>
+        <div>
+          <Furniture setIsRotate={setIsRotate} />
+        </div>
       </CanvasBox>
-      <BackgroundImg src={spotLightImg} alt='배경 조명 이미지' />
       <BottomSection>
         <BtnBox>
           <SocialButton social='mail' onClick={handleGotoLogin}>

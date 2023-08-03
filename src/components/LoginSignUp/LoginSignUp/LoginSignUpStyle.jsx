@@ -1,22 +1,21 @@
 import styled from 'styled-components';
 
-export const SignUpHeader = styled.div`
+export const LoginSignUpWrapper = styled.form`
+  box-shadow: rgba(105, 80, 80, 0.08) 0px -3px 20px;
   width: clamp(390px, 100%, 720px);
   min-height: 100vh;
   margin: 0 auto;
-  position: relative;
   background-color: ${({ theme }) => theme.colors.white};
   position: relative;
 `;
 
-export const SignUpLogo = styled.h1`
+export const LoginSignUpLogo = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.lg};
   text-align: center;
   padding-top: 55px;
   margin-bottom: 40px;
 `;
-
-export const SignUpBottomBox = styled.div`
+export const BottomBox = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -25,7 +24,7 @@ export const SignUpBottomBox = styled.div`
   }
 `;
 
-export const SignUpGoBack = styled.span`
+export const LinkWrapper = styled.span`
   margin: 24px auto 0;
   border: none;
   font-size: ${({ theme }) => theme.fontSize.xs};

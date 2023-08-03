@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/common/Navbar/Navbar';
 
 const NoneDataWrapper = styled(NoneFeedWrapper)`
+  width: clamp(390px, 100%, 720px);
+  margin: auto;
+  background-color: #fff;
   & > img {
     width: 240px;
     margin-bottom: 6px;
