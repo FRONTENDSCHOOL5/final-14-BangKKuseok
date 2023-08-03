@@ -97,7 +97,7 @@ export const StyledUserIcon = styled(UserIcon)`
 `;
 
 export const NavbarLabel = styled.span`
-  font-size: 1rem;
+  font-size: ${({ theme }) => theme.fontSize.xs};
   margin-top: 6px;
   color: ${({ theme }) => theme.colors.gray300};
 
