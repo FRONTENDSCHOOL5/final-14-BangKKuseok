@@ -11,7 +11,7 @@ import ProductBubble from '../ProductBubble/ProductBubble';
 import BottomSheet from '../../common/BottomSheet/BottomSheet';
 import BasicModal from '../../common/BottomSheet/BasicModal';
 import ModalProductList from '../ModalProductList/ModalProductList';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   canSelectProductSelector,
   mouseLocAtom,
@@ -25,7 +25,7 @@ import { useQuery } from 'react-query';
 import { getMyProfile } from '../../../api/profileApi';
 import { getProducts } from '../../../api/productApi';
 
-export default function PostProductTag({ postImg, setIsBtnActive }) {
+export default function PostProductTag({ postImg }) {
   //태그추가 단계 : 클릭 유도 / 상품목록 확인 / 태그와 버블 / 상품태그 추가
   const [tagStep, setTagStep] = useState('클릭 유도');
   const [isBubbleShow, setIsBubbleShow] = useState(true);
@@ -33,7 +33,7 @@ export default function PostProductTag({ postImg, setIsBtnActive }) {
   const [isMouseMove, setIsMouseMove] = useState(false);
   const [mouseLoc, setMouseLoc] = useRecoilState(mouseLocAtom);
   const selectedItems = useRecoilValue(selectedProductsAtom);
-  const [userItems, setUserItems] = useRecoilState(userProductsAtom);
+  const setUserItems = useSetRecoilState(userProductsAtom);
   const canSeletedItems = useRecoilValue(canSelectProductSelector);
   const { xLeftBenchmark, xRightBenchmark, yLeftBenchmark, yRightBenchmark } = MOUSEBENCHMARK;
 
@@ -94,15 +94,7 @@ export default function PostProductTag({ postImg, setIsBtnActive }) {
         setTagStep('태그와 버블');
       }
     }
-  }, [isMouseMove, isShow, selectedItems, setIsBtnActive, setMouseLoc, tagStep]);
-
-  useEffect(() => {
-    if (userItems.length === 0 || selectedItems.length >= 1) {
-      setIsBtnActive(true);
-    } else {
-      setIsBtnActive(false);
-    }
-  }, [selectedItems, setIsBtnActive, userItems]);
+  }, [isMouseMove, isShow, selectedItems, setMouseLoc, tagStep]);
 
   const handleClickModalOpen = () => {
     setIsShow((prev) => !prev);
