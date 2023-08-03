@@ -11,6 +11,8 @@ import Gallery from '../../components/common/Gallery/Gallery';
 import { filterPosts } from '../../utils/filterPosts';
 import Spinner from '../../components/common/Spinner/Spinner';
 import { topLikedPosts as topLikedMockPosts } from '../../mock/mockData';
+import useScroll from '../../hooks/useScroll';
+import TopButton from '../../components/common/Button/TopButton/TopButton';
 
 const Message = styled.p`
   font-weight: 500;
@@ -34,6 +36,8 @@ const PostWrapper = styled.section`
 `;
 
 export default function HomePage() {
+  const wrapperRef = useScroll();
+
   const [isClickSearchButton, setIsClickSearchButton] = useState(false);
   const [filteredAllPosts, setFilteredAllPosts] = useState([]);
   const [filteredPosts, setfilteredPosts] = useState([]);
@@ -135,7 +139,7 @@ export default function HomePage() {
       {isClickSearchButton ? (
         <Search onClickLeftButton={handleClickLeftButton} />
       ) : (
-        <BasicLayout type='home' onClickRightButton={handleClickRightButton}>
+        <BasicLayout type='home' onClickRightButton={handleClickRightButton} ref={wrapperRef}>
           {isRecent ? (
             <Carousel data={topLikedPosts.length > 0 ? topLikedPosts : topLikedMockPosts} />
           ) : (
@@ -151,6 +155,7 @@ export default function HomePage() {
               <Gallery data={filterPosts(isTabClick ? filteredPosts : filteredAllPosts)} />
             </PostWrapper>
           )}
+          <TopButton reference={wrapperRef} />
         </BasicLayout>
       )}
     </>

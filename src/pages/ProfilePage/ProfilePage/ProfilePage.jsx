@@ -20,6 +20,8 @@ import { deleteProduct, getProducts } from '../../../api/productApi';
 import { deletePost, getMyPost, reportPost } from '../../../api/postApi';
 import { TOAST } from '../../../constants/common';
 import { MYPOSTLIMIT } from '../../../constants/pagenation';
+import TopButton from '../../../components/common/Button/TopButton/TopButton';
+import useScroll from '../../../hooks/useScroll';
 
 const ProfilePageWrapper = styled.main``;
 
@@ -32,6 +34,7 @@ const Message = styled.p`
 `;
 
 export default function ProfilePage() {
+  const wrapperRef = useScroll();
   const navigate = useNavigate();
   const { accountname: accountnameByParams } = useParams();
 
@@ -229,6 +232,7 @@ export default function ProfilePage() {
       type={'profile'}
       onClickLeftButton={() => navigate(-1)}
       onClickRightButton={handleClickMoreProfileButton}
+      ref={wrapperRef}
     >
       {!isProfileLoading && !isMyProfileLoading && !isMyPostLoading && !isProductLoading && (
         <ProfilePageWrapper>
@@ -255,6 +259,7 @@ export default function ProfilePage() {
               <Message>작성된 게시물이 없습니다.</Message>
             )}
           </>
+          <TopButton reference={wrapperRef} />
 
           {/* -- BottomSheet */}
           <BottomSheet isShow={isShowMoreProfile || isShowMorePost} onClick={handleClickCloseModal}>
