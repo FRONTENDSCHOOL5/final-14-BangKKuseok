@@ -17,9 +17,10 @@ export default function useScroll() {
   }, 500);
 
   useEffect(() => {
-    reference.current.addEventListener('scroll', handleSetScrollY);
+    const referenceValue = reference.current;
+    referenceValue.addEventListener('scroll', handleSetScrollY);
     return () => {
-      reference.current?.removeEventListener('scroll', handleSetScrollY);
+      referenceValue.removeEventListener('scroll', handleSetScrollY);
     };
   });
 
