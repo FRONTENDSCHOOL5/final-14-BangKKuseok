@@ -10,14 +10,7 @@ export const CommentList = styled.ul`
   border-top: 1px solid ${({ theme }) => theme.colors.gray100};
 `;
 
-export default function CommentSection({
-  data,
-  myProfile,
-  setIsShow,
-  setModalType,
-  postId,
-  setCommentId,
-}) {
+export default function CommentSection({ data, setIsShow, setModalType, postId, setCommentId }) {
   //댓글 작성하기
   const queryClient = useQueryClient();
   const uploadCommentMutation = useMutation(uploadComment, {
@@ -59,7 +52,6 @@ export default function CommentSection({
           <CommentItem
             key={comment.id}
             data={comment}
-            myProfile={myProfile}
             setModalType={setModalType}
             setIsShow={setIsShow}
             setCommentId={setCommentId}

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { postLogin } from '../../api/loginApi';
 import LoginSignUp from '../../components/LoginSignUp/LoginSignUp/LoginSignUp';
+import { useSetRecoilState } from 'recoil';
+import { myProfileDataAtom } from '../../atoms/myProfile';
 
 export default function LoginPage() {
   const [preData, setPreData] = useState({
@@ -10,6 +12,7 @@ export default function LoginPage() {
     password: '123123',
   });
   const [message, setMessage] = useState('');
+  const setMyProfile = useSetRecoilState(myProfileDataAtom);
 
   const navigate = useNavigate();
 
@@ -20,6 +23,8 @@ export default function LoginPage() {
       } else {
         // 성공
         localStorage.setItem('token', formData.user.token);
+        localStorage.setItem('myProfileData', JSON.stringify(formData.user));
+        setMyProfile(formData.user);
         navigate('/home');
       }
     },

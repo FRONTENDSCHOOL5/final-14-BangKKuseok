@@ -9,13 +9,13 @@ import Confirm from '../../../components/common/Confirm/Confirm';
 import { PostPageWrapper } from './PostPageStyle';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deletePost, getPostDetail, reportPost } from '../../../api/postApi';
-import { getMyProfile } from '../../../api/profileApi';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { isUploadorEditBeforeAtom } from '../../../atoms/post';
 import Spinner from '../../../components/common/Spinner/Spinner';
 import { deleteComment, getComments, reportComment } from '../../../api/commentApi';
 import CommentSection from '../../../components/PostDetail/CommentSection/CommentSection';
 import { TOAST } from '../../../constants/common';
+import { myProfileDataAtom } from '../../../atoms/myProfile';
 
 export default function PostPage() {
   const { postId } = useParams();
@@ -27,6 +27,9 @@ export default function PostPage() {
   const [modalType, setModalType] = useState('userPost');
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [confirmType, setConfirmType] = useState({ type: 'report', object: 'comment' });
+
+  const myProfileData = useRecoilValue(myProfileDataAtom);
+
   const navigate = useNavigate();
 
   //게시글 상세 정보받기
@@ -65,17 +68,6 @@ export default function PostPage() {
       setScrollDown(false);
     }
   }, [scrollDown]);
-
-  //내 프로필 정보받기
-  const { data: myProfileData, isLoading: isMyProfileLoading } = useQuery(
-    'myProfileData',
-    () => getMyProfile(),
-    {
-      onError: (error) => {
-        console.log(error);
-      },
-    },
-  );
 
   //게시글 삭제하기
   const deletePostMutation = useMutation(deletePost, {
@@ -196,12 +188,12 @@ export default function PostPage() {
   };
 
   //로딩 이미지
-  if (!commentsData || !postData || !myProfileData) {
+  if (!commentsData || !postData) {
     return <Spinner />;
   }
   return (
     <>
-      {commentsData && postData && myProfileData && (
+      {commentsData && postData && (
         <BasicLayout
           type='post'
           isNonNav
@@ -215,7 +207,6 @@ export default function PostPage() {
             <PostCard data={postData} commentCount={commentCount} moreInfo />
             <CommentSection
               data={commentsData}
-              myProfile={myProfileData}
               setModalType={setModalType}
               setIsShow={setIsShow}
               postId={postId}

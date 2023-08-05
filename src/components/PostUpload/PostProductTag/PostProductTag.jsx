@@ -18,11 +18,11 @@ import {
   selectedProductsAtom,
   userProductsAtom,
 } from '../../../atoms/post';
+import { myProfileDataAtom } from '../../../atoms/myProfile';
 import ProductTag from '../ProductTag/ProductTag';
 import useBubbleLocation from '../../../hooks/useBubbleLocation';
 import { MOUSEBENCHMARK } from '../../../constants/common';
 import { useQuery } from 'react-query';
-import { getMyProfile } from '../../../api/profileApi';
 import { getProducts } from '../../../api/productApi';
 
 export default function PostProductTag({ postImg }) {
@@ -31,19 +31,20 @@ export default function PostProductTag({ postImg }) {
   const [isBubbleShow, setIsBubbleShow] = useState(true);
   const [isShow, setIsShow] = useState(false);
   const [isMouseMove, setIsMouseMove] = useState(false);
+
   const [mouseLoc, setMouseLoc] = useRecoilState(mouseLocAtom);
   const selectedItems = useRecoilValue(selectedProductsAtom);
   const setUserItems = useSetRecoilState(userProductsAtom);
   const canSeletedItems = useRecoilValue(canSelectProductSelector);
+  const myProfileData = useRecoilValue(myProfileDataAtom);
+
   const { xLeftBenchmark, xRightBenchmark, yLeftBenchmark, yRightBenchmark } = MOUSEBENCHMARK;
 
-  const { data: myProfileData } = useQuery('myProfile', getMyProfile);
   // 상품 목록 정보 가져오기
   const { data: myProductData } = useQuery(
     ['myProduct', myProfileData],
     () => getProducts(myProfileData.accountname),
     {
-      enabled: !!myProfileData,
       onSuccess(data) {
         setUserItems(data);
       },
