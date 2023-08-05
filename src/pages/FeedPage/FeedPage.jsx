@@ -13,8 +13,11 @@ import ListModal from '../../components/common/BottomSheet/ListModal';
 import Confirm from '../../components/common/Confirm/Confirm';
 import Search from '../SearchPage/SearchPage';
 import useObserver from '../../hooks/useObserver';
+import useScroll from '../../hooks/useScroll';
+import TopButton from '../../components/common/Button/TopButton/TopButton';
 
 export default function FeedPage() {
+  const wrapperRef = useScroll();
   const [isShow, setIsShow] = useState(false);
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState();
@@ -113,7 +116,7 @@ export default function FeedPage() {
       {isClickSearchButton ? (
         <Search onClickLeftButton={handleClickLeftButton} />
       ) : (
-        <BasicLayout type='feed' onClickRightButton={handleClickRightButton}>
+        <BasicLayout type='feed' onClickRightButton={handleClickRightButton} ref={wrapperRef}>
           <FeedPageWrapper>
             <PostList
               selectedTab='list'
@@ -123,11 +126,16 @@ export default function FeedPage() {
             />
           </FeedPageWrapper>
           <div ref={observerRef} style={{ minHeight: '1px' }}></div>
+          <TopButton reference={wrapperRef} />
+
+          {/* -- BottomSheet */}
           {isShow && (
             <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
               <ListModal type='userPost' onClick={handleClickListItem} />
             </BottomSheet>
           )}
+
+          {/* -- Confirm */}
           {isShowConfirm && (
             <Confirm
               type='report'

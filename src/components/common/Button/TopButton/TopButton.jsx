@@ -3,7 +3,6 @@ import topBtn from '../../../../assets/images/top-btn.png';
 import debounce from '../../../../utils/debounce';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-const regex = new RegExp(/profile\//);
 
 const StyledTopButton = styled.button`
   position: fixed;
@@ -17,29 +16,24 @@ const StyledTopButton = styled.button`
 `;
 
 export default function TopButton({ reference }) {
-  const { pathname } = useLocation();
   const [isShow, setIsShow] = useState(false);
 
   const handleDetectScrollY = debounce(() => {
-    if (
-      pathname === '/home' ||
-      pathname === '/feed' ||
-      pathname === '/profile' ||
-      regex.test(pathname)
-    ) {
-      if (reference.current.scrollTop > 0) {
-        setIsShow(true);
-      } else {
-        setIsShow(false);
-      }
+    if (reference.current.scrollTop > 0) {
+      setIsShow(true);
+    } else {
+      setIsShow(false);
     }
   }, 100);
 
   useEffect(() => {
-    reference.current.addEventListener('scroll', handleDetectScrollY);
-    return () => {
-      reference.current?.removeEventListener('scroll', handleDetectScrollY);
-    };
+    const referenceValue = reference.current;
+    if (referenceValue) {
+      referenceValue.addEventListener('scroll', handleDetectScrollY);
+      return () => {
+        referenceValue.removeEventListener('scroll', handleDetectScrollY);
+      };
+    }
   });
 
   const handleClickTopButton = () => {
@@ -47,10 +41,8 @@ export default function TopButton({ reference }) {
   };
 
   return (
-    <>
-      <StyledTopButton type='button' onClick={handleClickTopButton} isShow={isShow}>
-        <img src={topBtn} alt='상단 이동 버튼' />
-      </StyledTopButton>
-    </>
+    <StyledTopButton type='button' onClick={handleClickTopButton} isShow={isShow}>
+      <img src={topBtn} alt='상단 이동 버튼' />
+    </StyledTopButton>
   );
 }
