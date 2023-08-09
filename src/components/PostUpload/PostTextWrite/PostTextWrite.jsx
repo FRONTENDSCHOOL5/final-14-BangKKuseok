@@ -1,19 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ProductBubble from '../ProductBubble/ProductBubble';
 import BottomSheet from '../../common/BottomSheet/BottomSheet';
-import { useRecoilValue } from 'recoil';
-import { selectedProductsAtom } from '../../../atoms/post';
 import ProductTag from '../ProductTag/ProductTag';
 import { ImgBox, TagBox } from '../PostProductTag/PostProductTagStyle';
 import { SPACES } from '../../../constants/common';
 import { ModalSpaceList, PostTextWriteWrapper, SelectSpaceBtn } from './PostTextWriteStyle';
 import BasicModal from '../../common/BottomSheet/BasicModal';
 
-export default function PostTextWrite({ postImg, setIsBtnActive, setContent }) {
+export default function PostTextWrite({ postImg, setIsBtnActive, setContent, selectedProducts }) {
   //바텀시트 열기 변수
   const [isShow, setIsShow] = useState(false);
-  //선택된 데이터
-  const selectedItems = useRecoilValue(selectedProductsAtom);
 
   //공간과,게시글 내용
   const [space, setSpace] = useState('공간을 선택해주세요');
@@ -59,7 +55,7 @@ export default function PostTextWrite({ postImg, setIsBtnActive, setContent }) {
         <ImgBox>
           <img src={postImg} alt='게시글 이미지' />
           <TagBox>
-            {selectedItems.map((item) => (
+            {selectedProducts.map((item) => (
               <li key={item.id}>
                 <ProductBubble data={item} />
                 <ProductTag data={item} />
