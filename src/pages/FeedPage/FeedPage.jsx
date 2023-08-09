@@ -15,6 +15,7 @@ import Search from '../SearchPage/SearchPage';
 import useObserver from '../../hooks/useObserver';
 import useScroll from '../../hooks/useScroll';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
+import { FEEDPOSTLIMIT } from '../../constants/pagenation';
 
 export default function FeedPage() {
   const wrapperRef = useScroll();
@@ -45,8 +46,8 @@ export default function FeedPage() {
     ({ pageParam = { skip: 0 } }) => getFeedPost({ skip: pageParam.skip }),
     {
       getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length > 0 ? allPages.length * 10 : 0;
-        return lastPage.data.length < 10 ? undefined : { skip: nextPage };
+        const nextPage = allPages.length > 0 ? allPages.length * FEEDPOSTLIMIT : 0;
+        return lastPage.data.length < FEEDPOSTLIMIT ? undefined : { skip: nextPage };
       },
       select: (data) => {
         return {
