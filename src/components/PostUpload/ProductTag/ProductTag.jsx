@@ -8,11 +8,11 @@ const StyledProductTag = styled.img`
   border-radius: 50%;
   box-shadow: 0px 0px 3px rgba(62, 62, 62, 0.3);
   transform: translate(-50%, -50%);
-  left: ${({ mouseLoc }) => mouseLoc.x + '%'};
-  top: ${({ mouseLoc }) => mouseLoc.y + '%'};
+  left: ${({ pinLoc }) => pinLoc.x + '%'};
+  top: ${({ pinLoc }) => pinLoc.y + '%'};
   z-index: 0;
 `;
 
 export default function ProductTag({ data }) {
-  return <StyledProductTag src={addTagBtn} alt='상품 말풍선 태그 버튼' mouseLoc={data.mouseLoc} />;
+  return <StyledProductTag src={addTagBtn} alt='상품 말풍선 태그 버튼' pinLoc={data.pinLoc} />;
 }
