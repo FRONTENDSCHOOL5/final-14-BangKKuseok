@@ -1,8 +1,9 @@
+import { ALLPOSTLIMIT } from '../constants/pagenation';
 import { accessInstance } from './axiosInstance';
 
-export const getAllPost = async ({ limit, skip }) => {
+export const getAllPost = async ({ skip }) => {
   try {
-    const response = await accessInstance.get(`/post?limit=${limit}&skip=${skip}`);
+    const response = await accessInstance.get(`/post?limit=${ALLPOSTLIMIT}&skip=${skip}`);
     const { posts } = response.data;
 
     return {

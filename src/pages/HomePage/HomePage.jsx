@@ -13,6 +13,7 @@ import Spinner from '../../components/common/Spinner/Spinner';
 import { topLikedPosts as topLikedMockPosts } from '../../mock/mockData';
 import useScroll from '../../hooks/useScroll';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
+import { ALLPOSTLIMIT } from '../../constants/pagenation';
 
 const Message = styled.p`
   font-weight: 500;
@@ -41,16 +42,12 @@ export default function HomePage() {
   const [isClickSearchButton, setIsClickSearchButton] = useState(false);
   const [filteredAllPosts, setFilteredAllPosts] = useState([]);
   const [filteredPosts, setfilteredPosts] = useState([]);
-  const [allPosts, setAllPosts] = useState([]);
   const [isTabClick, setIsTabClick] = useState(false);
 
-  const count = useRef(0);
-  const [isLast, setIsLast] = useState(false);
   const [isRecent, setIsRecent] = useState(false);
   const [topLikedPosts, setTopLikedPosts] = useState([]);
 
   const TOP_LIKED_POSTS_DAYS = 7;
-
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
   currentDate.setDate(currentDate.getDate() - TOP_LIKED_POSTS_DAYS);
@@ -59,21 +56,21 @@ export default function HomePage() {
     data: homePostData,
     isLoading: homeIsLoading,
     fetchNextPage: homeFetchNextPage,
+    hasNextPage,
   } = useInfiniteQuery(
     'homePostData',
-    ({ skip = count.current }) => getAllPost({ limit: 100, skip }),
+    ({ pageParam = { skip: 0 } }) => getAllPost({ skip: pageParam.skip }),
     {
-      getNextPageParam: (lastPage) => {
-        return lastPage.nextPage + 1;
+      cacheTime: 0,
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = allPages.length > 0 ? allPages.length * ALLPOSTLIMIT : 0;
+        return lastPage.data.length < ALLPOSTLIMIT ? undefined : { skip: nextPage };
       },
       onSuccess: (newData) => {
         const pageParam = newData.pageParams.length - 1;
-        setAllPosts([...newData.pages[pageParam].data]);
-        if (newData.pages[pageParam].isLast) {
-          setIsLast(true);
-        }
-
-        const allFiltered = allPosts.filter((post) => post.content?.includes('"space"'));
+        const allFiltered = newData.pages[pageParam].data.filter((post) =>
+          post.content?.includes('"space"'),
+        );
         setFilteredAllPosts((prevData) => [...prevData, ...allFiltered]);
       },
     },
@@ -85,26 +82,29 @@ export default function HomePage() {
 
   // 홈 피드 100개씩 불러오기
   useEffect(() => {
-    if (!isLast) {
+    if (hasNextPage) {
       homeFetchNextPage();
-      count.current += 100;
     }
-  }, [homePostData, homeIsLoading, isLast, homeFetchNextPage]);
+  }, [homePostData, homeIsLoading, homeFetchNextPage, hasNextPage]);
 
   // 캐러셀 필터링
   useEffect(() => {
-    const filteredRecentPosts = filteredAllPosts.filter((item) => {
-      const createdAt = new Date(item.createdAt);
-      if (createdAt <= currentDate) {
-        setIsRecent(true);
-        return false;
+    if (!isRecent) {
+      const filteredRecentPosts = filteredAllPosts.filter((item) => {
+        const createdAt = new Date(item.createdAt);
+        if (createdAt <= currentDate) {
+          setIsRecent(true);
+          return false;
+        }
+        return true;
+      });
+      if (filteredRecentPosts.length) {
+        setTopLikedPosts(
+          filteredRecentPosts.sort((a, b) => b.heartCount - a.heartCount).slice(0, 5),
+        );
+      } else {
+        setTopLikedPosts([]);
       }
-      return true;
-    });
-    if (filteredRecentPosts.length) {
-      setTopLikedPosts(filteredRecentPosts.sort((a, b) => b.heartCount - a.heartCount).slice(0, 5));
-    } else {
-      setTopLikedPosts([]);
     }
   }, [filteredAllPosts]);
 
