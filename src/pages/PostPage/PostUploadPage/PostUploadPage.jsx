@@ -6,13 +6,8 @@ import PostProductTag from '../../../components/PostUpload/PostProductTag/PostPr
 import PostTextWrite from '../../../components/PostUpload/PostTextWrite/PostTextWrite';
 import { useMutation } from 'react-query';
 import { uploadPost } from '../../../api/postApi';
-import { useResetRecoilState, useSetRecoilState } from 'recoil';
-import {
-  bubbleLocAtom,
-  isUploadorEditBeforeAtom,
-  mouseLocAtom,
-  selectedProductsAtom,
-} from '../../../atoms/post';
+import { useSetRecoilState } from 'recoil';
+import { isUploadorEditBeforeAtom } from '../../../atoms/post';
 
 export default function PostUploadPage() {
   const [step, setStep] = useState('사진 선택');
@@ -23,10 +18,8 @@ export default function PostUploadPage() {
 
   const [content, setContent] = useState({});
   const [postImg, setPostImg] = useState(null);
+  const [selectedProducts, setSelectedProducts] = useState([]);
   const [postId, setPostId] = useState(null);
-  const resetSelectedItems = useResetRecoilState(selectedProductsAtom);
-  const resetMouseLoc = useResetRecoilState(mouseLocAtom);
-  const resetBubbleLoc = useResetRecoilState(bubbleLocAtom);
 
   //포스트 업로드 함수
   const uploadPostMutation = useMutation(uploadPost, {
@@ -67,9 +60,6 @@ export default function PostUploadPage() {
       setIsBtnActive(false);
       setBtnText('등록');
     } else if (step === '게시글 작성') {
-      resetSelectedItems();
-      resetMouseLoc();
-      resetBubbleLoc();
       setIsUploadorEditBefore(true);
       uploadPostMutation.mutate({
         post: { content: JSON.stringify(content), image: postImg },
@@ -81,9 +71,20 @@ export default function PostUploadPage() {
     '사진 선택': (
       <PostImgUpload setImg={setPostImg} setIsBtnActive={setIsBtnActive} uploadedImg={postImg} />
     ),
-    '상품태그 추가': <PostProductTag postImg={postImg} />,
+    '상품태그 추가': (
+      <PostProductTag
+        postImg={postImg}
+        selectedProducts={selectedProducts}
+        setSelectedProducts={setSelectedProducts}
+      />
+    ),
     '게시글 작성': (
-      <PostTextWrite postImg={postImg} setIsBtnActive={setIsBtnActive} setContent={setContent} />
+      <PostTextWrite
+        postImg={postImg}
+        setIsBtnActive={setIsBtnActive}
+        setContent={setContent}
+        selectedProducts={selectedProducts}
+      />
     ),
   };
 

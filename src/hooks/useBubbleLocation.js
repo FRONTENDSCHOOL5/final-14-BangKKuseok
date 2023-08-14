@@ -1,12 +1,9 @@
-import { useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { bubbleLocAtom, mouseLocAtom } from '../atoms/post';
+import { useEffect, useState } from 'react';
 import { BUBBLEBENCHMARK } from '../constants/common';
 
-export default function useBubbleLocation() {
-  const setBubbleLoc = useSetRecoilState(bubbleLocAtom);
-  const mouseLoc = useRecoilValue(mouseLocAtom);
-  const { x, y } = mouseLoc;
+export default function useBubbleLocation(pinLoc) {
+  const [bubbleLoc, setBubbleLoc] = useState({ x: 50, y: 50, bubleUp: true, edgeLeft: 50 });
+  const { x, y } = pinLoc;
   const {
     leftBenchmark,
     rightBenchmark,
@@ -34,7 +31,7 @@ export default function useBubbleLocation() {
       bubbleUp: y >= yPositionBenchmark,
       edgeLeft: edgeLeft,
     });
-  }, [mouseLoc]);
+  }, [pinLoc]);
 
-  return null;
+  return bubbleLoc;
 }

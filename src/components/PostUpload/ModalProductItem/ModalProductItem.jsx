@@ -1,23 +1,25 @@
 import React from 'react';
 import Button from '../../common/Button/Button/Button';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { bubbleLocAtom, mouseLocAtom, selectedProductsAtom } from '../../../atoms/post';
 import { ModalProductItemWrapper, ProductInfoBox } from './ModalProductItemStyle';
 
-export default function ModalProductItem({ data, setIsShow, setTagStep, setIsBubbleShow }) {
+export default function ModalProductItem({
+  data,
+  setIsShow,
+  setTagStep,
+  setIsBubbleShow,
+  pinLoc,
+  bubbleLoc,
+  setSelectedProducts,
+}) {
   const { itemName, price, itemImage } = data;
   const { name } = JSON.parse(itemName);
-
-  const setSelectedItems = useSetRecoilState(selectedProductsAtom);
-  const mouseLoc = useRecoilValue(mouseLocAtom);
-  const bubbleLoc = useRecoilValue(bubbleLocAtom);
 
   // 상품선택하면
   const handleClickProduct = () => {
     //선택된 상품 데이터 1개 저장
-    setSelectedItems((prevSelectedItems) => [
+    setSelectedProducts((prevSelectedItems) => [
       ...prevSelectedItems,
-      { ...data, mouseLoc, bubbleLoc },
+      { ...data, pinLoc, bubbleLoc },
     ]);
 
     //바텀시트 닫고 버블 보이도록

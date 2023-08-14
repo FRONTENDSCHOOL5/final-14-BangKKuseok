@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const PostProductTagWrapper = styled.div`
   margin: 0 auto;
@@ -33,9 +33,9 @@ const TagBox = styled.ul`
   cursor: ${(p) => p.isPointer && 'pointer'};
 `;
 
-const GuideTagButton = styled.div.attrs(({ addTagBtn, mouseLoc }) => ({
+const GuideTagButton = styled.div.attrs(({ addTagBtn, pinLoc }) => ({
   style: {
-    background: `url(${addTagBtn}) no-repeat ${mouseLoc.x}% ${mouseLoc.y}% / 20px`,
+    background: `url(${addTagBtn}) no-repeat ${pinLoc.x}% ${pinLoc.y}% / 20px`,
   },
 }))`
   position: relative;
@@ -62,10 +62,10 @@ const bouncing = keyframes`
 }
 `;
 
-const BouncingCircle = styled.div.attrs(({ mouseLoc }) => ({
+const BouncingCircle = styled.div.attrs(({ pinLoc }) => ({
   style: {
-    left: mouseLoc.x + '%',
-    top: mouseLoc.y + '%',
+    left: pinLoc.x + '%',
+    top: pinLoc.y + '%',
   },
 }))`
   position: absolute;
