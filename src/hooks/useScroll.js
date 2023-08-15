@@ -10,7 +10,10 @@ export default function useScroll() {
   const [scrollMemory, setScrollMemory] = useRecoilState(scrollMemoryAtom);
 
   const handleSetScrollY = debounce(() => {
-    setScrollMemory({ ...scrollMemory, [pathname]: reference.current.scrollTop });
+    setScrollMemory({
+      ...scrollMemory,
+      [pathname]: reference.current ? reference.current.scrollTop : undefined,
+    });
   }, 500);
 
   useEffect(() => {
