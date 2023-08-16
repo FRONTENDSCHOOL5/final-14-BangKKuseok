@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
 	:root{
 		font-size: 10px;
 		background-color: #FFF6F0;
+		--vh: 100%;
 	}
 	body{
 		font-family: 'Pretendard', sans-serif;

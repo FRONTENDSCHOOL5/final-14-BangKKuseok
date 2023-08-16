@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const LoginSignUpWrapper = styled.form`
   box-shadow: rgba(105, 80, 80, 0.08) 0px -3px 20px;
   width: clamp(390px, 100%, 720px);
-  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
   margin: 0 auto;
   background-color: ${({ theme }) => theme.colors.white};
   position: relative;
