@@ -11,7 +11,7 @@ const fadeOut = keyframes`
 
 export const SplashPageWrapper = styled.div`
   width: clamp(390px, 100%, 720px);
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   position: relative;
   margin: auto;
   box-shadow: rgba(105, 80, 80, 0.08) 0px -3px 20px;
@@ -22,7 +22,7 @@ export const SplashPageWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 50vh;
+    gap: calc(var(--vh, 1vh) * 50);
     background-color: #fff;
   }
 `;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const UserProfileWrapper = styled.div`
   width: clamp(390px, 100%, 720px);
-  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
   margin: 0 auto;
   position: relative;
   background-color: ${({ theme }) => theme.colors.white};

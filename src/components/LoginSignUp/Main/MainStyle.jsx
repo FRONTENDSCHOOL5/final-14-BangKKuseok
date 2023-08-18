@@ -4,7 +4,7 @@ export const MainPageWrapper = styled.main`
   position: relative;
   width: clamp(390px, 100%, 720px);
   box-shadow: rgba(105, 80, 80, 0.08) 0px -3px 20px;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   margin: 0 auto;
   background-color: ${({ theme }) => theme.colors.subCoral};
   text-align: center;
@@ -19,7 +19,7 @@ export const WhiteLogoImg = styled.img`
   transform: translate(-50%, 0);
   width: 187px;
   max-width: calc(100% - 102px);
-  margin: 15vh auto 0;
+  margin: calc(var(--vh, 1vh) * 15) auto 0;
 `;
 
 const rustle = keyframes`
@@ -36,7 +36,7 @@ export const CanvasBox = styled.div`
   margin: 0 auto;
   background: url(${({ spotLightImg }) => spotLightImg}) no-repeat center / contain;
   width: 48%;
-  height: 64vh;
+  height: calc(var(--vh, 1vh) * 64);
   background-size: 90% 90%;
 
   @media screen and (max-width: 570px) {
@@ -45,7 +45,7 @@ export const CanvasBox = styled.div`
   }
 
   @media screen and (max-height: 811px) {
-    height: calc(90vh - 191px);
+    height: calc((var(--vh, 1vh) * 90) - 191px);
   }
 
   & > div {

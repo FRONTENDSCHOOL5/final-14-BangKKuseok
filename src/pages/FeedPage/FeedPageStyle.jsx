@@ -4,7 +4,7 @@ export const NoneFeedWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 58px);
+  height: calc((var(--vh, 1vh) * 100) - 58px);
   flex-direction: column;
 
   img {

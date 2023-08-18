@@ -41,7 +41,7 @@ export const BottomSheetDim = styled.div`
   position: fixed;
   top: 0;
   width: clamp(390px, 100%, 720px);
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   margin: 0 auto;
   z-index: 50;
   background-color: rgba(0, 0, 0, 0.3);
