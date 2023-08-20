@@ -2,13 +2,17 @@ import React from 'react';
 import ModalProductItem from '../ModalProductItem/ModalProductItem';
 import Button from '../../common/Button/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { canSelectProductSelector } from '../../../atoms/post';
 import { ModalProductListWrapper } from './ModalProductListStyle';
 
-export default function ModalProductList({ setIsShow, setTagStep, setIsBubbleShow }) {
-  const canSelectItems = useRecoilValue(canSelectProductSelector);
-
+export default function ModalProductList({
+  setIsShow,
+  setTagStep,
+  setIsBubbleShow,
+  pinLoc,
+  bubbleLoc,
+  setSelectedProducts,
+  canSelectProducts,
+}) {
   const navigate = useNavigate();
   const handleClickProductUploadButton = () => {
     navigate('/product/upload');
@@ -16,15 +20,18 @@ export default function ModalProductList({ setIsShow, setTagStep, setIsBubbleSho
 
   return (
     <ModalProductListWrapper>
-      {canSelectItems.length > 0 ? (
+      {canSelectProducts.length > 0 ? (
         <>
-          {canSelectItems.map((item) => (
+          {canSelectProducts.map((item) => (
             <ModalProductItem
               data={item}
               key={item.id}
               setIsShow={setIsShow}
               setTagStep={setTagStep}
               setIsBubbleShow={setIsBubbleShow}
+              pinLoc={pinLoc}
+              bubbleLoc={bubbleLoc}
+              setSelectedProducts={setSelectedProducts}
             />
           ))}
           <Button size='md' onClick={handleClickProductUploadButton}>

@@ -116,11 +116,7 @@ export default function ProfileCard({ profile, isMyProfile }) {
           </>
         ) : (
           <>
-            <Button
-              size='md'
-              variant='line'
-              onClick={() => navigate('/profile/edit', { state: profile })}
-            >
+            <Button size='md' variant='line' onClick={() => navigate('/profile/edit')}>
               프로필 수정
             </Button>
             <Button size='md' onClick={() => navigate('/product/upload')}>

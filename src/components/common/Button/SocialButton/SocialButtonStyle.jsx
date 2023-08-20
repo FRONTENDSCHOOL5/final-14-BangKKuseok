@@ -7,14 +7,23 @@ const SOCIALS = {
   mail: css`
     --border: 1px solid ${({ theme }) => theme.colors.mainCoral};
     --background: url(${mailIcon}) no-repeat left 1em center / 1.7em;
+    &:hover {
+      background-color: rgba(241, 88, 70, 0.2);
+    }
   `,
   kakao: css`
     --border: 1px solid ${({ theme }) => theme.colors.yellow};
     --background: url(${kakaoIcon}) no-repeat left 1em center / 1.7em;
+    &:hover {
+      background-color: rgba(242, 201, 76, 0.2);
+    }
   `,
   google: css`
     --border: 1px solid ${({ theme }) => theme.colors.gray300};
     --background: url(${googleIcon}) no-repeat left 1em center / 1.7em;
+    &:hover {
+      background-color: rgba(118, 118, 118, 0.2);
+    }
   `,
 };
 

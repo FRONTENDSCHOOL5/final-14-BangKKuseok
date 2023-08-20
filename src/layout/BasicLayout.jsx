@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import Header from '../components/common/Header/Header';
 import Navbar from '../components/common/Navbar/Navbar';
-
 import styled from 'styled-components';
 import Toast from '../components/common/Toast/Toast';
-import useScroll from '../hooks/useScroll';
-import TopButton from '../components/common/Button/TopButton/TopButton';
 
 const LayoutWrapper = styled.div`
   width: clamp(390px, 100%, 720px);
-  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
   margin: 0 auto;
   position: relative;
   background-color: #fff;
@@ -19,7 +16,7 @@ const LayoutWrapper = styled.div`
 
 const LayoutMain = styled.div`
   overflow-y: scroll;
-  height: ${(p) => !p.isNonNav && 'calc(100vh - 68px)'};
+  height: ${(p) => !p.isNonNav && 'calc((var(--vh, 1vh) * 100) - 68px)'};
   -ms-overflow-style: none;
   scrollbar-width: none;
 
@@ -28,19 +25,17 @@ const LayoutMain = styled.div`
   }
 `;
 
-export default function BasicLayout({ children, isNonNav = false, ...props }) {
-  const wrapperRef = useScroll();
+const BasicLayout = forwardRef(({ children, isNonNav = false, ...props }, ref) => {
   return (
-    <>
-      <LayoutWrapper>
-        <LayoutMain isNonNav={isNonNav} ref={wrapperRef}>
-          <Header {...props} />
-          {children}
-          <Toast />
-          <TopButton reference={wrapperRef} />
-        </LayoutMain>
-        {isNonNav ? null : <Navbar />}
-      </LayoutWrapper>
-    </>
+    <LayoutWrapper>
+      <LayoutMain isNonNav={isNonNav} ref={ref}>
+        <Header {...props} />
+        {children}
+        <Toast />
+      </LayoutMain>
+      {isNonNav ? null : <Navbar />}
+    </LayoutWrapper>
   );
-}
+});
+
+export default BasicLayout;

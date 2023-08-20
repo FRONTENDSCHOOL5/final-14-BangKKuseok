@@ -5,6 +5,7 @@ import AppRouter from './pages/Router';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { useEffect } from 'react';
 
 function App() {
   const queryClient = new QueryClient({
@@ -15,6 +16,14 @@ function App() {
         keepPreviousData: true,
       },
     },
+  });
+
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  useEffect(() => {
+    setScreenSize();
   });
 
   return (

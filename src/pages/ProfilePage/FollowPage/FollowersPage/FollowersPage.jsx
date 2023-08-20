@@ -2,14 +2,17 @@ import React from 'react';
 import BasicLayout from '../../../../layout/BasicLayout';
 import { useLocation } from 'react-router-dom';
 import { FollowerWrapper, FollowerList, FollowItem } from './FollowersPageStyle';
-import { useInfiniteQuery, useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import { getFollowers } from '../../../../api/followApi';
 import UserSimpleInfo from '../../../../components/common/UserSimpleInfo/UserSimpleInfo/UserSimpleInfo';
 import useObserver from '../../../../hooks/useObserver';
-import { getMyProfile } from '../../../../api/profileApi';
+import { useRecoilValue } from 'recoil';
+import { myProfileDataAtom } from '../../../../atoms/myProfile';
 
 export default function FollowersPage() {
   const accountname = useLocation().state.accountname;
+
+  const myProfileData = useRecoilValue(myProfileDataAtom);
 
   const {
     data: followers,

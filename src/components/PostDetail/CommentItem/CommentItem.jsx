@@ -3,9 +3,12 @@ import { getTimeGap } from '../../../utils/getTime';
 import moreIcon from '../../../assets/icons/icon-more-small.svg';
 import { CommentInfoBox, StyledCommentItem } from './CommentItemStyle';
 import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { myProfileDataAtom } from '../../../atoms/myProfile';
 
-export default function CommentItem({ data, myProfile, setModalType, setIsShow, setCommentId }) {
+export default function CommentItem({ data, setModalType, setIsShow, setCommentId }) {
   const { author, createdAt, content } = data;
+  const myProfile = useRecoilValue(myProfileDataAtom);
 
   //댓글 더보기를 눌렀을때 _id 구분 (내 댓글 - 삭제 / 남 댓글 - 신고)
   const handleClickMoreButton = () => {

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import BasicLayout from '../../../layout/BasicLayout';
 import SetUserProfileForm from '../../../components/LoginSignUp/SetUserProfile/SetUserProfileForm';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { updateProfile } from '../../../api/profileApi';
 import { useMutation, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
 import { TOAST } from '../../../constants/common';
+import { useRecoilState } from 'recoil';
+import { myProfileDataAtom } from '../../../atoms/myProfile';
 
 export default function ProfileEditPage() {
   const [isAlreadyIdMsg, setIsAlreadyIdMsg] = useState('');
@@ -16,20 +18,20 @@ export default function ProfileEditPage() {
     intro: '',
     image: '',
   });
-
+  const [myData, setMyData] = useRecoilState(myProfileDataAtom);
   const navigate = useNavigate();
-  const location = useLocation();
-  const myData = location.state;
 
   const queryClient = useQueryClient();
 
   const updateProfileMutation = useMutation(updateProfile, {
-    onSuccess: () => {
+    onSuccess: (data) => {
+      localStorage.setItem('myProfileData', JSON.stringify(data.user));
+      setMyData(data.user);
       navigate('/profile');
     },
     onMutate: () => {
       // 이전 데이터를 캐시에서 제거
-      queryClient.removeQueries('myProfile');
+      queryClient.removeQueries('profile');
     },
     onError: (error) => {
       setIsAlreadyIdMsg(error.response.data.message);
