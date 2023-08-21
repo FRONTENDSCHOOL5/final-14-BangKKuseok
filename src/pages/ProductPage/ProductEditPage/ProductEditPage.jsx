@@ -53,7 +53,6 @@ export default function ProductEditPage() {
       title={'상품 수정'}
       isBtnActive={isBtnActive}
       isNonNav={true}
-      onClickLeftButton={() => navigate(-1)}
       onClickRightButton={handleClickSave}
     >
       <ProductForm

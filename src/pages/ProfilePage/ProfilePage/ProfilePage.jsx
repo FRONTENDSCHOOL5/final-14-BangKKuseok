@@ -216,11 +216,7 @@ export default function ProfilePage() {
   // 로딩중일때
   if (isMyPostLoading || isProfileLoading || isProductLoading) {
     return (
-      <BasicLayout
-        type={'profile'}
-        onClickLeftButton={() => navigate(-1)}
-        onClickRightButton={handleClickMoreProfileButton}
-      >
+      <BasicLayout type={'profile'} onClickRightButton={handleClickMoreProfileButton}>
         <Spinner />
       </BasicLayout>
     );
@@ -229,7 +225,6 @@ export default function ProfilePage() {
   return (
     <BasicLayout
       type={'profile'}
-      onClickLeftButton={() => navigate(-1)}
       onClickRightButton={handleClickMoreProfileButton}
       ref={wrapperRef}
     >

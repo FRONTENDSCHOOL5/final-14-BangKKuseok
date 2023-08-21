@@ -99,7 +99,6 @@ export default function PostEditPage() {
           title='게시글 수정'
           btnText='수정'
           isBtnActive={isBtnActive}
-          onClickLeftButton={() => navigate(-1)}
           onClickRightButton={handleClickRightButton}
         >
           <PostEditPageWrapper>

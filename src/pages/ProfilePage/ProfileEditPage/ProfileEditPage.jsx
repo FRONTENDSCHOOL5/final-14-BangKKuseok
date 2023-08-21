@@ -50,10 +50,10 @@ export default function ProfileEditPage() {
   return (
     <BasicLayout
       type='profileEdit'
+      title='프로필 수정'
       btnText='저장'
       isBtnActive={isButtonActive}
       isNonNav={true}
-      onClickLeftButton={() => navigate(-1)}
       onClickRightButton={handleClickSaveButton}
     >
       <SetUserProfileForm

@@ -1,6 +1,6 @@
 import React from 'react';
 import BasicLayout from '../../../../layout/BasicLayout';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { FollowerWrapper, FollowerList, FollowItem } from '../FollowersPage/FollowersPageStyle';
 import { useInfiniteQuery } from 'react-query';
 import { getFollowings } from '../../../../api/followApi';
@@ -10,7 +10,6 @@ import { useRecoilValue } from 'recoil';
 import { myProfileDataAtom } from '../../../../atoms/myProfile';
 
 export default function FollowingsPage() {
-  const navigate = useNavigate();
   const accountname = useLocation().state.accountname;
 
   const myProfileData = useRecoilValue(myProfileDataAtom);
@@ -37,12 +36,10 @@ export default function FollowingsPage() {
   );
   const observerRef = useObserver(hasNextPage, fetchNextPage, isLoading);
 
-  const handleClickBackButton = () => {
-    navigate(-1);
-  };
+  const { data: myProfileData } = useQuery('myProfile', getMyProfile);
 
   return (
-    <BasicLayout type='follow' title='팔로잉' onClickLeftButton={handleClickBackButton}>
+    <BasicLayout type='follow' title='팔로잉'>
       <FollowerWrapper>
         <>
           <FollowerList>
