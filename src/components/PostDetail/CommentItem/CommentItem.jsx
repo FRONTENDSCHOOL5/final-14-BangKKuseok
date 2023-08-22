@@ -5,20 +5,22 @@ import { CommentInfoBox, StyledCommentItem } from './CommentItemStyle';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { myProfileDataAtom } from '../../../atoms/myProfile';
+import useModal from '../../../hooks/useModal';
 
-export default function CommentItem({ data, setModalType, setIsShow, setCommentId }) {
+export default function CommentItem({ data, setCommentId }) {
   const { author, createdAt, content } = data;
   const myProfile = useRecoilValue(myProfileDataAtom);
+
+  const { openModal } = useModal('');
 
   //댓글 더보기를 눌렀을때 _id 구분 (내 댓글 - 삭제 / 남 댓글 - 신고)
   const handleClickMoreButton = () => {
     setCommentId(data.id);
     if (myProfile._id === author._id) {
-      setModalType('myComment');
+      openModal('myComment');
     } else {
-      setModalType('userComment');
+      openModal('userComment');
     }
-    setIsShow(true);
   };
 
   return (

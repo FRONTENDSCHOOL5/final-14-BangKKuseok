@@ -16,6 +16,7 @@ import { deleteComment, getComments, reportComment } from '../../../api/commentA
 import CommentSection from '../../../components/PostDetail/CommentSection/CommentSection';
 import { TOAST } from '../../../constants/common';
 import { myProfileDataAtom } from '../../../atoms/myProfile';
+import useModal from '../../../hooks/useModal';
 
 export default function PostPage() {
   const { postId } = useParams();
@@ -23,12 +24,12 @@ export default function PostPage() {
   const [scrollDown, setScrollDown] = useState(false);
   const [isUploadorEditBefore, setIsUploadorEditBefore] = useRecoilState(isUploadorEditBeforeAtom);
   const [commentCount, setCommentCount] = useState();
-  const [isShow, setIsShow] = useState(false);
-  const [modalType, setModalType] = useState('userPost');
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [confirmType, setConfirmType] = useState({ type: 'report', object: 'comment' });
 
   const myProfileData = useRecoilValue(myProfileDataAtom);
+
+  const { modalData, openModal, closeModal } = useModal('');
 
   const navigate = useNavigate();
 
@@ -111,10 +112,6 @@ export default function PostPage() {
     },
   });
 
-  const handleClickModalOpen = () => {
-    setIsShow((prev) => !prev);
-  };
-
   //뒤로 가기 (이전페이지가 upload일 경우 전전페이지로 이동)
   const handleClickLeftButton = () => {
     if (isUploadorEditBefore) {
@@ -128,22 +125,21 @@ export default function PostPage() {
   //게시글 더보기 버튼 눌렀을 때
   const handleClickRightButton = () => {
     if (myProfileData._id === postData.author._id) {
-      setModalType('myPost');
+      openModal('myPost');
     } else {
-      setModalType('userPost');
+      openModal('userPost');
     }
-    setIsShow(true);
   };
 
   //listItem누를때 실행 함수 (confrim창이 뜨거나 edit페이지로 넘어감)
   const handleClickListItem = (e) => {
-    if (modalType === 'userComment') {
+    if (modalData.modalType === 'userComment') {
       setConfirmType({ type: 'report', object: 'comment' });
       setIsShowConfirm(true);
-    } else if (modalType === 'myComment') {
+    } else if (modalData.modalType === 'myComment') {
       setConfirmType({ type: 'delete', object: 'comment' });
       setIsShowConfirm(true);
-    } else if (modalType === 'userPost') {
+    } else if (modalData.modalType === 'userPost') {
       setConfirmType({ type: 'report', object: 'post' });
       setIsShowConfirm(true);
     } else {
@@ -155,6 +151,7 @@ export default function PostPage() {
         //수정일 경우
         navigate(`/post/${postId}/edit`);
       }
+      closeModal();
     }
   };
 
@@ -180,7 +177,7 @@ export default function PostPage() {
       }
     }
     setIsShowConfirm(false);
-    setIsShow(false);
+    closeModal();
   };
 
   const handleClickTitle = () => {
@@ -205,19 +202,15 @@ export default function PostPage() {
         >
           <PostPageWrapper>
             <PostCard data={postData} commentCount={commentCount} moreInfo />
-            <CommentSection
-              data={commentsData}
-              setModalType={setModalType}
-              setIsShow={setIsShow}
-              postId={postId}
-              setCommentId={setCommentId}
-            />
+            <CommentSection data={commentsData} postId={postId} setCommentId={setCommentId} />
           </PostPageWrapper>
-          {isShow && (
-            <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
-              <ListModal type={modalType} onClick={handleClickListItem}></ListModal>
-            </BottomSheet>
-          )}
+
+          {/* -- BottomSheet */}
+          <BottomSheet>
+            <ListModal onClick={handleClickListItem}></ListModal>
+          </BottomSheet>
+
+          {/* -- Confirm */}
           {isShowConfirm && (
             <Confirm
               type={confirmType.type}
