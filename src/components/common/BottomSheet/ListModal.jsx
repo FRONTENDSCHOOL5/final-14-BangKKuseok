@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import useModal from '../../../hooks/useModal';
 
 const BottomSheetListWrapper = styled.ul`
   margin-bottom: 10px;
@@ -21,10 +22,12 @@ const TYPES = {
   userComment: ['신고하기'],
 };
 
-export default function ListModal({ type, onClick }) {
+export default function ListModal({ onClick }) {
+  const { modalData } = useModal('');
+
   return (
     <BottomSheetListWrapper>
-      {TYPES[type].map((item, index) => (
+      {TYPES[modalData.modalType].map((item, index) => (
         <ListItem key={index} onClick={onClick}>
           <button type='button'>{item}</button>
         </ListItem>
