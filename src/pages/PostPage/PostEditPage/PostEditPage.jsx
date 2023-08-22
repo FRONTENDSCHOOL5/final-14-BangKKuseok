@@ -12,17 +12,19 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import PostImgUpload from '../../../components/PostUpload/PostImgUpload/PostImgUpload';
 import { useSetRecoilState } from 'recoil';
 import { isUploadorEditBeforeAtom } from '../../../atoms/post';
+import useModal from '../../../hooks/useModal';
 
 export default function PostEditPage() {
   const { postId } = useParams();
   const navigate = useNavigate();
   const [isBtnActive, setIsBtnActive] = useState(false);
-  const [isShow, setIsShow] = useState(false);
   const setIsUploadorEditBefore = useSetRecoilState(isUploadorEditBeforeAtom);
 
   const [editData, setEditData] = useState({});
   const [postImg, setPostImg] = useState();
   const [content, setContent] = useState({ space: '', detail: '' });
+
+  const { openModal, closeModal } = useModal('');
 
   //게시글 상세 정보받기
   const { data: postData, isLoading: isPostLoading } = useQuery(
@@ -58,7 +60,7 @@ export default function PostEditPage() {
 
   //공간목록 바텀시트 여닫기
   const handleClickModalOpen = () => {
-    setIsShow((prev) => !prev);
+    openModal('editSpace');
   };
 
   //공간 선택하기
@@ -68,7 +70,7 @@ export default function PostEditPage() {
       ...editData,
       content: JSON.stringify({ ...content, space: e.target.innerText }),
     });
-    setIsShow(false);
+    closeModal();
   };
 
   //게시글 수정 버튼 누르기
@@ -117,22 +119,22 @@ export default function PostEditPage() {
               editData={editData}
             />
           </PostEditPageWrapper>
-          {isShow && (
-            <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
-              <BasicModal>
-                <ModalSpaceList>
-                  <h3>공간을 선택해주세요</h3>
-                  <ul>
-                    {SPACES.map((space, index) => (
-                      <button type='button' key={index} onClick={handleClickSpace}>
-                        {space}
-                      </button>
-                    ))}
-                  </ul>
-                </ModalSpaceList>
-              </BasicModal>
-            </BottomSheet>
-          )}
+
+          {/* -- BottomSheet */}
+          <BottomSheet>
+            <BasicModal>
+              <ModalSpaceList>
+                <h3>공간을 선택해주세요</h3>
+                <ul>
+                  {SPACES.map((space, index) => (
+                    <button type='button' key={index} onClick={handleClickSpace}>
+                      {space}
+                    </button>
+                  ))}
+                </ul>
+              </ModalSpaceList>
+            </BasicModal>
+          </BottomSheet>
         </BasicLayout>
       )}
     </>
