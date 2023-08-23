@@ -36,7 +36,6 @@ export default function FollowingsPage() {
   );
   const observerRef = useObserver(hasNextPage, fetchNextPage, isLoading);
 
-  const { data: myProfileData } = useQuery('myProfile', getMyProfile);
 
   return (
     <BasicLayout type='follow' title='팔로잉'>
