@@ -2,12 +2,13 @@ import React from 'react';
 import BasicLayout from '../../../../layout/BasicLayout';
 import { useLocation } from 'react-router-dom';
 import { FollowerWrapper, FollowerList, FollowItem } from './FollowersPageStyle';
-import { useInfiniteQuery } from 'react-query';
 import { getFollowers } from '../../../../api/followApi';
 import UserSimpleInfo from '../../../../components/common/UserSimpleInfo/UserSimpleInfo/UserSimpleInfo';
 import useObserver from '../../../../hooks/useObserver';
+import useInfiniteDataQuery from '../../../../hooks/useInfiniteDataQuery';
 import { useRecoilValue } from 'recoil';
 import { myProfileDataAtom } from '../../../../atoms/myProfile';
+import { FOLLOWLIMIT } from '../../../../constants/pagenation';
 
 export default function FollowersPage() {
   const accountname = useLocation().state.accountname;
@@ -19,21 +20,13 @@ export default function FollowersPage() {
     fetchNextPage,
     isLoading,
     hasNextPage,
-  } = useInfiniteQuery(
-    'followers',
-    ({ pageParam = { skip: 0 } }) =>
-      getFollowers({ accountname: accountname, skip: pageParam.skip }),
-    {
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length > 0 ? allPages.length * 10 : 0;
-        return lastPage.data.length < 10 ? undefined : { skip: nextPage };
-      },
-      select: (data) => {
-        return data.pages.flatMap((page) => page.data);
-      },
-      enabled: !!accountname,
+  } = useInfiniteDataQuery(['followers', accountname], getFollowers, {
+    limit: FOLLOWLIMIT,
+    select: (data) => {
+      return data.pages.flatMap((page) => page.data);
     },
-  );
+    enabled: !!accountname,
+  });
 
   const observerRef = useObserver(hasNextPage, fetchNextPage, isLoading);
 
