@@ -150,8 +150,8 @@ export default function PostPage() {
       } else {
         //수정일 경우
         navigate(`/post/${postId}/edit`);
+        closeModal();
       }
-      closeModal();
     }
   };
 
@@ -188,6 +188,7 @@ export default function PostPage() {
   if (!commentsData || !postData) {
     return <Spinner />;
   }
+
   return (
     <>
       {commentsData && postData && (
