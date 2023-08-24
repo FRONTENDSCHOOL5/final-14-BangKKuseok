@@ -6,10 +6,11 @@ import { ImgBox, TagBox } from '../PostProductTag/PostProductTagStyle';
 import { SPACES } from '../../../constants/common';
 import { ModalSpaceList, PostTextWriteWrapper, SelectSpaceBtn } from './PostTextWriteStyle';
 import BasicModal from '../../common/BottomSheet/BasicModal';
+import useModal from '../../../hooks/useModal';
 
 export default function PostTextWrite({ postImg, setIsBtnActive, setContent, selectedProducts }) {
-  //바텀시트 열기 변수
-  const [isShow, setIsShow] = useState(false);
+  //바텀시트 커스텀 훅
+  const { openModal, closeModal } = useModal('');
 
   //공간과,게시글 내용
   const [space, setSpace] = useState('공간을 선택해주세요');
@@ -17,13 +18,13 @@ export default function PostTextWrite({ postImg, setIsBtnActive, setContent, sel
 
   //공간목록 모달 열기
   const handleClickSpaces = () => {
-    setIsShow(true);
+    openModal('editSpace');
   };
 
   //공간 선택하기
   const handleClickSpace = (e) => {
     setSpace(e.target.innerText);
-    setIsShow(false);
+    closeModal();
   };
 
   //인풋의 변화감지해서 해당밸류넣기
@@ -43,11 +44,6 @@ export default function PostTextWrite({ postImg, setIsBtnActive, setContent, sel
       setIsBtnActive(false);
     }
   }, [space, detail, setIsBtnActive, setContent]);
-
-  //바텀시트 여닫기
-  const handleClickModalOpen = () => {
-    setIsShow((prev) => !prev);
-  };
 
   return (
     <>
@@ -76,22 +72,21 @@ export default function PostTextWrite({ postImg, setIsBtnActive, setContent, sel
           onChange={handleChangeDetail}
         ></textarea>
       </PostTextWriteWrapper>
-      {isShow && (
-        <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
-          <BasicModal>
-            <ModalSpaceList>
-              <h3>공간을 선택해주세요</h3>
-              <ul>
-                {SPACES.map((space, index) => (
-                  <button type='button' key={index} onClick={handleClickSpace}>
-                    {space}
-                  </button>
-                ))}
-              </ul>
-            </ModalSpaceList>
-          </BasicModal>
-        </BottomSheet>
-      )}
+
+      <BottomSheet>
+        <BasicModal>
+          <ModalSpaceList>
+            <h3>공간을 선택해주세요</h3>
+            <ul>
+              {SPACES.map((space, index) => (
+                <button type='button' key={index} onClick={handleClickSpace}>
+                  {space}
+                </button>
+              ))}
+            </ul>
+          </ModalSpaceList>
+        </BasicModal>
+      </BottomSheet>
     </>
   );
 }
