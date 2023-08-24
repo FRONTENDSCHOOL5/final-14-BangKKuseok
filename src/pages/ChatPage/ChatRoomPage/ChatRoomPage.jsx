@@ -14,12 +14,12 @@ import {
   ChatTime,
   Message,
 } from './ChatRoomPageStyle';
+import useModal from '../../../hooks/useModal';
 
 export default function ChatRoomPage() {
   const location = useLocation();
 
-  const [isShow, setIsShow] = useState(false);
-  const [modalType, setModalType] = useState('');
+  const { openModal, closeModal } = useModal('');
 
   const [type, setType] = useState('text');
   const [message, setMessage] = useState('');
@@ -37,6 +37,7 @@ export default function ChatRoomPage() {
   // 오전, 오후 시간 반환 함수
   const handleHours = (num) =>
     num < 12 ? '오전 ' + num : num === 12 ? '오후 ' + num : '오후 ' + (num - 12);
+
   // 숫자가 한 자리일 때 두 자리로 변환하는 함수
   const padZero = (num) => (num < 10 ? '0' + num : num);
 
@@ -47,21 +48,17 @@ export default function ChatRoomPage() {
   const formattedHours = handleHours(hours);
   const formattedMinutes = padZero(minutes);
 
-  ////// header //////
   // 모달창 열기
   const handleClickRightButton = () => {
-    setModalType('chat');
-    setIsShow(true);
+    openModal('chat');
   };
-  const handleClickModalOpen = () => {
-    setIsShow((prev) => !prev);
-  };
+
   // 채팅방 나가기를 누르면 ChatListPage로 이동
   const handleClickListItem = () => {
     navigate('/chat');
+    closeModal();
   };
 
-  ////// bottom input //////
   // input 클릭하면 실행
   const handleInputClick = (e) => {
     setType('file');
@@ -204,12 +201,10 @@ export default function ChatRoomPage() {
         isChat={true}
         value={message}
       />
-      {/* 모달 열기 */}
-      {isShow && (
-        <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
-          <ListModal type={modalType} onClick={handleClickListItem}></ListModal>
-        </BottomSheet>
-      )}
+      {/* -- BottomSheet */}
+      <BottomSheet>
+        <ListModal onClick={handleClickListItem}></ListModal>
+      </BottomSheet>
     </BasicLayout>
   );
 }
