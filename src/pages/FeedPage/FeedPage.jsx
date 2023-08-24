@@ -16,13 +16,15 @@ import useObserver from '../../hooks/useObserver';
 import useScroll from '../../hooks/useScroll';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
 import { FEEDPOSTLIMIT } from '../../constants/pagenation';
+import useModal from '../../hooks/useModal';
 
 export default function FeedPage() {
   const wrapperRef = useScroll();
-  const [isShow, setIsShow] = useState(false);
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState();
   const [isClickSearchButton, setIsClickSearchButton] = useState(false);
+
+  const { openModal, closeModal } = useModal('');
 
   //서치컴포에서 서치 눌렀을떄
   const handleClickLeftButton = () => {
@@ -69,27 +71,22 @@ export default function FeedPage() {
     },
   });
 
-  const handleClickModalOpen = () => {
-    setIsShow((prev) => !prev);
-  };
-
   //게시글 더보기 누르기
   const handleClickMorePostButton = (selectedPost) => {
     setSelectedPostId(selectedPost.id);
-    setIsShow(true);
+    openModal('userPost');
   };
 
   //모달안의 신고하기 목록 누르기
-  const handleClickListItem = (e) => {
+  const handleClickListItem = () => {
     setIsShowConfirm(true);
-    console.log(e);
   };
 
   //컨펌창에서 게시글을 신고하기
   const handleClickConfirm = (e) => {
     reportPostMutation.mutate(selectedPostId);
     setIsShowConfirm(false);
-    setIsShow(false);
+    closeModal();
   };
 
   if (isLoading) {
@@ -117,7 +114,12 @@ export default function FeedPage() {
       {isClickSearchButton ? (
         <Search onClickLeftButton={handleClickLeftButton} />
       ) : (
-        <BasicLayout type='feed' title='게시글' onClickRightButton={handleClickRightButton} ref={wrapperRef}>
+        <BasicLayout
+          type='feed'
+          title='게시글'
+          onClickRightButton={handleClickRightButton}
+          ref={wrapperRef}
+        >
           <FeedPageWrapper>
             <PostList
               selectedTab='list'
@@ -130,11 +132,9 @@ export default function FeedPage() {
           <TopButton reference={wrapperRef} />
 
           {/* -- BottomSheet */}
-          {isShow && (
-            <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
-              <ListModal type='userPost' onClick={handleClickListItem} />
-            </BottomSheet>
-          )}
+          <BottomSheet>
+            <ListModal onClick={handleClickListItem} />
+          </BottomSheet>
 
           {/* -- Confirm */}
           {isShowConfirm && (
