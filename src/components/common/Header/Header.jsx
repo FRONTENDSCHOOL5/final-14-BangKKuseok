@@ -123,6 +123,14 @@ export default function Header({
           <MoreButton type={type} onClick={onClickRightButton} />
         </HeaderWrapper>
       );
+    case 'chat':
+      return (
+        <HeaderWrapper type={type}>
+          <BackButton type={type} onClick={onClickLeftButton} />
+          <HeaderTitle type={type} title={title} />
+          <MoreButton type={type} onClick={onClickRightButton} />
+        </HeaderWrapper>
+      );
     case 'imageSelect':
       return (
         <HeaderWrapper type={type}>
