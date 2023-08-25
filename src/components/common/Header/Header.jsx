@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 function BackButton({ type, onClick }) {
   const navigate = useNavigate();
   return (
-    <button onClick={type === 'search' ? onClick : () => navigate(-1)}>
+    <button onClick={type === 'search' || type === 'post' ? onClick : () => navigate(-1)}>
       <BackIcon stroke={type === 'profile' ? '#fff' : '#000'} />
     </button>
   );
