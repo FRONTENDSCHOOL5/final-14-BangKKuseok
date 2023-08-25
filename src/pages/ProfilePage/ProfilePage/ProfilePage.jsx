@@ -166,7 +166,7 @@ export default function ProfilePage() {
         closeModal();
       }
     }
-    if (modalData.modalType === 'myPost' || 'userPost') {
+    if (modalData.modalType === 'myPost' || modalData.modalType === 'userPost') {
       if (e.target.innerText === '삭제') {
         setConfirmType({ type: 'delete', object: 'post' });
       } else if (e.target.innerText === '신고하기') {
