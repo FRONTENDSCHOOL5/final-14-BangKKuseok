@@ -10,7 +10,13 @@ import { useNavigate } from 'react-router-dom';
 function BackButton({ type, onClick }) {
   const navigate = useNavigate();
   return (
-    <button onClick={type === 'search' || type === 'post' ? onClick : () => navigate(-1)}>
+    <button
+      onClick={
+        type === 'search' || type === 'post' || type === 'imageSelect'
+          ? onClick
+          : () => navigate(-1)
+      }
+    >
       <BackIcon stroke={type === 'profile' ? '#fff' : '#000'} />
     </button>
   );
@@ -76,7 +82,7 @@ export default function Header({
     case 'feed':
       return (
         <HeaderWrapper type={type}>
-          <BackButton type={type} onClick={onClickLeftButton} />
+          <BackButton type={type} />
           <HeaderTitle type={type} onClickTitle={onClickTitle} title={title} />
           <SearchButton type={type} onClick={onClickRightButton} />
         </HeaderWrapper>
@@ -96,26 +102,19 @@ export default function Header({
     case 'profile':
       return (
         <HeaderWrapper type={type}>
-          <BackButton type={type} onClick={onClickLeftButton} />
+          <BackButton type={type} />
           <MoreButton type={type} onClick={onClickRightButton} />
-        </HeaderWrapper>
-      );
-    case 'profileEdit':
-      return (
-        <HeaderWrapper type={type}>
-          <BackButton type={type} onClick={onClickLeftButton} />
-          <HeaderTitle type={type} onClickTitle={onClickTitle} title={title} />
-          <SaveButton onClick={onClickRightButton} btnText={btnText} isBtnActive={isBtnActive} />
         </HeaderWrapper>
       );
     case 'follow':
       return (
         <HeaderWrapper type={type}>
-          <BackButton type={type} onClick={onClickLeftButton} />
+          <BackButton type={type} />
           <HeaderTitle type={type} onClickTitle={onClickTitle} title={title} />
         </HeaderWrapper>
       );
     case 'post':
+    case 'chat':
       return (
         <HeaderWrapper type={type}>
           <BackButton type={type} onClick={onClickLeftButton} />
@@ -123,19 +122,12 @@ export default function Header({
           <MoreButton type={type} onClick={onClickRightButton} />
         </HeaderWrapper>
       );
-    case 'chat':
-      return (
-        <HeaderWrapper type={type}>
-          <BackButton type={type} onClick={onClickLeftButton} />
-          <HeaderTitle type={type} title={title} />
-          <MoreButton type={type} onClick={onClickRightButton} />
-        </HeaderWrapper>
-      );
+    case 'profileEdit':
     case 'imageSelect':
       return (
         <HeaderWrapper type={type}>
           <BackButton type={type} onClick={onClickLeftButton} />
-          <HeaderTitle type={type} onClickTitle={onClickTitle} title={title} />
+          <HeaderTitle type={type} title={title} />
           <SaveButton onClick={onClickRightButton} btnText={btnText} isBtnActive={isBtnActive} />
         </HeaderWrapper>
       );
