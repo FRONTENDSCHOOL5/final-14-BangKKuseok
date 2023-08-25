@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderWrapper, SearchBtn, HeaderH2, HeaderSpan } from './HeaderStyle';
+import { HeaderWrapper, SearchBtn, HeaderH2, HeaderSpan, HeaderTitleBtn } from './HeaderStyle';
 import { ReactComponent as BackIcon } from '../../../assets/icons/icon-arrow-left.svg';
 import { ReactComponent as MoreIcon } from '../../../assets/icons/icon-more.svg';
 import { ReactComponent as SearchIcon } from '../../../assets/icons/icon-search.svg';
@@ -44,11 +44,13 @@ function SaveButton({ onClick, btnText, isBtnActive }) {
 }
 
 function HeaderTitle({ type, onClickTitle, title, subtitle }) {
-  return (
-    <HeaderH2 onClick={type === 'post' ? onClickTitle : null}>
+  return type === 'post' ? (
+    <HeaderTitleBtn onClick={onClickTitle}>
       {title}
-      {type === 'post' ? <HeaderSpan>{subtitle}</HeaderSpan> : null}
-    </HeaderH2>
+      <HeaderSpan>{subtitle}</HeaderSpan>
+    </HeaderTitleBtn>
+  ) : (
+    <HeaderH2>{title}</HeaderH2>
   );
 }
 

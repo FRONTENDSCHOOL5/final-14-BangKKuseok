@@ -43,16 +43,15 @@ const HeaderText = css`
   margin-right: auto;
   margin-left: 1.6rem;
   font-weight: 500;
+  font-size: ${({ theme }) => theme.fontSize.md};
 `;
 
 const HeaderH2 = styled.h2`
   ${HeaderText}
-  font-size: ${({ theme }) => theme.fontSize.md};
-  ${({ onClick }) =>
-    onClick &&
-    css`
-      cursor: pointer;
-    `}
+`;
+
+const HeaderTitleBtn = styled.button`
+  ${HeaderText}
 `;
 
 const HeaderSpan = styled.span`
@@ -69,4 +68,4 @@ const SearchBtn = styled.button`
   right: 1.6rem;
 `;
 
-export { HeaderWrapper, HeaderH2, HeaderSpan, SearchBtn };
+export { HeaderWrapper, HeaderH2, HeaderTitleBtn, HeaderSpan, SearchBtn };
