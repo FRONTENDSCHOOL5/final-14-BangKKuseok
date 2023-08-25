@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import BasicLayout from '../../../layout/BasicLayout';
@@ -14,7 +14,7 @@ import Confirm from '../../../components/common/Confirm/Confirm';
 import Spinner from '../../../components/common/Spinner/Spinner';
 import useObserver from '../../../hooks/useObserver';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getMyProfile, getProfile } from '../../../api/profileApi';
 import { deleteProduct, getProducts } from '../../../api/productApi';
 import { deletePost, getMyPost, reportPost } from '../../../api/postApi';
@@ -24,6 +24,8 @@ import TopButton from '../../../components/common/Button/TopButton/TopButton';
 import useScroll from '../../../hooks/useScroll';
 import { useRecoilValue } from 'recoil';
 import { myProfileDataAtom } from '../../../atoms/myProfile';
+import useReportMutation from '../../../hooks/useReportMutation';
+import useInfiniteDataQuery from '../../../hooks/useInfiniteDataQuery';
 
 const ProfilePageWrapper = styled.main``;
 
@@ -69,21 +71,13 @@ export default function ProfilePage() {
     fetchNextPage: fetchPostNextPage,
     isLoading: isMyPostLoading,
     hasNextPage: hasPostNextPage,
-  } = useInfiniteQuery(
-    ['myPost', profileData],
-    ({ pageParam = { skip: 0 } }) =>
-      getMyPost({ accountname: profileData.accountname, skip: pageParam.skip }),
-    {
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length > 0 ? allPages.length * MYPOSTLIMIT : 0;
-        return lastPage.data.length < MYPOSTLIMIT ? undefined : { skip: nextPage };
-      },
-      select: (data) => {
-        return data.pages.flatMap((page) => page.data);
-      },
-      enabled: !!profileData,
+  } = useInfiniteDataQuery(['myPost', profileData], getMyPost, {
+    limit: MYPOSTLIMIT,
+    select: (data) => {
+      return data.pages.flatMap((page) => page.data);
     },
-  );
+    enabled: !!profileData,
+  });
 
   const observerRef = useObserver(hasPostNextPage, fetchPostNextPage, isMyPostLoading);
 
@@ -119,14 +113,7 @@ export default function ProfilePage() {
   });
 
   //게시글 신고하기
-  const reportPostMutation = useMutation(reportPost, {
-    onSuccess() {
-      toast('🚨 신고가 완료되었습니다. 신속하게 처리하겠습니다.', TOAST);
-    },
-    onError(error) {
-      console.log(error);
-    },
-  });
+  const reportPostMutation = useReportMutation(reportPost);
 
   const handleClickTabButton = (tabId) => {
     setSelectedTab(tabId);

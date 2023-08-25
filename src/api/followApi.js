@@ -1,9 +1,10 @@
+import { FOLLOWLIMIT } from '../constants/pagenation';
 import { accessInstance } from './axiosInstance';
 
 export const getFollowers = async ({ accountname, skip }) => {
   try {
     const response = await accessInstance.get(
-      `/profile/${accountname}/follower/?limit=10&skip=${skip}`,
+      `/profile/${accountname}/follower/?limit=${FOLLOWLIMIT}&skip=${skip}`,
     );
     return {
       data: response.data,
@@ -17,7 +18,7 @@ export const getFollowers = async ({ accountname, skip }) => {
 export const getFollowings = async ({ accountname, skip }) => {
   try {
     const response = await accessInstance.get(
-      `/profile/${accountname}/following/?limit=10&skip=${skip}`,
+      `/profile/${accountname}/following/?limit=${FOLLOWLIMIT}&skip=${skip}`,
     );
 
     return {
