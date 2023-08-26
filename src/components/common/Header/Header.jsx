@@ -16,6 +16,7 @@ function BackButton({ type, onClick }) {
           ? onClick
           : () => navigate(-1)
       }
+      aria-label='뒤로가기 버튼'
     >
       <BackIcon stroke={type === 'profile' ? '#fff' : '#000'} />
     </button>
@@ -24,7 +25,7 @@ function BackButton({ type, onClick }) {
 
 function SearchButton({ type, onClick }) {
   return (
-    <SearchBtn onClick={onClick}>
+    <SearchBtn onClick={onClick} aria-label='사용자 검색 버튼'>
       <SearchIcon stroke={type === 'home' ? '#fff' : '#000'} />
     </SearchBtn>
   );
@@ -32,7 +33,19 @@ function SearchButton({ type, onClick }) {
 
 function MoreButton({ type, onClick }) {
   return (
-    <button type='button' onClick={onClick}>
+    <button
+      type='button'
+      onClick={onClick}
+      aria-label={(() => {
+        if (type === 'profile') {
+          return '프로필 더보기 버튼';
+        } else if (type === 'post') {
+          return '게시글 더보기 버튼';
+        } else {
+          return '채팅 더보기 버튼';
+        }
+      })()}
+    >
       <MoreIcon
         fill={type === 'profile' ? '#fff' : '#000'}
         stroke={type === 'profile' ? '#fff' : '#000'}
