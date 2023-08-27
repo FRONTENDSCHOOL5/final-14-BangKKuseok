@@ -77,7 +77,7 @@ export default function UserSimpleInfo({
         )}
       </UserInfoBox>
       {type === 'more' ? (
-        <button type='button' onClick={onClick}>
+        <button type='button' onClick={onClick} aria-label='게시글 더보기 버튼'>
           <MoreIcon />
         </button>
       ) : type === 'follow' ? (
