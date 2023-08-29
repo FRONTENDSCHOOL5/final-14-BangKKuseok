@@ -18,15 +18,17 @@ import useReportMutation from '../../hooks/useReportMutation';
 import { FEEDPOSTLIMIT } from '../../constants/pagenation';
 
 import useModal from '../../hooks/useModal';
+import useConfirm from '../../hooks/useConfirm';
 import useInfiniteDataQuery from '../../hooks/useInfiniteDataQuery';
 
 export default function FeedPage() {
   const wrapperRef = useScroll();
-  const [isShowConfirm, setIsShowConfirm] = useState(false);
+  //const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState();
   const [isClickSearchButton, setIsClickSearchButton] = useState(false);
 
   const { openModal, closeModal } = useModal('');
+  const { openConfirm, closeConfirm } = useConfirm();
 
   //서치컴포에서 서치 눌렀을떄
   const handleClickLeftButton = () => {
@@ -67,13 +69,13 @@ export default function FeedPage() {
 
   //모달안의 신고하기 목록 누르기
   const handleClickListItem = () => {
-    setIsShowConfirm(true);
+    openConfirm({ type: 'report' });
   };
 
   //컨펌창에서 게시글을 신고하기
   const handleClickConfirm = () => {
     reportPostMutation.mutate(selectedPostId);
-    setIsShowConfirm(false);
+    closeConfirm();
     closeModal();
   };
 
@@ -125,14 +127,7 @@ export default function FeedPage() {
           </BottomSheet>
 
           {/* -- Confirm */}
-          {isShowConfirm && (
-            <Confirm
-              type='report'
-              object='post'
-              setIsShowConfirm={setIsShowConfirm}
-              onClick={handleClickConfirm}
-            />
-          )}
+          <Confirm onClick={handleClickConfirm} />
         </BasicLayout>
       )}
     </>
