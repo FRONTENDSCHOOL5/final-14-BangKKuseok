@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import BasicLayout from '../../../layout/BasicLayout';
@@ -37,11 +37,8 @@ const UnreadDot = styled.div`
 `;
 
 export default function ChatListPage() {
-  // const [isShowConfirm, setIsShowConfirm] = useState(false);
-  //const [confirmType, setConfirmType] = useState({ type: '', object: '' });
-
   const { openModal, closeModal } = useModal('');
-  const { confirmData, openConfirm, closeConfirm } = useConfirm();
+  const { openConfirm, closeConfirm } = useConfirm();
 
   // 모달 열기
   const handleClickRightButton = () => {

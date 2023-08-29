@@ -23,7 +23,6 @@ import useInfiniteDataQuery from '../../hooks/useInfiniteDataQuery';
 
 export default function FeedPage() {
   const wrapperRef = useScroll();
-  //const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState();
   const [isClickSearchButton, setIsClickSearchButton] = useState(false);
 
