@@ -11,6 +11,8 @@ import { URL } from '../../../../api/axiosInstance';
 import basicImage from '../../../../assets/images/profile.png';
 import { ImgBox, TagBox } from '../../../PostUpload/PostProductTag/PostProductTagStyle';
 import ProductTagItem from '../../../PostUpload/ProductTagItem/ProductTagItem';
+import { useSetRecoilState } from 'recoil';
+import { isClickProductTagBeforeAtom } from '../../../../atoms/post';
 
 export default function PostCard({ data, commentCount, moreInfo = false }) {
   const { id, content, hearted, heartCount, createdAt } = data;
@@ -21,6 +23,7 @@ export default function PostCard({ data, commentCount, moreInfo = false }) {
     ? JSON.parse(content)
     : { selectedProducts: undefined };
   const navigate = useNavigate();
+  const setIsClickProductTagBefore = useSetRecoilState(isClickProductTagBeforeAtom);
 
   // URL이 붙어있는 경우 그냥쓰기 없으면은 붙이기
   //,이 있는 경우 - 첫번째 데이터만
@@ -80,6 +83,11 @@ export default function PostCard({ data, commentCount, moreInfo = false }) {
     }
   };
 
+  const handleClickProductBubble = () => {
+    setIsClickProductTagBefore(true);
+    navigate(`/profile/${profileData.accountname}`);
+  };
+
   return (
     <PostCardWrapper moreInfo={moreInfo}>
       <ImgBox>
@@ -99,6 +107,7 @@ export default function PostCard({ data, commentCount, moreInfo = false }) {
                 key={item.id}
                 data={item}
                 type='postDetail'
+                onClickProductBubble={handleClickProductBubble}
               />
             ))}
           </TagBox>
