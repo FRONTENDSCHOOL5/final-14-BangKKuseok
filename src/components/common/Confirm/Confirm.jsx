@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { ButtonBox, ConfirmBackdrop, ConfirmWrapper } from './ConfirmStyle';
 import useConfirm from '../../../hooks/useConfirm';
 
@@ -19,7 +20,8 @@ export default function Confirm({ onClick }) {
     post: '게시글',
   };
 
-  return (
+  // Portal을 사용한 Confirm 컴포넌트
+  return ReactDOM.createPortal(
     confirmData.isShow && (
       <ConfirmBackdrop>
         <ConfirmWrapper>
@@ -34,6 +36,7 @@ export default function Confirm({ onClick }) {
           </ButtonBox>
         </ConfirmWrapper>
       </ConfirmBackdrop>
-    )
+    ),
+    document.getElementById('confirm-root'),
   );
 }
