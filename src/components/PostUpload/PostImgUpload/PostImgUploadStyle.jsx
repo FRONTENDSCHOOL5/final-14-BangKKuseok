@@ -47,6 +47,7 @@ const UploadForm = styled.div`
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04);
   backdrop-filter: blur(10px);
   border-radius: 50%;
+  z-index: 5;
 
   label {
     cursor: pointer;

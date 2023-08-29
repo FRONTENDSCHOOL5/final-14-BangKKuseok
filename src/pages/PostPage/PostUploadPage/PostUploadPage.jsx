@@ -84,6 +84,7 @@ export default function PostUploadPage() {
         setIsBtnActive={setIsBtnActive}
         setContent={setContent}
         selectedProducts={selectedProducts}
+        step={step}
       />
     ),
   };

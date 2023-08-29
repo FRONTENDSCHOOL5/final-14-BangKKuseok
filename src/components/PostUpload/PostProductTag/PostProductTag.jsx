@@ -19,7 +19,12 @@ import { getProducts } from '../../../api/productApi';
 import useModal from '../../../hooks/useModal';
 import ProductTagItem from '../ProductTagItem/ProductTagItem';
 
-export default function PostProductTag({ postImg, selectedProducts, setSelectedProducts }) {
+export default function PostProductTag({
+  postImg,
+  selectedProducts,
+  setSelectedProducts,
+  type = 'upload',
+}) {
   //태그추가 단계 : 클릭 유도 / 상품목록 확인 / 태그와 버블 / 상품태그 추가
   const [tagStep, setTagStep] = useState('클릭 유도');
   const [isBubbleShow, setIsBubbleShow] = useState(true);
@@ -51,7 +56,7 @@ export default function PostProductTag({ postImg, selectedProducts, setSelectedP
   }, [selectedProducts]);
 
   useEffect(() => {
-    if (selectedProducts.length > 0) {
+    if (selectedProducts.length > 0 || type === 'edit') {
       setTagStep('태그와 버블');
     }
   }, []);
@@ -103,9 +108,9 @@ export default function PostProductTag({ postImg, selectedProducts, setSelectedP
 
   return (
     <>
-      <PostProductTagWrapper>
+      <PostProductTagWrapper type={type}>
         <ImgBox>
-          <img src={postImg} alt='게시글 이미지' />
+          {type === 'upload' && <img src={postImg} alt='게시글 이미지' />}
           <TagBox
             onMouseDown={() => setIsMouseMove(true)}
             onMouseMove={handleMouseMoveOnImg}
@@ -136,13 +141,15 @@ export default function PostProductTag({ postImg, selectedProducts, setSelectedP
               ))}
           </TagBox>
         </ImgBox>
-        <p>
-          {tagStep === '태그와 버블'
-            ? canSelectProducts.length > 0
-              ? '다른 상품들도 태그할 수 있어요'
-              : ''
-            : '원하는 위치에 회원님의 상품을 태그하세요'}
-        </p>
+        {type === 'upload' && (
+          <p>
+            {tagStep === '태그와 버블'
+              ? canSelectProducts.length > 0
+                ? '다른 상품들도 태그할 수 있어요'
+                : ''
+              : '원하는 위치에 회원님의 상품을 태그하세요'}
+          </p>
+        )}
       </PostProductTagWrapper>
       {tagStep === '상품목록 확인' && (
         <BottomSheet>
