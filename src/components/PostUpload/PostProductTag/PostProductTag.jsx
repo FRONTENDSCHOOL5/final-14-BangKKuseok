@@ -7,18 +7,17 @@ import {
   PostProductTagWrapper,
   TagBox,
 } from './PostProductTagStyle';
-import ProductBubble from '../ProductBubble/ProductBubble';
 import BottomSheet from '../../common/BottomSheet/BottomSheet';
 import BasicModal from '../../common/BottomSheet/BasicModal';
 import ModalProductList from '../ModalProductList/ModalProductList';
 import { useRecoilValue } from 'recoil';
 import { myProfileDataAtom } from '../../../atoms/myProfile';
-import ProductTag from '../ProductTag/ProductTag';
 import useBubbleLocation from '../../../hooks/useBubbleLocation';
 import { MOUSEBENCHMARK } from '../../../constants/common';
 import { useQuery } from 'react-query';
 import { getProducts } from '../../../api/productApi';
 import useModal from '../../../hooks/useModal';
+import ProductTagItem from '../ProductTagItem/ProductTagItem';
 
 export default function PostProductTag({ postImg, selectedProducts, setSelectedProducts }) {
   //태그추가 단계 : 클릭 유도 / 상품목록 확인 / 태그와 버블 / 상품태그 추가
@@ -57,28 +56,34 @@ export default function PostProductTag({ postImg, selectedProducts, setSelectedP
     }
   }, []);
 
+  const handleSetPinLocation = (e) => {
+    const x = Math.floor((e.nativeEvent.offsetX / e.currentTarget.offsetWidth) * 100);
+    const y = Math.floor((e.nativeEvent.offsetY / e.currentTarget.offsetWidth) * 100);
+    setPinLoc({
+      x: x < xLeftBenchmark ? xLeftBenchmark : x > xRightBenchmark ? xRightBenchmark : x,
+      y: y < yLeftBenchmark ? yLeftBenchmark : y > yRightBenchmark ? yRightBenchmark : y,
+    });
+  };
+
   const handleMouseMoveOnImg = (e) => {
     if (!isMouseMove) return;
     if ((isMouseMove && tagStep === '클릭 유도') || tagStep === '상품태그 추가') {
-      const x = Math.floor((e.nativeEvent.offsetX / e.currentTarget.offsetWidth) * 100);
-      const y = Math.floor((e.nativeEvent.offsetY / e.currentTarget.offsetWidth) * 100);
-      setPinLoc({
-        x: x < xLeftBenchmark ? xLeftBenchmark : x > xRightBenchmark ? xRightBenchmark : x,
-        y: y < yLeftBenchmark ? yLeftBenchmark : y > yRightBenchmark ? yRightBenchmark : y,
-      });
+      handleSetPinLocation(e);
     }
   };
   const bubbleLoc = useBubbleLocation(pinLoc);
 
   const handleMouseUpImg = (e) => {
+    e.stopPropagation();
     //1.태그 선택이 가능할 때
     if (tagStep === '클릭 유도' || tagStep === '상품태그 추가') {
+      handleSetPinLocation(e);
       setIsMouseMove(false);
       openModal('productList');
       setTagStep('상품목록 확인');
 
       //2.'태그와 버블'일때
-    } else if (tagStep === '태그와 버블' && canSelectProducts.length > 0) {
+    } else if (tagStep === '태그와 버블') {
       setIsBubbleShow(false);
       setTagStep('상품태그 추가');
     }
@@ -115,19 +120,19 @@ export default function PostProductTag({ postImg, selectedProducts, setSelectedP
             )}
             {(tagStep === '태그와 버블' || tagStep === '상품태그 추가') &&
               selectedProducts.map((item) => (
-                <li key={item.id}>
-                  <ProductBubble
-                    data={item}
-                    setTagStep={setTagStep}
-                    isBubbleShow={isBubbleShow}
-                    setIsMouseMove={setIsMouseMove}
-                    setPinLoc={setPinLoc}
-                    selectedProducts={selectedProducts}
-                    setSelectedProducts={setSelectedProducts}
-                    setCanSelectProducts={setCanSelectProducts}
-                  />
-                  <ProductTag data={item} />
-                </li>
+                <ProductTagItem
+                  key={item.id}
+                  data={item}
+                  setTagStep={setTagStep}
+                  isBubbleShow={isBubbleShow}
+                  setIsMouseMove={setIsMouseMove}
+                  setPinLoc={setPinLoc}
+                  selectedProducts={selectedProducts}
+                  setSelectedProducts={setSelectedProducts}
+                  canSelectProducts={canSelectProducts}
+                  setCanSelectProducts={setCanSelectProducts}
+                  type={type}
+                />
               ))}
           </TagBox>
         </ImgBox>

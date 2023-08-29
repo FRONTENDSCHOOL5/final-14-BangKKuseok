@@ -20,7 +20,6 @@ const PostImgUploadWrapper = styled.div`
 
   position: relative;
   margin: 0 auto;
-  max-width: 342px;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   background-color: ${({ theme }) => theme.colors.gray50};

@@ -9,27 +9,30 @@ export default function useBubbleLocation(pinLoc) {
     rightBenchmark,
     leftDefaultValue,
     rightDefaultValue,
-    leftWeighting,
-    rightWeighting,
+    xWeighting,
+    edgeLeftDefaultValue,
+    edgeRightDefaultValue,
+    edgeLeftWeighting,
+    edgeRightWeighting,
     yPositionBenchmark,
   } = BUBBLEBENCHMARK;
 
   useEffect(() => {
+    let xForCalc = -94;
     let edgeLeft = 50;
+
     if (x > rightBenchmark) {
-      edgeLeft = rightDefaultValue + (x - rightBenchmark - 0.5) * rightWeighting;
+      xForCalc = rightDefaultValue - (x - rightBenchmark) * xWeighting;
+      edgeLeft = edgeRightDefaultValue + (x - rightBenchmark) * edgeRightWeighting;
     } else if (x < leftBenchmark) {
-      edgeLeft = leftDefaultValue + (x - leftDefaultValue) * leftWeighting;
-    }
-    if (y < yPositionBenchmark) {
-      edgeLeft = edgeLeft - 2.5;
+      xForCalc = leftDefaultValue - (x + leftDefaultValue - 2) * xWeighting;
+      edgeLeft = edgeLeftDefaultValue + (x - edgeLeftDefaultValue + 1) * edgeLeftWeighting;
     }
 
     setBubbleLoc({
-      x: x < leftBenchmark ? leftBenchmark : x > rightBenchmark ? rightBenchmark : x,
-      y: y > yPositionBenchmark ? y - 7 : y + 27,
+      x: xForCalc,
+      edgeLeft: edgeLeft < 6 ? 6 : edgeLeft > 94 ? 94 : edgeLeft,
       bubbleUp: y >= yPositionBenchmark,
-      edgeLeft: edgeLeft,
     });
   }, [pinLoc]);
 
