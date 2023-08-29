@@ -31,7 +31,7 @@ export default function CommentItem({ data, setCommentId }) {
           <h5>{author.username}</h5>
         </Link>
         <time dateTime={createdAt}>• {getTimeGap(createdAt)}</time>
-        <button type='button' onClick={handleClickMoreButton} />
+        <button type='button' onClick={handleClickMoreButton} aria-label='댓글 더보기 버튼' />
       </CommentInfoBox>
       <p>{content}</p>
     </StyledCommentItem>

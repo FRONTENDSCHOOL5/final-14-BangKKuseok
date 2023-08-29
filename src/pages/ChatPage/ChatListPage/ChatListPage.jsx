@@ -58,7 +58,7 @@ export default function ChatListPage() {
 
   return (
     <>
-      <BasicLayout type='post' title='채팅' onClickRightButton={handleClickRightButton}>
+      <BasicLayout type='chat' title='채팅' onClickRightButton={handleClickRightButton}>
         {/* mockData의 profile 리스트를 불러온다. */}
         <ChatListWrapper>
           <ChatList>

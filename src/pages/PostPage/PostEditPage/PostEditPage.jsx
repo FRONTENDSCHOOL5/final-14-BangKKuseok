@@ -73,6 +73,11 @@ export default function PostEditPage() {
     closeModal();
   };
 
+  //뒤로가기 버튼 누르기
+  const handleClickLeftButton = () => {
+    navigate(-1);
+  };
+
   //게시글 수정 버튼 누르기
   const handleClickRightButton = () => {
     EditPostMutation.mutate({
@@ -101,6 +106,7 @@ export default function PostEditPage() {
           title='게시글 수정'
           btnText='수정'
           isBtnActive={isBtnActive}
+          onClickLeftButton={handleClickLeftButton}
           onClickRightButton={handleClickRightButton}
         >
           <PostEditPageWrapper>
