@@ -150,6 +150,7 @@ export default function PostPage() {
       //삭제하기
       if (confirmType.type === 'delete') {
         deletePostMutation.mutate(postId);
+        navigate('/');
       } else {
         //신고하기
         reportPostMutation.mutate(postId);
