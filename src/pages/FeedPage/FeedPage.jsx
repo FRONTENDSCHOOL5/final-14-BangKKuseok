@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import BasicLayout from '../../layout/BasicLayout';
 import PostList from '../../components/Profile/PostList/PostList';
-import { useInfiniteQuery, useMutation } from 'react-query';
 import { getFeedPost } from '../../api/feedApi';
 import Spinner from '../../components/common/Spinner/Spinner';
 import { FeedPageWrapper, NoneFeedWrapper } from './FeedPageStyle';
@@ -15,8 +14,11 @@ import Search from '../SearchPage/SearchPage';
 import useObserver from '../../hooks/useObserver';
 import useScroll from '../../hooks/useScroll';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
+import useReportMutation from '../../hooks/useReportMutation';
 import { FEEDPOSTLIMIT } from '../../constants/pagenation';
+
 import useModal from '../../hooks/useModal';
+import useInfiniteDataQuery from '../../hooks/useInfiniteDataQuery';
 
 export default function FeedPage() {
   const wrapperRef = useScroll();
@@ -43,33 +45,19 @@ export default function FeedPage() {
     isLoading,
     isFetching,
     hasNextPage,
-  } = useInfiniteQuery(
-    'feedPostData',
-    ({ pageParam = { skip: 0 } }) => getFeedPost({ skip: pageParam.skip }),
-    {
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length > 0 ? allPages.length * FEEDPOSTLIMIT : 0;
-        return lastPage.data.length < FEEDPOSTLIMIT ? undefined : { skip: nextPage };
-      },
-      select: (data) => {
-        return {
-          pages: data.pages.flatMap((page) => page.data),
-        };
-      },
+  } = useInfiniteDataQuery('feedPostData', getFeedPost, {
+    limit: FEEDPOSTLIMIT,
+    select: (data) => {
+      return {
+        pages: data.pages.flatMap((page) => page.data),
+      };
     },
-  );
+  });
 
   const observerRef = useObserver(hasNextPage, fetchNextPage, isLoading);
 
   //게시글 신고하기
-  const reportPostMutation = useMutation(reportPost, {
-    onSuccess() {
-      alert(`해당 게시글을 신고했습니다.`);
-    },
-    onError(error) {
-      console.log(error);
-    },
-  });
+  const reportPostMutation = useReportMutation(reportPost);
 
   //게시글 더보기 누르기
   const handleClickMorePostButton = (selectedPost) => {
@@ -83,7 +71,7 @@ export default function FeedPage() {
   };
 
   //컨펌창에서 게시글을 신고하기
-  const handleClickConfirm = (e) => {
+  const handleClickConfirm = () => {
     reportPostMutation.mutate(selectedPostId);
     setIsShowConfirm(false);
     closeModal();

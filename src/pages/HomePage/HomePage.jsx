@@ -1,10 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import Carousel from '../../components/common/Carousel/Carousel';
 import SpaceTabs from '../../components/common/Tabs/SpaceTabs';
 import BasicLayout from '../../layout/BasicLayout';
 import { useState } from 'react';
 import Search from '../SearchPage/SearchPage';
-import { useInfiniteQuery } from 'react-query';
 import { getAllPost } from '../../api/homeApi';
 import styled from 'styled-components';
 import Gallery from '../../components/common/Gallery/Gallery';
@@ -14,6 +13,7 @@ import { topLikedPosts as topLikedMockPosts } from '../../mock/mockData';
 import useScroll from '../../hooks/useScroll';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
 import { ALLPOSTLIMIT } from '../../constants/pagenation';
+import useInfiniteDataQuery from '../../hooks/useInfiniteDataQuery';
 
 const Message = styled.p`
   font-weight: 500;
@@ -57,24 +57,17 @@ export default function HomePage() {
     isLoading: homeIsLoading,
     fetchNextPage: homeFetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery(
-    'homePostData',
-    ({ pageParam = { skip: 0 } }) => getAllPost({ skip: pageParam.skip }),
-    {
-      cacheTime: 0,
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length > 0 ? allPages.length * ALLPOSTLIMIT : 0;
-        return lastPage.data.length < ALLPOSTLIMIT ? undefined : { skip: nextPage };
-      },
-      onSuccess: (newData) => {
-        const pageParam = newData.pageParams.length - 1;
-        const allFiltered = newData.pages[pageParam].data.filter((post) =>
-          post.content?.includes('"space"'),
-        );
-        setFilteredAllPosts((prevData) => [...prevData, ...allFiltered]);
-      },
+  } = useInfiniteDataQuery('homePostData', getAllPost, {
+    cacheTime: 0,
+    limit: ALLPOSTLIMIT,
+    onSuccess: (newData) => {
+      const pageParam = newData.pageParams.length - 1;
+      const allFiltered = newData.pages[pageParam].data.filter((post) =>
+        post.content?.includes('"space"'),
+      );
+      setFilteredAllPosts((prevData) => [...prevData, ...allFiltered]);
     },
-  );
+  });
 
   useEffect(() => {
     setfilteredPosts(homePostData);

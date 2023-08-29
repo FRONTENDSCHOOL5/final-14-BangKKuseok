@@ -16,7 +16,9 @@ import { deleteComment, getComments, reportComment } from '../../../api/commentA
 import CommentSection from '../../../components/PostDetail/CommentSection/CommentSection';
 import { TOAST } from '../../../constants/common';
 import { myProfileDataAtom } from '../../../atoms/myProfile';
+
 import useModal from '../../../hooks/useModal';
+import useReportMutation from '../../../hooks/useReportMutation';
 
 export default function PostPage() {
   const { postId } = useParams();
@@ -80,16 +82,6 @@ export default function PostPage() {
     },
   });
 
-  //게시글 신고하기
-  const reportPostMutation = useMutation(reportPost, {
-    onSuccess() {
-      toast('🚨 신고가 완료되었습니다. 신속하게 처리하겠습니다.', TOAST);
-    },
-    onError(error) {
-      console.log(error);
-    },
-  });
-
   //댓글 삭제하기
   const queryClient = useQueryClient();
   const deleteCommentMutation = useMutation(deleteComment, {
@@ -102,15 +94,11 @@ export default function PostPage() {
     },
   });
 
+  //게시글 신고하기
+  const reportPostMutation = useReportMutation(reportPost);
+
   //댓글 신고하기
-  const reportCommentMutation = useMutation(reportComment, {
-    onSuccess() {
-      toast('🚨 신고가 완료되었습니다. 신속하게 처리하겠습니다.', TOAST);
-    },
-    onError(error) {
-      console.log(error);
-    },
-  });
+  const reportCommentMutation = useReportMutation(reportComment);
 
   //뒤로 가기 (이전페이지가 upload일 경우 전전페이지로 이동)
   const handleClickLeftButton = () => {
