@@ -12,9 +12,7 @@ function BackButton({ type, onClick }) {
   return (
     <button
       onClick={
-        type === 'search' || type === 'post' || type === 'imageSelect'
-          ? onClick
-          : () => navigate(-1)
+        type === 'search' || type === 'post' || type === 'postUpload' ? onClick : () => navigate(-1)
       }
       aria-label='뒤로가기 버튼'
     >
@@ -135,8 +133,8 @@ export default function Header({
           <MoreButton type={type} onClick={onClickRightButton} />
         </HeaderWrapper>
       );
-    case 'profileEdit':
-    case 'imageSelect':
+    case 'save':
+    case 'postUpload':
       return (
         <HeaderWrapper type={type}>
           <BackButton type={type} onClick={onClickLeftButton} />

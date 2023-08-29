@@ -33,7 +33,7 @@ export default function ProductUploadPage() {
 
   return (
     <BasicLayout
-      type='imageSelect'
+      type='save'
       btnText='저장'
       title={'상품 등록'}
       isBtnActive={isBtnActive}

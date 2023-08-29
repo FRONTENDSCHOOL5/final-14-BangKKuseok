@@ -48,7 +48,7 @@ export default function ProductEditPage() {
 
   return (
     <BasicLayout
-      type='imageSelect'
+      type='save'
       btnText='저장'
       title={'상품 수정'}
       isBtnActive={isBtnActive}

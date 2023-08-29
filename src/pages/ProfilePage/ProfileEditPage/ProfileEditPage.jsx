@@ -49,7 +49,7 @@ export default function ProfileEditPage() {
 
   return (
     <BasicLayout
-      type='profileEdit'
+      type='save'
       title='프로필 수정'
       btnText='저장'
       isBtnActive={isButtonActive}
