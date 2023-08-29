@@ -1,24 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BottomSheetDim, BottomSheetWrapper, ModalBox, ModalHandle } from './BottomSheetStyle';
+import useModal from '../../../hooks/useModal';
 
-export default function BottomSheet({ isShow, onClick, children }) {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    let modalTimer;
-
-    if (isShow) {
-      setIsVisible(true);
-    } else {
-      modalTimer = setTimeout(() => setIsVisible(false), 250);
-    } // 0.25초뒤에 없어짐
-
-    return () => {
-      if (modalTimer !== undefined) {
-        clearTimeout(modalTimer);
-      }
-    };
-  }, [isShow]);
+export default function BottomSheet({ children }) {
+  const { modalData, isVisible, closeModal } = useModal('');
 
   if (!isVisible) {
     return null;
@@ -27,11 +12,11 @@ export default function BottomSheet({ isShow, onClick, children }) {
   return (
     <>
       <BottomSheetWrapper>
-        <ModalBox isShow={isShow}>
+        <ModalBox isShow={modalData.isShow}>
           {children}
-          <ModalHandle onClick={onClick} aria-label='모달 닫기' />
+          <ModalHandle onClick={closeModal} aria-label='모달 닫기' />
         </ModalBox>
-        <BottomSheetDim isShow={isShow} onClick={onClick} />
+        <BottomSheetDim isShow={modalData.isShow} onClick={closeModal} />
       </BottomSheetWrapper>
     </>
   );

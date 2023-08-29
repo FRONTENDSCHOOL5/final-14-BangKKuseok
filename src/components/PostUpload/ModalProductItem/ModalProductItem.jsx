@@ -1,10 +1,10 @@
 import React from 'react';
 import Button from '../../common/Button/Button/Button';
 import { ModalProductItemWrapper, ProductInfoBox } from './ModalProductItemStyle';
+import useModal from '../../../hooks/useModal';
 
 export default function ModalProductItem({
   data,
-  setIsShow,
   setTagStep,
   setIsBubbleShow,
   pinLoc,
@@ -13,6 +13,8 @@ export default function ModalProductItem({
 }) {
   const { itemName, price, itemImage } = data;
   const { name } = JSON.parse(itemName);
+
+  const { closeModal } = useModal('');
 
   // 상품선택하면
   const handleClickProduct = () => {
@@ -23,7 +25,7 @@ export default function ModalProductItem({
     ]);
 
     //바텀시트 닫고 버블 보이도록
-    setIsShow(false);
+    closeModal();
     setIsBubbleShow(true);
     setTagStep('태그와 버블');
   };

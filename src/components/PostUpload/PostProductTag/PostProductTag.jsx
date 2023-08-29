@@ -18,12 +18,12 @@ import useBubbleLocation from '../../../hooks/useBubbleLocation';
 import { MOUSEBENCHMARK } from '../../../constants/common';
 import { useQuery } from 'react-query';
 import { getProducts } from '../../../api/productApi';
+import useModal from '../../../hooks/useModal';
 
 export default function PostProductTag({ postImg, selectedProducts, setSelectedProducts }) {
   //태그추가 단계 : 클릭 유도 / 상품목록 확인 / 태그와 버블 / 상품태그 추가
   const [tagStep, setTagStep] = useState('클릭 유도');
   const [isBubbleShow, setIsBubbleShow] = useState(true);
-  const [isShow, setIsShow] = useState(false);
   const [isMouseMove, setIsMouseMove] = useState(false);
 
   const myProfileData = useRecoilValue(myProfileDataAtom);
@@ -31,6 +31,8 @@ export default function PostProductTag({ postImg, selectedProducts, setSelectedP
   const [canSelectProducts, setCanSelectProducts] = useState([]);
 
   const { xLeftBenchmark, xRightBenchmark, yLeftBenchmark, yRightBenchmark } = MOUSEBENCHMARK;
+
+  const { modalData, openModal } = useModal('');
 
   // 상품 목록 정보 가져오기
   const { data: myProductData } = useQuery(
@@ -72,7 +74,7 @@ export default function PostProductTag({ postImg, selectedProducts, setSelectedP
     //1.태그 선택이 가능할 때
     if (tagStep === '클릭 유도' || tagStep === '상품태그 추가') {
       setIsMouseMove(false);
-      setIsShow(true);
+      openModal('productList');
       setTagStep('상품목록 확인');
 
       //2.'태그와 버블'일때
@@ -83,7 +85,7 @@ export default function PostProductTag({ postImg, selectedProducts, setSelectedP
   };
 
   useEffect(() => {
-    if (tagStep === '상품목록 확인' && !isShow) {
+    if (tagStep === '상품목록 확인' && !modalData.isShow) {
       setPinLoc({ x: 50, y: 50 });
       setIsMouseMove(false);
       if (selectedProducts.length === 0) {
@@ -92,11 +94,7 @@ export default function PostProductTag({ postImg, selectedProducts, setSelectedP
         setTagStep('태그와 버블');
       }
     }
-  }, [isMouseMove, isShow, selectedProducts, setPinLoc, tagStep]);
-
-  const handleClickModalOpen = () => {
-    setIsShow((prev) => !prev);
-  };
+  }, [isMouseMove, modalData.isShow, selectedProducts, setPinLoc, tagStep]);
 
   return (
     <>
@@ -142,10 +140,9 @@ export default function PostProductTag({ postImg, selectedProducts, setSelectedP
         </p>
       </PostProductTagWrapper>
       {tagStep === '상품목록 확인' && (
-        <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
+        <BottomSheet>
           <BasicModal>
             <ModalProductList
-              setIsShow={setIsShow}
               setTagStep={setTagStep}
               setIsBubbleShow={setIsBubbleShow}
               pinLoc={pinLoc}

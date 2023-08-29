@@ -24,6 +24,8 @@ import TopButton from '../../../components/common/Button/TopButton/TopButton';
 import useScroll from '../../../hooks/useScroll';
 import { useRecoilValue } from 'recoil';
 import { myProfileDataAtom } from '../../../atoms/myProfile';
+
+import useModal from '../../../hooks/useModal';
 import useReportMutation from '../../../hooks/useReportMutation';
 import useInfiniteDataQuery from '../../../hooks/useInfiniteDataQuery';
 
@@ -46,17 +48,13 @@ export default function ProfilePage() {
   const [selectedPost, setSelectedPost] = useState({});
   const [productId, setProductId] = useState(0);
 
-  const [isShowMoreProfile, setIsShowMoreProfile] = useState(false);
-  const [isShowMorePost, setIsShowMorePost] = useState(false);
-  const [isShowProductDetail, setIsShowProductDetail] = useState(false);
-
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [confirmType, setConfirmType] = useState({ type: '', object: '' });
-  const [modalType, setModalType] = useState('');
 
   const myProfileData = useRecoilValue(myProfileDataAtom);
-
   const queryClient = useQueryClient();
+
+  const { modalData, openModal, closeModal } = useModal('');
 
   // 프로필 정보 받기
   const { data: profileData, isLoading: isProfileLoading } = useQuery(
@@ -120,58 +118,52 @@ export default function ProfilePage() {
   };
 
   const handleClickMoreProfileButton = () => {
-    setIsShowMoreProfile(true);
-    setModalType('profile');
+    openModal('profile');
   };
 
   const handleClickMorePostButton = (selectedPost) => {
     setSelectedPost(selectedPost);
-    setIsShowMorePost(true);
     if (myProfileData.accountname === selectedPost.author.accountname) {
-      setModalType('myPost');
+      openModal('myPost');
     } else {
-      setModalType('userPost');
+      openModal('userPost');
     }
   };
 
   const handleClickProduct = (selectedProductId) => {
     setProductId(selectedProductId);
-    setIsShowProductDetail(true);
-  };
-
-  const handleClickCloseModal = () => {
-    setIsShowMoreProfile(false);
-    setIsShowMorePost(false);
-    setIsShowProductDetail(false);
+    openModal('productDetail');
   };
 
   const handleClickLModalItem = (e) => {
-    if (isShowMoreProfile) {
+    if (modalData.modalType === 'profile') {
       if (e.target.innerText === '로그아웃') {
         setConfirmType({ type: 'logout' });
       } else {
         navigate(`/profile/edit`, { state: myProfileData });
+        closeModal();
       }
     }
-
-    if (isShowProductDetail) {
+    if (modalData.modalType === 'productDetail') {
       if (e.target.innerText === '삭제') {
         setConfirmType({ type: 'delete', object: 'product' });
       } else {
-        navigate(`/product/${productId}/edit`, { state: productId });
+        navigate(`/product/${productId}/edit`, {
+          state: productId,
+        });
+        closeModal();
       }
     }
-
-    if (isShowMorePost) {
+    if (modalData.modalType === 'myPost' || modalData.modalType === 'userPost') {
       if (e.target.innerText === '삭제') {
         setConfirmType({ type: 'delete', object: 'post' });
       } else if (e.target.innerText === '신고하기') {
         setConfirmType({ type: 'report', object: 'post' });
       } else {
         navigate(`/post/${selectedPost.id}/edit`);
+        closeModal();
       }
     }
-
     setIsShowConfirm(true);
   };
 
@@ -197,7 +189,7 @@ export default function ProfilePage() {
         break;
     }
     setIsShowConfirm(false);
-    handleClickCloseModal();
+    closeModal();
   };
 
   // 로딩중일때
@@ -243,19 +235,20 @@ export default function ProfilePage() {
           <TopButton reference={wrapperRef} />
 
           {/* -- BottomSheet */}
-          <BottomSheet isShow={isShowMoreProfile || isShowMorePost} onClick={handleClickCloseModal}>
-            <ListModal type={modalType} onClick={handleClickLModalItem} />
-          </BottomSheet>
-          <BottomSheet isShow={isShowProductDetail} onClick={handleClickCloseModal}>
-            <BasicModal>
-              {productId && (
-                <ProductDetailCard
-                  isMyProfile={profileData.accountname === myProfileData.accountname}
-                  productId={productId}
-                  onClick={handleClickLModalItem}
-                />
-              )}
-            </BasicModal>
+          <BottomSheet>
+            {modalData.modalType === 'productDetail' ? (
+              <BasicModal>
+                {productId && (
+                  <ProductDetailCard
+                    isMyProfile={profileData.accountname === myProfileData.accountname}
+                    productId={productId}
+                    onClick={handleClickLModalItem}
+                  />
+                )}
+              </BasicModal>
+            ) : (
+              <ListModal onClick={handleClickLModalItem} />
+            )}
           </BottomSheet>
 
           {/* -- Confirm */}

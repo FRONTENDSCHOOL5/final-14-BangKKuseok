@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { ModalProductListWrapper } from './ModalProductListStyle';
 
 export default function ModalProductList({
-  setIsShow,
   setTagStep,
   setIsBubbleShow,
   pinLoc,
@@ -26,7 +25,6 @@ export default function ModalProductList({
             <ModalProductItem
               data={item}
               key={item.id}
-              setIsShow={setIsShow}
               setTagStep={setTagStep}
               setIsBubbleShow={setIsBubbleShow}
               pinLoc={pinLoc}

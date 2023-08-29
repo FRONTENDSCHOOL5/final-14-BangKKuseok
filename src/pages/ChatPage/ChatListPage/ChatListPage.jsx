@@ -7,6 +7,7 @@ import ListModal from '../../../components/common/BottomSheet/ListModal';
 import Confirm from '../../../components/common/Confirm/Confirm';
 import OtherSimpleInfo from '../../../components/common/UserSimpleInfo/OtherSimpleInfo/OtherSimpleInfo';
 import { profile } from '../../../mock/mockData';
+import useModal from '../../../hooks/useModal';
 
 const ChatListWrapper = styled.div`
   padding: 14px 16px;
@@ -35,25 +36,24 @@ const UnreadDot = styled.div`
 `;
 
 export default function ChatListPage() {
-  const [isShow, setIsShow] = useState(false);
-  const [modalType, setModalType] = useState('');
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [confirmType, setConfirmType] = useState({ type: '', object: '' });
 
+  const { openModal, closeModal } = useModal('');
+
   // 모달 열기
   const handleClickRightButton = () => {
-    setModalType('myComment');
-    setIsShow(true);
-  };
-
-  // 모달 열고 닫기
-  const handleClickModalOpen = () => {
-    setIsShow((prev) => !prev);
+    openModal('myComment');
   };
 
   const handleClickListItem = (chatId) => {
     setConfirmType({ type: 'delete', object: 'chat' });
     setIsShowConfirm(true);
+  };
+
+  const handleClickConfirm = () => {
+    setIsShowConfirm(false);
+    closeModal();
   };
 
   return (
@@ -83,19 +83,18 @@ export default function ChatListPage() {
           </ChatList>
         </ChatListWrapper>
 
-        {/* 모달 열기 */}
-        {isShow && (
-          <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
-            <ListModal type={modalType} onClick={handleClickListItem}></ListModal>
-          </BottomSheet>
-        )}
+        {/* -- BottomSheet */}
+        <BottomSheet>
+          <ListModal onClick={handleClickListItem}></ListModal>
+        </BottomSheet>
 
-        {/* confirm창 열기 */}
+        {/* -- confirm */}
         {isShowConfirm && (
           <Confirm
             type={confirmType.type}
             object={confirmType.object}
             setIsShowConfirm={setIsShowConfirm}
+            onClick={handleClickConfirm}
           />
         )}
       </BasicLayout>

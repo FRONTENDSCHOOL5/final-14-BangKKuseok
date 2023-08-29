@@ -16,14 +16,17 @@ import useScroll from '../../hooks/useScroll';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
 import useReportMutation from '../../hooks/useReportMutation';
 import { FEEDPOSTLIMIT } from '../../constants/pagenation';
+
+import useModal from '../../hooks/useModal';
 import useInfiniteDataQuery from '../../hooks/useInfiniteDataQuery';
 
 export default function FeedPage() {
   const wrapperRef = useScroll();
-  const [isShow, setIsShow] = useState(false);
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState();
   const [isClickSearchButton, setIsClickSearchButton] = useState(false);
+
+  const { openModal, closeModal } = useModal('');
 
   //서치컴포에서 서치 눌렀을떄
   const handleClickLeftButton = () => {
@@ -56,14 +59,10 @@ export default function FeedPage() {
   //게시글 신고하기
   const reportPostMutation = useReportMutation(reportPost);
 
-  const handleClickModalOpen = () => {
-    setIsShow((prev) => !prev);
-  };
-
   //게시글 더보기 누르기
   const handleClickMorePostButton = (selectedPost) => {
     setSelectedPostId(selectedPost.id);
-    setIsShow(true);
+    openModal('userPost');
   };
 
   //모달안의 신고하기 목록 누르기
@@ -75,7 +74,7 @@ export default function FeedPage() {
   const handleClickConfirm = () => {
     reportPostMutation.mutate(selectedPostId);
     setIsShowConfirm(false);
-    setIsShow(false);
+    closeModal();
   };
 
   if (isLoading) {
@@ -121,11 +120,9 @@ export default function FeedPage() {
           <TopButton reference={wrapperRef} />
 
           {/* -- BottomSheet */}
-          {isShow && (
-            <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
-              <ListModal type='userPost' onClick={handleClickListItem} />
-            </BottomSheet>
-          )}
+          <BottomSheet>
+            <ListModal onClick={handleClickListItem} />
+          </BottomSheet>
 
           {/* -- Confirm */}
           {isShowConfirm && (

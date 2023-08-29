@@ -10,7 +10,7 @@ export const CommentList = styled.ul`
   border-top: 1px solid ${({ theme }) => theme.colors.gray100};
 `;
 
-export default function CommentSection({ data, setIsShow, setModalType, postId, setCommentId }) {
+export default function CommentSection({ data, postId, setCommentId }) {
   //댓글 작성하기
   const queryClient = useQueryClient();
   const uploadCommentMutation = useMutation(uploadComment, {
@@ -49,13 +49,7 @@ export default function CommentSection({ data, setIsShow, setModalType, postId, 
       <CommentList>
         <h4 className='a11y'>댓글 목록</h4>
         {data.map((comment) => (
-          <CommentItem
-            key={comment.id}
-            data={comment}
-            setModalType={setModalType}
-            setIsShow={setIsShow}
-            setCommentId={setCommentId}
-          />
+          <CommentItem key={comment.id} data={comment} setCommentId={setCommentId} />
         ))}
       </CommentList>
       <RoundedBottomInput
