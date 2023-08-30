@@ -61,7 +61,10 @@ export default function Search({ onClickLeftButton }) {
     },
   );
 
-  const paginatedSearchResult = searchResult?.slice(0, view * 7);
+  const followedUsers = searchResult?.filter((user) => user.isfollow);
+  const unfollowedUsers = searchResult?.filter((user) => !user.isfollow);
+
+  const paginatedSearchResult = followedUsers?.concat(unfollowedUsers).slice(0, view * 7);
 
   const handleChangeInput = (e) => {
     setInputValue(e.target.value);
