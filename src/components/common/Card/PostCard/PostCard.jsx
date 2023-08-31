@@ -9,13 +9,21 @@ import { deleteLike, postLike } from '../../../../api/likeApi';
 import { getMyProfile, getProfile } from '../../../../api/profileApi';
 import { URL } from '../../../../api/axiosInstance';
 import basicImage from '../../../../assets/images/profile.png';
+import { ImgBox, TagBox } from '../../../PostUpload/PostProductTag/PostProductTagStyle';
+import ProductTagItem from '../../../PostUpload/ProductTagItem/ProductTagItem';
+import { useSetRecoilState } from 'recoil';
+import { isClickProductTagBeforeAtom } from '../../../../atoms/post';
 
 export default function PostCard({ data, commentCount, moreInfo = false }) {
   const { id, content, hearted, heartCount, createdAt } = data;
   const { space, detail } = content.includes('space')
     ? JSON.parse(content)
     : { space: undefined, detail: undefined };
+  const { selectedProducts } = content.includes('selectedProducts')
+    ? JSON.parse(content)
+    : { selectedProducts: undefined };
   const navigate = useNavigate();
+  const setIsClickProductTagBefore = useSetRecoilState(isClickProductTagBeforeAtom);
 
   // URL이 붙어있는 경우 그냥쓰기 없으면은 붙이기
   //,이 있는 경우 - 첫번째 데이터만
@@ -75,17 +83,36 @@ export default function PostCard({ data, commentCount, moreInfo = false }) {
     }
   };
 
+  const handleClickProductBubble = () => {
+    setIsClickProductTagBefore(true);
+    navigate(`/profile/${profileData.accountname}`);
+  };
+
   return (
     <PostCardWrapper moreInfo={moreInfo}>
-      {!error && data.image ? (
-        <img
-          src={image}
-          alt={space ? `${space} 이미지` : `${accountnameByParams} 이미지`}
-          onError={handleImageError}
-        />
-      ) : (
-        <img src={basicImage} alt='기본 이미지' />
-      )}
+      <ImgBox>
+        {!error && data.image ? (
+          <img
+            src={image}
+            alt={space ? `${space} 이미지` : `${accountnameByParams} 이미지`}
+            onError={handleImageError}
+          />
+        ) : (
+          <img src={basicImage} alt='기본 이미지' />
+        )}
+        {selectedProducts && moreInfo && (
+          <TagBox>
+            {selectedProducts.map((item) => (
+              <ProductTagItem
+                key={item.id}
+                data={item}
+                type='postDetail'
+                onClickProductBubble={handleClickProductBubble}
+              />
+            ))}
+          </TagBox>
+        )}
+      </ImgBox>
       <PostInfoBox moreInfo={moreInfo} noSpace={!space}>
         {space && <Space moreInfo={moreInfo}> {space} </Space>}
         <HeartCommentList moreInfo={moreInfo}>
@@ -99,6 +126,7 @@ export default function PostCard({ data, commentCount, moreInfo = false }) {
           </li>
         </HeartCommentList>
       </PostInfoBox>
+
       <PostDetail moreInfo={moreInfo}> {detail ? detail : content}</PostDetail>
       {moreInfo && <time dateTime={createdAt}>{convertDateFormat(createdAt)}</time>}
     </PostCardWrapper>
