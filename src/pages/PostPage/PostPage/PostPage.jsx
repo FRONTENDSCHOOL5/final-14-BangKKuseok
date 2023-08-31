@@ -18,6 +18,7 @@ import { TOAST } from '../../../constants/common';
 import { myProfileDataAtom } from '../../../atoms/myProfile';
 
 import useModal from '../../../hooks/useModal';
+import useConfirm from '../../../hooks/useConfirm';
 import useReportMutation from '../../../hooks/useReportMutation';
 
 export default function PostPage() {
@@ -26,12 +27,11 @@ export default function PostPage() {
   const [scrollDown, setScrollDown] = useState(false);
   const [isUploadorEditBefore, setIsUploadorEditBefore] = useRecoilState(isUploadorEditBeforeAtom);
   const [commentCount, setCommentCount] = useState();
-  const [isShowConfirm, setIsShowConfirm] = useState(false);
-  const [confirmType, setConfirmType] = useState({ type: 'report', object: 'comment' });
 
   const myProfileData = useRecoilValue(myProfileDataAtom);
 
   const { modalData, openModal, closeModal } = useModal('');
+  const { confirmData, openConfirm, closeConfirm } = useConfirm();
 
   const navigate = useNavigate();
 
@@ -122,19 +122,15 @@ export default function PostPage() {
   //listItem누를때 실행 함수 (confrim창이 뜨거나 edit페이지로 넘어감)
   const handleClickListItem = (e) => {
     if (modalData.modalType === 'userComment') {
-      setConfirmType({ type: 'report', object: 'comment' });
-      setIsShowConfirm(true);
+      openConfirm({ type: 'report', object: 'comment' });
     } else if (modalData.modalType === 'myComment') {
-      setConfirmType({ type: 'delete', object: 'comment' });
-      setIsShowConfirm(true);
+      openConfirm({ type: 'delete', object: 'comment' });
     } else if (modalData.modalType === 'userPost') {
-      setConfirmType({ type: 'report', object: 'post' });
-      setIsShowConfirm(true);
+      openConfirm({ type: 'report', object: 'post' });
     } else {
       //삭제일 경우
       if (e.currentTarget.innerText === '삭제') {
-        setConfirmType({ type: 'delete', object: 'post' });
-        setIsShowConfirm(true);
+        openConfirm({ type: 'delete', object: 'post' });
       } else {
         //수정일 경우
         navigate(`/post/${postId}/edit`);
@@ -146,9 +142,9 @@ export default function PostPage() {
   //게시글,댓글 삭제,신고하기
   const handleClickConfirm = () => {
     //게시글을
-    if (confirmType.object === 'post') {
+    if (confirmData.object === 'post') {
       //삭제하기
-      if (confirmType.type === 'delete') {
+      if (confirmData.type === 'delete') {
         deletePostMutation.mutate(postId);
         navigate('/');
       } else {
@@ -158,14 +154,14 @@ export default function PostPage() {
       //댓글을
     } else {
       //삭제하기
-      if (confirmType.type === 'delete') {
+      if (confirmData.type === 'delete') {
         deleteCommentMutation.mutate({ postId, commentId });
       } else {
         //신고하기
         reportCommentMutation.mutate({ postId, commentId });
       }
     }
-    setIsShowConfirm(false);
+    closeConfirm();
     closeModal();
   };
 
@@ -201,14 +197,7 @@ export default function PostPage() {
           </BottomSheet>
 
           {/* -- Confirm */}
-          {isShowConfirm && (
-            <Confirm
-              type={confirmType.type}
-              object={confirmType.object}
-              setIsShowConfirm={setIsShowConfirm}
-              onClick={handleClickConfirm}
-            />
-          )}
+          <Confirm onClick={handleClickConfirm} />
         </BasicLayout>
       )}
     </>

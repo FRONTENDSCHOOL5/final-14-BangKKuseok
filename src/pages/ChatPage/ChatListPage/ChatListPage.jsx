@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import BasicLayout from '../../../layout/BasicLayout';
@@ -8,6 +8,7 @@ import Confirm from '../../../components/common/Confirm/Confirm';
 import OtherSimpleInfo from '../../../components/common/UserSimpleInfo/OtherSimpleInfo/OtherSimpleInfo';
 import { profile } from '../../../mock/mockData';
 import useModal from '../../../hooks/useModal';
+import useConfirm from '../../../hooks/useConfirm';
 
 const ChatListWrapper = styled.div`
   padding: 14px 16px;
@@ -36,10 +37,8 @@ const UnreadDot = styled.div`
 `;
 
 export default function ChatListPage() {
-  const [isShowConfirm, setIsShowConfirm] = useState(false);
-  const [confirmType, setConfirmType] = useState({ type: '', object: '' });
-
   const { openModal, closeModal } = useModal('');
+  const { openConfirm, closeConfirm } = useConfirm();
 
   // 모달 열기
   const handleClickRightButton = () => {
@@ -47,12 +46,11 @@ export default function ChatListPage() {
   };
 
   const handleClickListItem = (chatId) => {
-    setConfirmType({ type: 'delete', object: 'chat' });
-    setIsShowConfirm(true);
+    openConfirm({ type: 'delete', object: 'chat' });
   };
 
   const handleClickConfirm = () => {
-    setIsShowConfirm(false);
+    closeConfirm();
     closeModal();
   };
 
@@ -89,14 +87,7 @@ export default function ChatListPage() {
         </BottomSheet>
 
         {/* -- confirm */}
-        {isShowConfirm && (
-          <Confirm
-            type={confirmType.type}
-            object={confirmType.object}
-            setIsShowConfirm={setIsShowConfirm}
-            onClick={handleClickConfirm}
-          />
-        )}
+        <Confirm onClick={handleClickConfirm} />
       </BasicLayout>
     </>
   );

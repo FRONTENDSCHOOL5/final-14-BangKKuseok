@@ -1,7 +1,10 @@
 import React from 'react';
 import { ButtonBox, ConfirmBackdrop, ConfirmWrapper } from './ConfirmStyle';
+import useConfirm from '../../../hooks/useConfirm';
 
-export default function Confirm({ type, object, setIsShowConfirm, onClick }) {
+export default function Confirm({ onClick }) {
+  const { confirmData, closeConfirm } = useConfirm();
+
   const confirmMsg = {
     upload: '업로드',
     delete: '삭제',
@@ -16,23 +19,21 @@ export default function Confirm({ type, object, setIsShowConfirm, onClick }) {
     post: '게시글',
   };
 
-  const handleClickCancel = () => {
-    setIsShowConfirm(false);
-  };
-
   return (
-    <ConfirmBackdrop>
-      <ConfirmWrapper>
-        <span>
-          {object
-            ? `${confirmObject[object]}을  ${confirmMsg[type]}할까요?`
-            : '로그아웃하시겠어요?'}
-        </span>
-        <ButtonBox>
-          <button onClick={handleClickCancel}>취소</button>
-          <button onClick={onClick}>{confirmMsg[type] || '확인'}</button>
-        </ButtonBox>
-      </ConfirmWrapper>
-    </ConfirmBackdrop>
+    confirmData.isShow && (
+      <ConfirmBackdrop>
+        <ConfirmWrapper>
+          <span>
+            {confirmData.object
+              ? `${confirmObject[confirmData.object]}을 ${confirmMsg[confirmData.type]}할까요?`
+              : '로그아웃하시겠어요?'}
+          </span>
+          <ButtonBox>
+            <button onClick={closeConfirm}>취소</button>
+            <button onClick={onClick}>{confirmMsg[confirmData.type] || '확인'}</button>
+          </ButtonBox>
+        </ConfirmWrapper>
+      </ConfirmBackdrop>
+    )
   );
 }

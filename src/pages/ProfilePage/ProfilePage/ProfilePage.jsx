@@ -26,6 +26,7 @@ import { useRecoilValue } from 'recoil';
 import { myProfileDataAtom } from '../../../atoms/myProfile';
 
 import useModal from '../../../hooks/useModal';
+import useConfirm from '../../../hooks/useConfirm';
 import useReportMutation from '../../../hooks/useReportMutation';
 import useInfiniteDataQuery from '../../../hooks/useInfiniteDataQuery';
 
@@ -48,13 +49,11 @@ export default function ProfilePage() {
   const [selectedPost, setSelectedPost] = useState({});
   const [productId, setProductId] = useState(0);
 
-  const [isShowConfirm, setIsShowConfirm] = useState(false);
-  const [confirmType, setConfirmType] = useState({ type: '', object: '' });
-
   const myProfileData = useRecoilValue(myProfileDataAtom);
   const queryClient = useQueryClient();
 
   const { modalData, openModal, closeModal } = useModal('');
+  const { confirmData, openConfirm, closeConfirm } = useConfirm();
 
   // 프로필 정보 받기
   const { data: profileData, isLoading: isProfileLoading } = useQuery(
@@ -138,7 +137,7 @@ export default function ProfilePage() {
   const handleClickLModalItem = (e) => {
     if (modalData.modalType === 'profile') {
       if (e.target.innerText === '로그아웃') {
-        setConfirmType({ type: 'logout' });
+        openConfirm({ type: 'logout' });
       } else {
         navigate(`/profile/edit`, { state: myProfileData });
         closeModal();
@@ -146,7 +145,7 @@ export default function ProfilePage() {
     }
     if (modalData.modalType === 'productDetail') {
       if (e.target.innerText === '삭제') {
-        setConfirmType({ type: 'delete', object: 'product' });
+        openConfirm({ type: 'delete', object: 'product' });
       } else {
         navigate(`/product/${productId}/edit`, {
           state: productId,
@@ -156,28 +155,27 @@ export default function ProfilePage() {
     }
     if (modalData.modalType === 'myPost' || modalData.modalType === 'userPost') {
       if (e.target.innerText === '삭제') {
-        setConfirmType({ type: 'delete', object: 'post' });
+        openConfirm({ type: 'delete', object: 'post' });
       } else if (e.target.innerText === '신고하기') {
-        setConfirmType({ type: 'report', object: 'post' });
+        openConfirm({ type: 'report', object: 'post' });
       } else {
         navigate(`/post/${selectedPost.id}/edit`);
         closeModal();
       }
     }
-    setIsShowConfirm(true);
   };
 
   const handleClickConfirm = () => {
-    switch (confirmType.object) {
+    switch (confirmData.object) {
       case 'product':
-        if (confirmType.type === 'delete') {
+        if (confirmData.type === 'delete') {
           deleteProductMutation.mutate(productId);
         }
         break;
       case 'post':
-        if (confirmType.type === 'delete') {
+        if (confirmData.type === 'delete') {
           deletePostMutation.mutate(selectedPost.id);
-        } else if (confirmType.type === 'report') {
+        } else if (confirmData.type === 'report') {
           reportPostMutation.mutate(selectedPost.id);
         }
         break;
@@ -188,7 +186,7 @@ export default function ProfilePage() {
         navigate('/');
         break;
     }
-    setIsShowConfirm(false);
+    closeConfirm();
     closeModal();
   };
 
@@ -252,14 +250,7 @@ export default function ProfilePage() {
           </BottomSheet>
 
           {/* -- Confirm */}
-          {isShowConfirm && (
-            <Confirm
-              type={confirmType.type}
-              object={confirmType.object}
-              setIsShowConfirm={setIsShowConfirm}
-              onClick={handleClickConfirm}
-            />
-          )}
+          <Confirm onClick={handleClickConfirm} />
         </ProfilePageWrapper>
       )}
     </BasicLayout>
