@@ -91,7 +91,7 @@ export default function PostUploadPage() {
 
   return (
     <BasicLayout
-      type='imageSelect'
+      type='postUpload'
       isNonNav
       title={step}
       btnText={btnText}

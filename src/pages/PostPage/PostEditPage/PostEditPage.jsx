@@ -77,11 +77,6 @@ export default function PostEditPage() {
     closeModal();
   };
 
-  //뒤로가기 버튼 누르기
-  const handleClickLeftButton = () => {
-    navigate(-1);
-  };
-
   //선택 상품 목록 수정
   useEffect(() => {
     setContent({ ...content, selectedProducts });
@@ -114,12 +109,11 @@ export default function PostEditPage() {
     <>
       {!isPostLoading && (
         <BasicLayout
-          type='imageSelect'
+          type='save'
           isNonNav
           title='게시글 수정'
           btnText='수정'
           isBtnActive={isBtnActive}
-          onClickLeftButton={handleClickLeftButton}
           onClickRightButton={handleClickRightButton}
         >
           <PostEditPageWrapper>
