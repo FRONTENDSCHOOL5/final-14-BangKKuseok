@@ -1,16 +1,27 @@
 import styled, { css } from 'styled-components';
 
+// 태그 위치에 따른 Y축 위치
+const bubbleYPosition = css`
+  ${({ bubbleLoc }) =>
+    bubbleLoc.bubbleUp
+      ? css`
+          bottom: 36px;
+        `
+      : css`
+          top: 36px;
+        `};
+`;
+
 export const ProductBubbleWrapper = styled.div`
   box-shadow: 4px 3px 25px rgba(29, 29, 29, 0.15);
   position: absolute;
-  transform: translate(-50%, -100%);
-  left: ${({ bubbleLoc }) => bubbleLoc.x + '%'};
-  top: ${({ bubbleLoc }) => bubbleLoc.y + '%'};
   z-index: 1;
+  left: ${({ bubbleLoc }) => bubbleLoc.x + 'px'};
+  ${bubbleYPosition}
 `;
 
 // 태그 위치에 따른 말꼬리 위치
-export const edgePosition = css`
+const edgePosition = css`
   ${({ bubbleLoc }) =>
     bubbleLoc.bubbleUp
       ? css`
@@ -23,14 +34,15 @@ export const edgePosition = css`
 `;
 
 export const ProductBubbleBox = styled.div`
+  position: relative;
   padding: 6px 8px;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 12px;
   display: flex;
   gap: 8px;
   align-items: center;
-  max-width: 208px;
-  position: relative;
+  width: 208px;
+  cursor: ${({ type }) => type === 'postDetail' && 'pointer'};
 
   img:first-child {
     width: 56px;
@@ -56,8 +68,7 @@ export const ProductBubbleBox = styled.div`
 `;
 
 export const ProductInfoBox = styled.div`
-  min-width: 82px;
-  max-width: 96px;
+  min-width: 96px;
   padding-left: 2px;
   h3 {
     color: ${({ theme }) => theme.colors.black};

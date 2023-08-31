@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components';
 
 export const PostTextWriteWrapper = styled.div`
   margin: 0 auto;
-  max-width: 342px;
   width: calc(100% - 48px);
 
   textarea {

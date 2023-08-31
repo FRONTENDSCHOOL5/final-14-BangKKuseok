@@ -20,7 +20,6 @@ const PostImgUploadWrapper = styled.div`
 
   position: relative;
   margin: 0 auto;
-  max-width: 342px;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   background-color: ${({ theme }) => theme.colors.gray50};
@@ -48,6 +47,7 @@ const UploadForm = styled.div`
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04);
   backdrop-filter: blur(10px);
   border-radius: 50%;
+  z-index: 5;
 
   label {
     cursor: pointer;

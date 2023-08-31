@@ -53,6 +53,7 @@ export const BottomSheetWrapper = styled.article`
   width: 100%;
   position: absolute;
   bottom: 0;
+  left: 0;
 `;
 
 export const ModalBox = styled.div`
