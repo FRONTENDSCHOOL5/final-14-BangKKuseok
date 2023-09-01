@@ -6,8 +6,12 @@ export const ConfirmBackdrop = styled.div`
   left: 0;
   z-index: 60;
   width: 100vw;
-  height: calc(var(--vh, 1vh) * 100);
   background-color: rgba(0, 0, 0, 0.3);
+
+  height: 100vh;
+  @media screen and (hover: none) and (pointer: coarse) {
+    height: calc(var(--vh, 1vh) * 100);
+  }
 `;
 
 export const ConfirmWrapper = styled.article`
