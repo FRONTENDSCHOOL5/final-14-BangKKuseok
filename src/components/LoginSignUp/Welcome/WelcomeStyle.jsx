@@ -11,11 +11,15 @@ const pop = keyframes`
 export const WelcomeWrapper = styled.div`
   margin: 0 auto;
   width: clamp(390px, 100%, 720px);
-  height: calc(var(--vh, 1vh) * 100);
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.white};
+
+  height: 100vh;
+  @media screen and (hover: none) and (pointer: coarse) {
+    height: calc(var(--vh, 1vh) * 100);
+  }
 
   div {
     position: relative;

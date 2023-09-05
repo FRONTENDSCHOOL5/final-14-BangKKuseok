@@ -3,6 +3,10 @@ import styled, { css } from 'styled-components';
 const ChatRoomWrapper = styled.div`
   height: calc(100vh - 110px);
   background-color: ${({ theme }) => theme.colors.gray50};
+
+  @media screen and (hover: none) and (pointer: coarse) {
+    height: calc((var(--vh, 1vh) * 100) - 110px);
+  }
 `;
 
 const ChatRoomContainer = styled.div`
@@ -13,7 +17,11 @@ const ChatRoomContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  height: calc((var(--vh, 1vh) * 100) - 130px);
+
+  height: calc(100vh - 130px);
+  @media screen and (hover: none) and (pointer: coarse) {
+    height: calc((var(--vh, 1vh) * 100) - 130px);
+  }
   padding: 18px 16px 0;
   display: flex;
   flex-direction: column;
