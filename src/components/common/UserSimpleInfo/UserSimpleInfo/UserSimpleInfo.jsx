@@ -58,7 +58,17 @@ export default function UserSimpleInfo({
                 )}
               </UserName>
               <AccountName>
-                {type === 'follow' ? profile.intro : `@ ${profile.accountname}`}
+                {type === 'follow' ? (
+                  profile.intro
+                ) : (
+                  <>
+                    {profile.isfollow ? (
+                      <span>@ {profile.accountname}ㆍ팔로우함</span>
+                    ) : (
+                      <span>@ {profile.accountname}</span>
+                    )}
+                  </>
+                )}
               </AccountName>
             </UserNameBox>
           </Link>
