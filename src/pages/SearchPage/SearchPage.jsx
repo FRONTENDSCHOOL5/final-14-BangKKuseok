@@ -61,10 +61,20 @@ export default function Search({ onClickLeftButton }) {
     },
   );
 
-  const followedUsers = searchResult?.filter((user) => user.isfollow);
-  const unfollowedUsers = searchResult?.filter((user) => !user.isfollow);
+  const sortedUsers = searchResult?.sort((a, b) => {
+    const unfollowedUsers = searchResult?.filter((user) => !user.isfollow);
+    if (a.isfollow === b.isfollow) {
+      // 한글부터 정렬
+      return a.username.localeCompare(b.username, 'ko-KR');
+    }
+    // isfollow가 true인 경우 우선순위를 높임
+    if (a.isfollow) {
+      return -1;
+    }
+    return 1;
+  });
 
-  const paginatedSearchResult = followedUsers?.concat(unfollowedUsers).slice(0, view * 7);
+  const paginatedSearchResult = sortedUsers?.slice(0, view * 7);
 
   const handleChangeInput = (e) => {
     setInputValue(e.target.value);
