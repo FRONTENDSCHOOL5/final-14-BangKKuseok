@@ -53,7 +53,10 @@ export default function Search({ onClickLeftButton }) {
       enabled: !!debouncedSearchUser,
       select: (result) =>
         result.filter((user) => {
-          return user.username.includes(debouncedSearchUser);
+          return (
+            user.username.includes(debouncedSearchUser) ||
+            user.accountname.includes(debouncedSearchUser)
+          );
         }),
     },
   );
