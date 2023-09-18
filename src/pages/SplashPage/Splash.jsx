@@ -6,7 +6,7 @@ import { RailImg, SplashPageWrapper, StyledLogo, FadeoutBox } from './SplashStyl
 export default function Splash() {
   return (
     <SplashPageWrapper>
-      <StyledLogo src={logoImg} alt='로고' />
+      <StyledLogo src={logoImg} alt='방꾸석 로고' />
       <ul>
         <RailImg furnituresImg={furnituresImg} />
         <RailImg furnituresImg={furnituresImg} />
