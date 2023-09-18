@@ -4,8 +4,12 @@ export const NoneFeedWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc((var(--vh, 1vh) * 100) - 58px);
   flex-direction: column;
+  height: calc(100vh - 58px);
+
+  @media screen and (hover: none) and (pointer: coarse) {
+    height: calc((var(--vh, 1vh) * 100) - 58px);
+  }
 
   img {
     width: 187px;

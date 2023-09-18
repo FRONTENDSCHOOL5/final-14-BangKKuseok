@@ -1,8 +1,19 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+
+const editWrapper = css`
+  ${({ type }) =>
+    type === 'edit' &&
+    css`
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 80px);
+    `}
+`;
 
 const PostProductTagWrapper = styled.div`
   margin: 0 auto;
-  max-width: 342px;
   width: calc(100% - 48px);
   & > p {
     text-align: center;
@@ -10,12 +21,14 @@ const PostProductTagWrapper = styled.div`
     color: ${({ theme }) => theme.colors.gray300};
     margin-top: 40px;
   }
+  ${editWrapper}
 `;
 
 const ImgBox = styled.div`
   position: relative;
   border-radius: 10px;
   width: 100%;
+  aspect-ratio: 1;
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   & > img {

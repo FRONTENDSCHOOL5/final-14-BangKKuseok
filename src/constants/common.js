@@ -33,11 +33,16 @@ export const MOUSEBENCHMARK = {
 };
 
 export const BUBBLEBENCHMARK = {
-  leftBenchmark: 33,
-  rightBenchmark: 67,
-  leftDefaultValue: 6,
-  rightDefaultValue: 51.5,
-  leftWeighting: 1.59,
-  rightWeighting: 1.63,
+  leftBenchmark: 32,
+  rightBenchmark: 68,
+  leftDefaultValue: -4,
+  rightDefaultValue: -98,
+  xWeighting: 3.58,
+
+  edgeLeftDefaultValue: 6,
+  edgeRightDefaultValue: 52,
+  edgeLeftWeighting: 1.65,
+  edgeRightWeighting: 1.72,
+
   yPositionBenchmark: 28,
 };

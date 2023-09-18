@@ -7,6 +7,7 @@ import { ReactComponent as UserIcon } from '../../../assets/icons/icon-user.svg'
 export const NavbarWrapper = styled.nav`
   width: clamp(390px, 100%, 720px);
   position: fixed;
+  z-index: 10;
   bottom: 0;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 -3px 20px rgba(105, 80, 80, 0.08);

@@ -6,7 +6,7 @@ const PostCardWrapper = styled.article`
   padding-bottom: 14px;
 
   /* ---게시글 이미지--- */
-  img {
+  & > img {
     position: relative;
     aspect-ratio: 1;
     object-fit: cover;

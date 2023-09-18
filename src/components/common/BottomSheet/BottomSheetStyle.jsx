@@ -41,18 +41,23 @@ export const BottomSheetDim = styled.div`
   position: fixed;
   top: 0;
   width: clamp(390px, 100%, 720px);
-  height: calc(var(--vh, 1vh) * 100);
   margin: 0 auto;
   z-index: 50;
   background-color: rgba(0, 0, 0, 0.3);
   animation: ${(p) => (p.isShow ? fadeIn : fadeOut)} 0.3s ease-out;
   transition: background-color 0.3s ease-out;
+
+  height: 100vh;
+  @media screen and (hover: none) and (pointer: coarse) {
+    height: calc(var(--vh, 1vh) * 100);
+  }
 `;
 
 export const BottomSheetWrapper = styled.article`
   width: 100%;
   position: absolute;
   bottom: 0;
+  left: 0;
 `;
 
 export const ModalBox = styled.div`

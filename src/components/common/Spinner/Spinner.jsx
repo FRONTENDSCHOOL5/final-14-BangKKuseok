@@ -20,8 +20,8 @@ const rotator = keyframes`
 
 `;
 const StyledSpinner = styled.div`
-  height: ${(p) =>
-    p.type === 'carousel' ? '404px' : p.type === 'follow' ? '16px' : 'calc(var(--vh, 1vh) * 100)'};
+  height: ${(p) => (p.type === 'carousel' ? '404px' : p.type === 'follow' ? '16px' : '100vh')};
+
   margin-top: ${(p) => (p.type === 'carousel' ? '-60px' : '0')};
   display: flex;
   align-items: center;

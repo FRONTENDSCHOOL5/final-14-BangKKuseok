@@ -1,14 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ProductBubble from '../ProductBubble/ProductBubble';
 import BottomSheet from '../../common/BottomSheet/BottomSheet';
-import ProductTag from '../ProductTag/ProductTag';
 import { ImgBox, TagBox } from '../PostProductTag/PostProductTagStyle';
 import { SPACES } from '../../../constants/common';
 import { ModalSpaceList, PostTextWriteWrapper, SelectSpaceBtn } from './PostTextWriteStyle';
 import BasicModal from '../../common/BottomSheet/BasicModal';
+import ProductTagItem from '../ProductTagItem/ProductTagItem';
 import useModal from '../../../hooks/useModal';
 
-export default function PostTextWrite({ postImg, setIsBtnActive, setContent, selectedProducts }) {
+export default function PostTextWrite({
+  postImg,
+  setIsBtnActive,
+  setContent,
+  selectedProducts,
+  step,
+}) {
   //바텀시트 커스텀 훅
   const { openModal, closeModal } = useModal('');
 
@@ -39,11 +45,11 @@ export default function PostTextWrite({ postImg, setIsBtnActive, setContent, sel
   useEffect(() => {
     if (space !== '공간을 선택해주세요' && detail !== '') {
       setIsBtnActive(true);
-      setContent({ space, detail });
+      setContent({ space, detail, selectedProducts });
     } else {
       setIsBtnActive(false);
     }
-  }, [space, detail, setIsBtnActive, setContent]);
+  }, [space, detail, setIsBtnActive, setContent, selectedProducts]);
 
   return (
     <>
@@ -52,10 +58,7 @@ export default function PostTextWrite({ postImg, setIsBtnActive, setContent, sel
           <img src={postImg} alt='게시글 이미지' />
           <TagBox>
             {selectedProducts.map((item) => (
-              <li key={item.id}>
-                <ProductBubble data={item} />
-                <ProductTag data={item} />
-              </li>
+              <ProductTagItem key={item.id} data={item} step={step} />
             ))}
           </TagBox>
         </ImgBox>

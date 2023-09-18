@@ -12,8 +12,8 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import PostImgUpload from '../../../components/PostUpload/PostImgUpload/PostImgUpload';
 import { useSetRecoilState } from 'recoil';
 import { isUploadorEditBeforeAtom } from '../../../atoms/post';
+import PostProductTag from '../../../components/PostUpload/PostProductTag/PostProductTag';
 import useModal from '../../../hooks/useModal';
-
 export default function PostEditPage() {
   const { postId } = useParams();
   const navigate = useNavigate();
@@ -22,9 +22,9 @@ export default function PostEditPage() {
 
   const [editData, setEditData] = useState({});
   const [postImg, setPostImg] = useState();
-  const [content, setContent] = useState({ space: '', detail: '' });
-
-  const { openModal, closeModal } = useModal('');
+  const [content, setContent] = useState({ space: '', detail: '', selectedProducts: '' });
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const { modalData, openModal, closeModal } = useModal('');
 
   //게시글 상세 정보받기
   const { data: postData, isLoading: isPostLoading } = useQuery(
@@ -33,8 +33,12 @@ export default function PostEditPage() {
     {
       onSuccess: (data) => {
         const { space, detail } = JSON.parse(data.content);
+        const { selectedProducts } = data.content.includes('selectedProducts')
+          ? JSON.parse(data.content)
+          : { selectedProducts: undefined };
         setPostImg(data.image);
-        setContent({ space, detail });
+        setContent({ space, detail, selectedProducts });
+        setSelectedProducts(selectedProducts);
         setEditData({ image: data.image, content: data.content });
       },
       onError: (error) => {
@@ -72,6 +76,15 @@ export default function PostEditPage() {
     });
     closeModal();
   };
+
+  //선택 상품 목록 수정
+  useEffect(() => {
+    setContent({ ...content, selectedProducts });
+    setEditData({
+      ...editData,
+      content: JSON.stringify({ ...content, selectedProducts }),
+    });
+  }, [selectedProducts]);
 
   //게시글 수정 버튼 누르기
   const handleClickRightButton = () => {
@@ -111,6 +124,12 @@ export default function PostEditPage() {
               setEditData={setEditData}
               editData={editData}
             />
+            <PostProductTag
+              postImg={postImg}
+              selectedProducts={selectedProducts}
+              setSelectedProducts={setSelectedProducts}
+              type={'edit'}
+            />
             <PostTextEdit
               onClick={handleClickModalOpen}
               setContent={setContent}
@@ -121,20 +140,22 @@ export default function PostEditPage() {
           </PostEditPageWrapper>
 
           {/* -- BottomSheet */}
-          <BottomSheet>
-            <BasicModal>
-              <ModalSpaceList>
-                <h3>공간을 선택해주세요</h3>
-                <ul>
-                  {SPACES.map((space, index) => (
-                    <button type='button' key={index} onClick={handleClickSpace}>
-                      {space}
-                    </button>
-                  ))}
-                </ul>
-              </ModalSpaceList>
-            </BasicModal>
-          </BottomSheet>
+          {modalData.modalType === 'editSpace' && (
+            <BottomSheet>
+              <BasicModal>
+                <ModalSpaceList>
+                  <h3>공간을 선택해주세요</h3>
+                  <ul>
+                    {SPACES.map((space, index) => (
+                      <button type='button' key={index} onClick={handleClickSpace}>
+                        {space}
+                      </button>
+                    ))}
+                  </ul>
+                </ModalSpaceList>
+              </BasicModal>
+            </BottomSheet>
+          )}
         </BasicLayout>
       )}
     </>
