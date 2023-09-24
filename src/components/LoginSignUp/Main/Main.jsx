@@ -23,7 +23,7 @@ export default function Main({ onClickLoginLink }) {
 
   return (
     <MainPageWrapper>
-      <WhiteLogoImg src={WhiteLogo} />
+      <WhiteLogoImg src={WhiteLogo} alt='방꾸석 로고' />
       <CanvasBox spotLightImg={spotLightImg} rotateImg={rotateImg} isRotate={isRotate}>
         <div>
           <Furniture setIsRotate={setIsRotate} />
