@@ -53,12 +53,28 @@ export default function Search({ onClickLeftButton }) {
       enabled: !!debouncedSearchUser,
       select: (result) =>
         result.filter((user) => {
-          return user.username.includes(debouncedSearchUser);
+          return (
+            user.username.includes(debouncedSearchUser) ||
+            user.accountname.includes(debouncedSearchUser)
+          );
         }),
     },
   );
 
-  const paginatedSearchResult = searchResult?.slice(0, view * 7);
+  const sortedUsers = searchResult?.sort((a, b) => {
+    const unfollowedUsers = searchResult?.filter((user) => !user.isfollow);
+    if (a.isfollow === b.isfollow) {
+      // 한글부터 정렬
+      return a.username.localeCompare(b.username, 'ko-KR');
+    }
+    // isfollow가 true인 경우 우선순위를 높임
+    if (a.isfollow) {
+      return -1;
+    }
+    return 1;
+  });
+
+  const paginatedSearchResult = sortedUsers?.slice(0, view * 7);
 
   const handleChangeInput = (e) => {
     setInputValue(e.target.value);
